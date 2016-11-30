@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Anubis</title>
+  </head>
+  <body>
+    <div class="app-base">
+      <div id="root">
+        Loading svg here.
+      </div>
+    </div>
+    <script>
+      (function bootstrap() {
+        const script = document.createElement('script');
+        script.src = process.env.NODE_ENV === 'development' ? 'http://localhost:9000/dist/bundle.js' : './dist/bundle.js';
+        document.write(script.outerHTML);
+      }());
+    </script>
+  </body>
+</html>
