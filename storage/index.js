@@ -1,15 +1,13 @@
 import storage from 'electron-json-storage';
 import reduce from 'async/reduce';
+import messages from './messages';
+import defaults from './defaults';
 
 //
 // These are our application defaults, if nothing can be found in our storage
 // API's we will try and pull the information from this instead.
 //
-const config = {
-  'locales': 'en-US',
-  'width': 800,
-  'height': 600
-};
+const config = Object.create({}, defaults, messages);
 
 /**
  * Fetch an item from our configuration.
