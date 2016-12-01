@@ -19,4 +19,4 @@ const defaults = {
 //
 // Expose our own translations and messages by default.
 //
-export default messages;
+export default defaults;

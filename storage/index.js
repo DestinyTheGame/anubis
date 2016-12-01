@@ -7,7 +7,7 @@ import defaults from './defaults';
 // These are our application defaults, if nothing can be found in our storage
 // API's we will try and pull the information from this instead.
 //
-const config = Object.create({}, defaults, messages);
+const config = Object.assign({}, defaults, messages);
 
 /**
  * Fetch an item from our configuration.
