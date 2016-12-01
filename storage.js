@@ -6,8 +6,9 @@ import reduce from 'async/reduce';
 // API's we will try and pull the information from this instead.
 //
 const config = {
-  width: 800,
-  height: 600
+  'locales': 'en-US',
+  'width': 800,
+  'height': 600
 };
 
 /**
