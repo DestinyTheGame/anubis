@@ -17,7 +17,7 @@ export default class Twitch extends EventEmitter {
     super();
 
     this.username = username;         // Username / Channel.
-    this.bots = {};                   // Plugin handling.
+    this.bots = [];                   // Current active bots.
     this.queue = [];                  // Callback queue till we have an API.
     this.api = null;                  // The actual API.
 
@@ -60,15 +60,14 @@ export default class Twitch extends EventEmitter {
       //
       // Integrate the various of automatic bot commands.
       //
+      // @TODO destory bots after the API is closed.
+      //
       if (data.bots && data.bots.length) {
-        data.bots.forEach((name) => {
-          const bot = bots[name];
+        data.bots.forEach((spec) => {
+          const Bot = bots[spec.name];
+          const bot = new Bot(this, spec.config);
 
-          //
-          // Prevent duplicates and unknown bots from crashing the chat.
-          //
-          if (!bot || name in this.bots) return;
-          this.bots[name] = bot.call(this, this);
+          this.bots.push(bot);
         });
       }
     });
