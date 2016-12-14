@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Card, Config } from './components';
+import { Card, Config, WebSocket } from './components';
 import { render } from 'react-dom';
 
 /**
@@ -16,7 +16,11 @@ class Application extends Component {
    * @private
    */
   render() {
-    return <div>Working</div>;
+    return (
+      <WebSocket>
+        <div>Hello world</div>
+      </WebSocket>
+    )
   }
 }
 
