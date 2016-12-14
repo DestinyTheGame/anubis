@@ -30,7 +30,7 @@ export default function start(err, boot) {
     //
     anubis.loadURL(url.format({
       pathname: path.join(__dirname, 'index.html'),
-      search: '?port='+ boot.port,
+      search: '?server=ws://localhost:'+ boot.get('port'),
       protocol: 'file:',
       slashes: true
     }));
