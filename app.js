@@ -1,6 +1,5 @@
-import { MuiThemeProvider } from 'material-ui';
-import React, { Component } from 'react';
-import { Wizzard } from './components';
+import React, { Component, PropTypes } from 'react';
+import { Card, Config } from './components';
 import { render } from 'react-dom';
 
 /**
@@ -17,11 +16,7 @@ class Application extends Component {
    * @private
    */
   render() {
-    return (
-      <MuiThemeProvider>
-        <Wizzard step={ 0 } />
-      </MuiThemeProvider>
-    );
+    return <div>Working</div>;
   }
 }
 
