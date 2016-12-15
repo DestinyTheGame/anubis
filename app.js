@@ -16,9 +16,12 @@ class Application extends Component {
    * @private
    */
   render() {
+    const wins = [true, true, false, false, false, false, false, false, false];
+    const losses = [true];
+
     return (
       <WebSocket>
-        <div>Hello world</div>
+        <Card wins={ wins } losses={ losses } />
       </WebSocket>
     )
   }
