@@ -8,6 +8,12 @@ import Svg, { Circle, Rect, G } from 'svgs';
  * @private
  */
 export default class Card extends Component {
+  /**
+   * Render the trials card.
+   *
+   * @returns {Component}
+   * @private
+   */
   render() {
     const padding = 100;
     const props = this.props;
@@ -18,16 +24,16 @@ export default class Card extends Component {
     };
 
     const wins = props.wins.map((game, i) => {
-      const fill = game === 'win' ? props.win : props.unfilled;
+      const fill = game ? props.win : props.unfilled;
 
       return (
-        <circle cy={ 50 } cx={ 50 + (i * padding) } { ...design } fill={ fill } />
+        <circle key={ 'win-'+ i } cy={ 50 } cx={ 50 + (i * padding) } { ...design } fill={ fill } />
       )
     });
 
     const losses = props.losses.map((game, i) => {
       return (
-        <circle cy={ 50 + padding } cx={ 50 + (i * padding) } { ...design } fill={ props.loss } />
+        <circle key={ 'loss-'+ i} cy={ 50 + padding } cx={ 50 + (i * padding) } { ...design } fill={ props.loss } />
       )
     });
 
@@ -79,6 +85,6 @@ Card.defaultProps = {
   border: '3',
   radius: 40,
 
-  width: 600,
+  width: 900,
   height: 250
 };
