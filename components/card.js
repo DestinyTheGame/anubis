@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Svg, { Circle, Rect, G } from 'svgs';
+import WebSockets from './websocket';
 
 /**
  * Rendering of the Trials card.
@@ -8,6 +9,67 @@ import Svg, { Circle, Rect, G } from 'svgs';
  * @private
  */
 export default class Card extends Component {
+  constructor () {
+    super(...arguments);
+
+    this.parser = this.parser.bind(this);
+    this.state = {
+      flawless: false,
+      losses: [],
+      wins: []
+    };
+  }
+
+  /**
+   * Receive messages from our server about the trials card. We're interested in
+   * inventory updates as we want to get the information from our current trials
+   * passage.
+   *
+   * @param {Object} data Message received from the server.
+   * @private
+   */
+  parser(data) {
+    if (data.type !== 'advisors') return;
+    if (!('trials' in data.activities)) return;
+
+    //
+    // Extract the required trials information from the activity. Things like
+    // wins on the card are stored on the extanded property.
+    //
+    const trials = data.activities.trials;
+    const scoreCard = trials.extended.scoreCard;
+    const losses = (new Array(scoreCard.losses)).fill(true);
+    const wins = (new Array(scoreCard.maxWins)).fill(false).map((item, i) => {
+      return i < scoreCard.wins;
+    });
+
+    this.setState({
+      mercy: scoreCard.losses === -1,
+      map: trials.display.flavor,
+      trials: trials,
+      losses: losses,
+      wins: wins
+    });
+  }
+
+  /**
+   * Start intercepting inventory messages.
+   *
+   * @private
+   */
+  componentDidMount() {
+    this.context.on('message', this.parser);
+  }
+
+  /**
+   * Remove our message interception.
+   *
+   * @private
+   */
+  componentWillUnmount() {
+    this.context.off('message', this.parser);
+  }
+
   /**
    * Render the trials card.
    *
@@ -23,7 +85,7 @@ export default class Card extends Component {
       r: props.radius
     };
 
-    const wins = props.wins.map((game, i) => {
+    const wins = this.state.wins.map((game, i) => {
       const fill = game ? props.win : props.unfilled;
 
       return (
@@ -31,7 +93,7 @@ export default class Card extends Component {
       )
     });
 
-    const losses = props.losses.map((game, i) => {
+    const losses = this.state.losses.map((game, i) => {
       return (
         <circle key={ 'loss-'+ i} cy={ 50 + padding } cx={ 50 + (i * padding) } { ...design } fill={ props.loss } />
       )
@@ -56,9 +118,6 @@ export default class Card extends Component {
  * @private
  */
 Card.propTypes = {
-  losses: PropTypes.array.isRequired,
-  wins: PropTypes.array.isRequired,
-
   background: PropTypes.string,
   unfilled: PropTypes.string,
   stroke: PropTypes.string,
@@ -69,6 +128,14 @@ Card.propTypes = {
   width: PropTypes.number,
   radius: PropTypes.number
 };
+
+/**
+ * The context types we're expecting
+ *
+ * @type {Object}
+ * @private
+ */
+Card.contextTypes = WebSockets.context;
 
 /**
  * Default Properties for the trials card.
