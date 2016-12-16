@@ -39,7 +39,7 @@ export default class WebSockets extends Component {
     };
 
     this.websocket.onmessage = (e) => {
-      this.broadcast.emit('data', e.data);
+      this.broadcast.emit('message', JSON.parse(e.data));
     };
 
     this.websocket.onclose = () => {
@@ -48,7 +48,7 @@ export default class WebSockets extends Component {
   }
 
   /**
-   * Close the WebSocket connection when the component gets unmounted
+   * Close the WebSocket connection when the component gets unmounted.
    *
    * @private
    */
