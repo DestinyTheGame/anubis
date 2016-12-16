@@ -1,4 +1,5 @@
 import React, { Component, PropTypes, Children } from 'react';
+import EventEmitter from 'eventemitter3';
 import URL from 'url-parse';
 
 /**
@@ -14,8 +15,61 @@ export default class WebSockets extends Component {
   constructor() {
     super(...arguments);
 
+    this.broadcast = new EventEmitter();
+
+    //
+    // Pre-bind the methods that get shared between all components.
+    //
+    this.send = this.send.bind(this);
+    this.on = this.broadcast.addListener.bind(this.broadcast);
+    this.off = this.broadcast.removeListener.bind(this.broadcast);
+  }
+
+  /**
+   * Start a new WebSocket connection when the component gets mounted.
+   *
+   * @private
+   */
+  componentDidMount() {
     const url = new URL(location.href, true);
     this.websocket = new WebSocket(url.query.server);
+
+    this.websocket.onopen = () => {
+      this.broadcast.emit('open');
+    };
+
+    this.websocket.onmessage = (e) => {
+      this.broadcast.emit('data', e.data);
+    };
+
+    this.websocket.onclose = () => {
+      this.broadcast.emit('close');
+    };
+  }
+
+  /**
+   * Close the WebSocket connection when the component gets unmounted
+   *
+   * @private
+   */
+  componentWillUnmount() {
+    if (!this.websocket) return;
+
+    this.websocket.close();
+  }
+
+  /**
+   * Send a message over the WebSocket connection.
+   *
+   * @param {Object} payload Payload that needs to be send over the connection.
+   * @public
+   */
+  send(payload) {
+    if (!this.websocket || this.websocket.readState !== WebSocket.OPEN) {
+      this.broadcast.once('open', this.send.bind(this, payload));
+    }
+
+    this.websocket.send(JSON.stringify(payload));
   }
 
   /**
@@ -26,7 +80,9 @@ export default class WebSockets extends Component {
    */
   getChildContext() {
     return {
-      websocket: this.websocket
+      send: this.send,
+      off: this.off,
+      on: this.on
     };
   }
 
@@ -48,7 +104,9 @@ export default class WebSockets extends Component {
  * @public
  */
 WebSockets.context = {
-  websocket: PropTypes.object
+  send: PropTypes.func,
+  off: PropTypes.func,
+  on: PropTypes.func
 };
 
 WebSockets.contextTypes = WebSockets.context;
