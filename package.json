@@ -34,6 +34,7 @@
     "react": "15.4.1",
     "react-dom": "15.4.1",
     "svgs": "1.0.0",
+    "tick-tock": "1.0.0",
     "tmi.js": "1.1.2",
     "ws": "1.1.1",
     "xmlhttprequest": "1.8.0"
