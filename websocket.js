@@ -26,7 +26,13 @@ function incoming(boot) {
           }));
 
           data.type = 'advisors';
-          client.send(JSON.stringify(data));
+          client.send(JSON.stringify(data), (err) => {
+            //
+            // This flow is completely async, so it could be that by the time we
+            // got our data the connection was already closed. Hence this
+            // callback
+            //
+          });
         });
       });
     }, 10000);
