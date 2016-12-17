@@ -7,7 +7,7 @@ const defaults = {
   //
   // Window dimensions.
   //
-  'width': 800,
+  'width': 900,
   'height': 600,
 
   //
