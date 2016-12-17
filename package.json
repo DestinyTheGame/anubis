@@ -6,7 +6,9 @@
   "scripts": {
     "start": "NODE_ENV=development electron .",
     "dev": "concurrently -k 'node -r babel-register webpack.js' 'npm start'",
-    "build-darwin": "NODE_ENV=production webpack --config webpack.prod.babel.js && electron-packager . Anubis --platform=darwin --arch=all --prune --overwrite"
+    "prod": "NODE_ENV=production webpack --config webpack.prod.babel.js",
+    "build-darwin": "npm run prod && electron-packager . Anubis --platform=darwin --arch=all --prune --overwrite",
+    "build-windows": "npm run prod && electron-packager . Anubis --platform=win32 --arch=all --prune --overwrite"
   },
   "keywords": [
     "trials",
