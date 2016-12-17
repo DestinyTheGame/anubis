@@ -3,13 +3,14 @@ import { gets } from './storage';
 import path from 'path';
 import url from 'url';
 
-/**
- * Every part of our application is booted and setup. So we can safely
- */
-export default function start(err, boot) {
-  if (err) throw err; // @TODO display an error page.
+let anubis;
 
-  let anubis;
+/**
+ * Create the Application window.
+ *
+ * @private
+ */
+function create(boot) {
   gets('width', 'height', (err, config) => {
     if (err) throw err;
 
@@ -34,13 +35,30 @@ export default function start(err, boot) {
       protocol: 'file:',
       slashes: true
     }));
-
-    //
-    // On OS X it is common for applications and their menu bar
-    // to stay active until the user quits explicitly with Cmd + Q
-    //
-    app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') app.quit()
-    });
   });
+}
+
+/**
+ * Every part of our application is booted and setup. So we can safely
+ */
+export default function start(err, boot) {
+  if (err) throw err; // @TODO display an error page.
+
+  //
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  //
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit()
+  });
+
+  //
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  //
+  app.on('activate', () => {
+    if (anubis === null) create(boot);
+  });
+
+  create(boot);
 };
