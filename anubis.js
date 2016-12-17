@@ -34,5 +34,13 @@ export default function start(err, boot) {
       protocol: 'file:',
       slashes: true
     }));
+
+    //
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    //
+    app.on('window-all-closed', () => {
+      if (process.platform !== 'darwin') app.quit()
+    });
   });
 };
