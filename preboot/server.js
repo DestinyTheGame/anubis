@@ -29,7 +29,7 @@ export default function preboot(boot, next) {
     });
 
     //
-    // Handling the incomming connections.
+    // Handling the incoming connections.
     //
     websocket.on('connection', incoming(boot));
 
