@@ -16,8 +16,13 @@
     </div>
     <script>
       (function bootstrap() {
-        const script = document.createElement('script');
-        script.src = process.env.NODE_ENV === 'development' ? 'http://localhost:9000/dist/bundle.js' : './dist/bundle.js';
+        var script = document.createElement('script');
+        var env = 'production';
+
+        try { env = process.env.NODE_ENV; }
+        catch (e) {}
+
+        script.src = env === 'development' ? 'http://localhost:9000/dist/bundle.js' : './dist/bundle.js';
         document.write(script.outerHTML);
       }());
     </script>

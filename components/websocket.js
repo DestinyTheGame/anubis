@@ -32,7 +32,9 @@ export default class WebSockets extends Component {
    */
   componentDidMount() {
     const url = new URL(location.href, true);
-    this.websocket = new WebSocket(url.query.server);
+    const server = url.query.server || url.href.replace('http', 'ws');
+
+    this.websocket = new WebSocket(server);
 
     this.websocket.onopen = () => {
       this.broadcast.emit('open');

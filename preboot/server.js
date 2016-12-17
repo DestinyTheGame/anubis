@@ -2,7 +2,9 @@ import { getPort as find } from 'portfinder';
 import { incoming } from '../websocket';
 import { Server as HTTP } from 'http';
 import connected from 'connected';
+import express from 'express';
 import { Server } from 'ws';
+import path from 'path';
 
 /**
  * Async boot sequence for setting up a random WebSocket server.
@@ -15,14 +17,24 @@ export default function preboot(boot, next) {
   find(function searching(err, port) {
     if (err) return next(err);
 
-    const server = new HTTP((req, res) => {
-      res.end('Internal Anubis API server');
+    const app = express();
+    const server = new HTTP(app);
+    const websocket = new Server({ server });
+
+    app
+    .use('/dist', express.static(path.join(__dirname, '..', 'dist')))
+    .use(function req(req, res) {
+      res.setHeader('Content-Type', 'text/html');
+      res.sendFile(path.join(__dirname, '..', 'index.html'));
     });
 
-    const websocket = new Server({ server });
+    //
+    // Handling the incomming connections.
+    //
     websocket.on('connection', incoming(boot));
 
     boot.set('websocket', websocket);
+    boot.set('express', express);
     boot.set('server', server);
     boot.set('port', port);
 

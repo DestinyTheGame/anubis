@@ -37,7 +37,7 @@ const config = {
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
-  target: 'electron-renderer',
+  target: 'web',
 };
 
 module.exports = config;
