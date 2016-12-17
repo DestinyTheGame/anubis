@@ -38,7 +38,12 @@ export default class Card extends Component {
     //
     const trials = data.activities.trials;
     const scoreCard = trials.extended.scoreCard;
-    const losses = (new Array(scoreCard.losses)).fill(true);
+
+    //
+    // Please note that when a mercy is applied the losses go to -1, creating an
+    // invalid array size.
+    //
+    const losses = (new Array(scoreCard.losses > 0 ? scoreCard.losses : 0)).fill(true);
     const wins = (new Array(scoreCard.maxWins)).fill(false).map((item, i) => {
       return i < scoreCard.wins;
     });
