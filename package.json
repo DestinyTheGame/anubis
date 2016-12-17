@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=development electron .",
     "dev": "concurrently -k 'node -r babel-register webpack.js' 'npm start'",
-    "build": "NODE_ENV=production webpack --config webpack.prod.babel.js && electron-packager . Anubis --platform=darwin --arch=all --prune --overwrite"
+    "build-darwin": "NODE_ENV=production webpack --config webpack.prod.babel.js && electron-packager . Anubis --platform=darwin --arch=all --prune --overwrite"
   },
   "keywords": [
     "trials",
@@ -31,6 +31,7 @@
     "electron-packager": "8.3.0",
     "electron-prebuilt": "1.4.10",
     "intl-messageformat": "1.3.0",
+    "portfinder": "1.0.10",
     "react": "15.4.1",
     "react-dom": "15.4.1",
     "svgs": "1.0.0",
