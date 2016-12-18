@@ -30,7 +30,7 @@ function incoming(boot) {
             //
             // This flow is completely async, so it could be that by the time we
             // got our data the connection was already closed. Hence this
-            // callback
+            // callback.
             //
           });
         });
