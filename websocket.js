@@ -20,7 +20,7 @@ function incoming(boot) {
 
     timers.setInterval('advisors', () => {
       destiny.go(() => {
-        const active = destiny.characters[0];
+        const active = destiny.characters.active();
 
         if (active) active.advisors((err, data) => {
           if (err) return client.send(JSON.stringify({
