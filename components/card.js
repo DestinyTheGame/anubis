@@ -86,8 +86,6 @@ export default class Card extends Component {
     const padding = 100;
     const props = this.props;
     const design = {
-      strokeWidth: props.border,
-      stroke: props.stroke,
       r: props.radius
     };
 
@@ -126,7 +124,6 @@ export default class Card extends Component {
 Card.propTypes = {
   background: PropTypes.string,
   unfilled: PropTypes.string,
-  stroke: PropTypes.string,
   loss: PropTypes.string,
   win: PropTypes.string,
 
@@ -154,7 +151,6 @@ Card.defaultProps = {
   loss: '#DC143C',
   win: '#FFD700',
   unfilled: '#757643',
-  stroke: '#000000',
   border: '3',
   radius: 40,
 
