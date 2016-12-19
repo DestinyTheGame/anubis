@@ -28,7 +28,7 @@
     "booting": "1.0.x",
     "bungie-auth": "0.0.x",
     "connected": "0.0.x",
-    "destiny-api": "1.1.x",
+    "destiny-api": "1.2.x",
     "electron-json-storage": "2.1.x",
     "electron-packager": "8.4.x",
     "electron-prebuilt": "1.4.x",

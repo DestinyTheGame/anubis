@@ -37,7 +37,7 @@ function incoming(boot) {
           });
         });
       });
-    }, 10000);
+    }, 5000);
 
     client.on('close', () => {
       timers.destroy();
