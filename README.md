@@ -18,6 +18,7 @@ Discord server!][discord]
 ## Table of Contents
 
 - [Installation](#installation)
+- [Documentation](/docs)
 - [Development](#development)
 - [Releasing](#releasing)
 - [Contributing](#contributing)
