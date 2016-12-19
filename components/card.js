@@ -148,7 +148,7 @@ Card.contextTypes = WebSockets.context;
  */
 Card.defaultProps = {
   background: '#00ff00',
-  loss: '#DC143C',
+  loss: '#CA1313',
   win: '#FFD700',
   unfilled: '#757643',
   border: '3',
