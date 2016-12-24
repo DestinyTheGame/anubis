@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Svg, { Circle, Rect, G } from 'svgs';
-import WebSockets from './websocket';
+import Svg, { Circle, G } from 'svgs';
+import WebSockets from '../websocket';
+import Trials from './trials';
 
 /**
  * Rendering of the Trials card.
@@ -13,11 +14,7 @@ export default class Card extends Component {
     super(...arguments);
 
     this.parser = this.parser.bind(this);
-    this.state = {
-      flawless: false,
-      losses: [],
-      wins: []
-    };
+    this.state = { trials: null };
   }
 
   /**
@@ -32,29 +29,8 @@ export default class Card extends Component {
     if (data.type !== 'advisors') return;
     if (!('trials' in data.activities)) return;
 
-    //
-    // Extract the required trials information from the activity. Things like
-    // wins on the card are stored on the extanded property.
-    //
-    const trials = data.activities.trials;
-    const scoreCard = trials.extended.scoreCard;
-    const mercy = scoreCard.losses === -1;
-
-    //
-    // Please note that when a mercy is applied the losses go to -1, creating an
-    // invalid array size.
-    //
-    const losses = (new Array(mercy ? 0 : scoreCard.losses)).fill(true);
-    const wins = (new Array(scoreCard.maxWins)).fill(false).map((item, i) => {
-      return i < scoreCard.wins;
-    });
-
     this.setState({
-      map: trials.display.flavor,
-      trials: trials,
-      losses: losses,
-      mercy: mercy,
-      wins: wins
+      trials: new Trials(data.activities.trials)
     });
   }
 
@@ -83,13 +59,19 @@ export default class Card extends Component {
    * @private
    */
   render() {
-    const padding = 100;
+    //
+    // We are still waiting for data at this point, so we can't really render.
+    //
+    if (!this.state.trials) return null;
+
+    const trials = this.state.trials;
     const props = this.props;
+    const padding = 100;
     const design = {
       r: props.radius
     };
 
-    const wins = this.state.wins.map((game, i) => {
+    const wins = trials.progress(true, true).map((game, i) => {
       const fill = game ? props.win : props.unfilled;
 
       return (
@@ -97,15 +79,16 @@ export default class Card extends Component {
       )
     });
 
-    const losses = this.state.losses.map((game, i) => {
+    const losses = trials.progress(true, false).map((game, i) => {
+      const fill = game ? props.loss : props.unfilled;
+
       return (
-        <circle key={ 'loss-'+ i} cy={ 50 + padding } cx={ 50 + (i * padding) } { ...design } fill={ props.loss } />
+        <circle key={ 'loss-'+ i} cy={ 50 + padding } cx={ 50 + (i * padding) } { ...design } fill={ fill } />
       )
     });
 
     return (
       <Svg width={ props.width } height={ props.height }>
-        <Rect fill={ props.background } width={ props.width } height={ props.height } />
         <G>
           { wins }
           { losses }
@@ -122,7 +105,6 @@ export default class Card extends Component {
  * @private
  */
 Card.propTypes = {
-  background: PropTypes.string,
   unfilled: PropTypes.string,
   loss: PropTypes.string,
   win: PropTypes.string,
@@ -147,7 +129,6 @@ Card.contextTypes = WebSockets.context;
  * @private
  */
 Card.defaultProps = {
-  background: '#00ff00',
   loss: '#CA1313',
   win: '#FFD700',
   unfilled: '#757643',

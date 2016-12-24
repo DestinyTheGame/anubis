@@ -34,7 +34,7 @@ export default function preboot(boot, next) {
       fresh: function fresh(err, payload) {
         if (err) return; // @TODO black hole error here. Basically, we're fucked.
 
-        set('refershToken', payload.refreshToken, function () {
+        set('refreshToken', payload.refreshToken, function () {
           set('accessToken', payload.accessToken, function () {
             // @TODO do some debug stuff.
           });
