@@ -4,8 +4,9 @@
   "description": "A lightweight trials companion for destiny the game.",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development electron .",
-    "dev": "concurrently -k 'node -r babel-register webpack.js' 'npm start'",
+    "start": "NODE_ENV=development DEBUG=bungie-auth* electron .",
+    "webpack": "node -r babel-register webpack.js",
+    "dev": "concurrently -k 'npm run webpack' 'npm start'",
     "prod": "NODE_ENV=production webpack --config webpack.prod.babel.js",
     "release": "npm run prod && electron-packager . Anubis --all --prune --overwrite --ignore builds --out builds"
   },
