@@ -45,14 +45,16 @@
     "xmlhttprequest": "1.8.x"
   },
   "devDependencies": {
+    "asar": "0.12.x",
     "concurrently": "3.1.x",
     "electron": "1.4.x",
     "electron-devtools-installer": "2.0.x",
     "electron-packager": "8.3.x",
+    "git-rev-sync": "1.8.0",
+    "webpack": "^2.1.0-beta.25",
     "webpack-dev-middleware": "^1.8.4",
     "webpack-dev-server": "^2.1.0-beta.10",
-    "webpack-hot-middleware": "^2.13.2",
-    "webpack": "^2.1.0-beta.25"
+    "webpack-hot-middleware": "^2.13.2"
   },
   "babel-ignore": false,
   "babel": {
