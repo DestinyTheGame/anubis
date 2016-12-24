@@ -19,7 +19,7 @@ export default function preboot(boot, next) {
     // authentication information for our application.
     //
     const bungie = new Bungie({
-      refershToken: config.refreshToken,
+      refreshToken: config.refreshToken,
       accessToken: config.accessToken,
       key: config.key,
       url: config.url,
