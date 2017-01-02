@@ -54,4 +54,22 @@ export default class Trials {
 
     return dots.fill(true).map((item, i) => i < this[wins ? 'wins' : 'losses']);
   }
+
+  /**
+   * A JSON export of the details.
+   *
+   * @returns {Object}
+   * @public
+   */
+  toJSON() {
+    return {
+      wins: this.wins,
+      losses: this.losses,
+      boons: {
+        mercy: this.boons.mercy,
+        favor: this.boons.favor,
+        boldness: this.boons.boldness
+      }
+    };
+  }
 }

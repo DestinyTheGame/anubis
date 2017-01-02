@@ -1,6 +1,7 @@
 import React, { Component, PropTypes, Children } from 'react';
 import EventEmitter from 'eventemitter3';
 import URL from 'url-parse';
+import yeast from 'yeast';
 
 /**
  * Provide access to a single but persistent WebSocket connection between the
@@ -16,10 +17,12 @@ export default class WebSockets extends Component {
     super(...arguments);
 
     this.broadcast = new EventEmitter();
+    this.rpcfn = {};
 
     //
     // Pre-bind the methods that get shared between all components.
     //
+    this.rpc = this.rpc.bind(this);
     this.send = this.send.bind(this);
     this.on = this.broadcast.addListener.bind(this.broadcast);
     this.off = this.broadcast.removeListener.bind(this.broadcast);
@@ -36,14 +39,34 @@ export default class WebSockets extends Component {
 
     this.websocket = new WebSocket(server);
 
+    //
+    // Broadcast our opening.
+    //
     this.websocket.onopen = () => {
       this.broadcast.emit('open');
     };
 
+    //
+    // Re-broadcast the parsed message if we are not dealing with RPC
+    // functionality.
+    //
     this.websocket.onmessage = (e) => {
-      this.broadcast.emit('message', JSON.parse(e.data));
+      let data;
+
+      try { data = JSON.parse(e.data); }
+      catch (err) { return this.broadcast.emit('error', err); }
+
+      if (data.type == 'rpc' && data.id in this.rpcfn) {
+        this.rpcfn[data.id](...data.args);
+        delete this.rpcfn[data.id];
+      } else {
+        this.broadcast.emit('message', data);
+      }
     };
 
+    //
+    // Broadcast our closing.
+    //
     this.websocket.onclose = () => {
       this.broadcast.emit('close');
     };
@@ -57,7 +80,8 @@ export default class WebSockets extends Component {
   componentWillUnmount() {
     if (!this.websocket) return;
 
-    this.websocket.close();
+    try { this.websocket.close(); }
+    catch (e) {}
   }
 
   /**
@@ -67,11 +91,30 @@ export default class WebSockets extends Component {
    * @public
    */
   send(payload) {
-    if (!this.websocket || this.websocket.readState !== WebSocket.OPEN) {
-      this.broadcast.once('open', this.send.bind(this, payload));
+    if (!this.websocket || this.websocket.readyState !== WebSocket.OPEN) {
+      return this.broadcast.once('open', this.send.bind(this, payload));
     }
 
     this.websocket.send(JSON.stringify(payload));
+  }
+
+  /**
+   * Send an RPC request to the server.
+   *
+   * @param {String} endpoint The RPC endpoint we want to hit.
+   * @param {Object} data Arguments for the RPC.
+   * @param {Function} fn Completion callback.
+   * @public
+   */
+  rpc(endpoint, data, fn) {
+    if ('function' === typeof data) {
+      fn = data;
+      data = null;
+    }
+
+    const id = yeast();
+    this.rpcfn[id] = fn;
+    this.send({ type: 'rpc', endpoint: endpoint, id: id, data: data });
   }
 
   /**
@@ -83,6 +126,7 @@ export default class WebSockets extends Component {
   getChildContext() {
     return {
       send: this.send,
+      rpc: this.rpc,
       off: this.off,
       on: this.on
     };
@@ -108,6 +152,7 @@ export default class WebSockets extends Component {
 WebSockets.context = {
   send: PropTypes.func,
   off: PropTypes.func,
+  rpc: PropTypes.func,
   on: PropTypes.func
 };
 

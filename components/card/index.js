@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Svg, { Circle, G } from 'svgs';
 import WebSockets from '../websocket';
+import StaleState from 'stale-state';
 import Trials from './trials';
 
 /**
@@ -12,6 +13,10 @@ import Trials from './trials';
 export default class Card extends Component {
   constructor () {
     super(...arguments);
+
+    this.stale = new StaleState({
+      interval: '10 second'
+    });
 
     this.parser = this.parser.bind(this);
     this.state = { trials: null };
@@ -29,9 +34,7 @@ export default class Card extends Component {
     if (data.type !== 'advisors') return;
     if (!('trials' in data.activities)) return;
 
-    this.setState({
-      trials: new Trials(data.activities.trials)
-    });
+    return new Trials(data.activities.trials);
   }
 
   /**
@@ -40,7 +43,52 @@ export default class Card extends Component {
    * @private
    */
   componentDidMount() {
-    this.context.on('message', this.parser);
+    //
+    // We've received changes that are accepted so update the card.
+    //
+    this.stale.commit((data) => {
+      this.setState({ trials: data });
+    });
+
+    //
+    // Check if the newly received state is better than the previous one. We
+    // need to consider:
+    //
+    // - Deletion of a trials card.
+    // - Stale or duplicate response.
+    // - Possible character changes.
+    //
+    this.stale.check((previous, data, state) => {
+      if (!previous) return state.accept();
+      if (JSON.stringify(previous) === JSON.stringify(data)) return state.same();
+
+      //
+      // Valid cases for a card change due to a win or loss.
+      //
+      if (
+           (data.wins > previous.wins)
+        || (data.losses > previous.losses)
+        || (!data.mercy && previous.mercy)
+      ) return state.accept();
+
+      state.decline();
+    });
+
+    //
+    // Make a new request for the latest data.
+    //
+    this.stale.request((next) => {
+      this.context.rpc('destiny.active.advisors', (err, data) => {
+        if (err) return next(err);
+
+        next(undefined, this.parser(data));
+      });
+    });
+
+    //
+    // Retrieve initial set of data.
+    //
+    this.stale.fetch();
   }
 
   /**
@@ -49,7 +97,7 @@ export default class Card extends Component {
    * @private
    */
   componentWillUnmount() {
-    this.context.off('message', this.parser);
+    this.timer.destroy();
   }
 
   /**

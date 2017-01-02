@@ -38,14 +38,17 @@
     "portfinder": "1.0.x",
     "react": "15.4.x",
     "react-dom": "15.4.x",
+    "stale-state": "1.1.x",
     "svgs": "1.0.x",
     "tick-tock": "1.0.x",
     "tmi.js": "1.1.x",
     "ws": "1.1.x",
-    "xmlhttprequest": "1.8.x"
+    "xmlhttprequest": "1.8.x",
+    "yeast": "0.1.x"
   },
   "devDependencies": {
     "asar": "~0.12.4",
+    "babel-register": "6.18.x",
     "concurrently": "3.1.x",
     "electron": "1.4.x",
     "electron-devtools-installer": "2.0.x",
