@@ -34,7 +34,7 @@ export default function preboot(boot, next) {
     websocket.on('connection', incoming(boot));
 
     boot.set('websocket', websocket);
-    boot.set('express', express);
+    boot.set('express', app);
     boot.set('server', server);
     boot.set('port', port);
 
