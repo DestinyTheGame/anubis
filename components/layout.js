@@ -12,6 +12,7 @@ export default class Layout extends Component {
     return (
       <div>
         <div className="menu">
+          <Link to="/guardian" activeClassName="active" className="item">Guardian.gg</Link>
           <Link to="/twitch" activeClassName="active" className="item">Twitch chat</Link>
           <Link to="/bot" activeClassName="active" className="item">Anubis bot</Link>
           <Link to="/duma" activeClassName="active" className="item">NetDuma</Link>

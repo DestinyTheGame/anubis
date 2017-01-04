@@ -1,4 +1,4 @@
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRedirect, hashHistory } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 import { render } from 'react-dom';
 
@@ -10,6 +10,7 @@ import {
   Layout,       // Default application layout.
   Twitch,       // Twitch chat integration.
   NotFound,     // Something went horribly wrong.
+  Guardian,     // Guardian.gg lookups
   Dashboard,    // Default rendering of the dashboard.
   WebSocket     // Provides connectivity context.
 } from './components';
@@ -61,7 +62,11 @@ class Application extends Component {
       <WebSocket>
         <Router history={ hashHistory }>
           <Route path="/" component={ Layout }>
-            <IndexRoute component={ Dashboard } />
+            <IndexRedirect to="/guardian" />
+
+            <Route path="guardian" component={ Guardian }>
+              <Route path="settings" component={ Guardian.Settings }/>
+            </Route>
 
             <Route path="twitch" component={ Twitch }>
               <Route path="settings" component={ Twitch.Settings }/>

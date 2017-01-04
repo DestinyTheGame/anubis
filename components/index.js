@@ -1,5 +1,6 @@
 import WebSocket from './websocket';
 import Dashboard from './dashboard';
+import Guardian from './guardian';
 import NotFound from './notfound';
 import Wizzard from './wizzard';
 import Layout from './layout';
@@ -13,6 +14,7 @@ import Card from './card';
 export {
   WebSocket,
   Dashboard,
+  Guardian,
   NotFound,
   Wizzard,
   Layout,
