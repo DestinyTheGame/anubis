@@ -38,6 +38,7 @@
     "portfinder": "1.0.x",
     "react": "15.4.x",
     "react-dom": "15.4.x",
+    "react-router": "3.0.0",
     "stale-state": "1.1.x",
     "svgs": "1.0.x",
     "tick-tock": "1.0.x",
