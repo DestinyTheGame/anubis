@@ -10,8 +10,8 @@ import { Link } from 'react-router';
 export default class Layout extends Component {
   render() {
     return (
-      <div>
-        <div className="menu">
+      <div className="grid row gutters">
+        <div className="menu box twentyfive">
           <Link to="/guardian" activeClassName="active" className="item">Guardian.gg</Link>
           <Link to="/twitch" activeClassName="active" className="item">Twitch chat</Link>
           <Link to="/bot" activeClassName="active" className="item">Anubis bot</Link>

@@ -10,7 +10,8 @@ export default class NotFound extends Component {
   render() {
     return (
       <div>
-        Not Found, you some how reached a page that wasnt found.
+        The development of this view has not started yet. If you are interested in
+        contributing to this app, give us a nudge at github.com/destinythegame/anubis
       </div>
     );
   }

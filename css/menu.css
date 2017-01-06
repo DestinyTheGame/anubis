@@ -1,0 +1,14 @@
+.menu {
+  background: #2b2d39;
+  font-family: 'Arial';
+}
+
+.menu .item {
+  color: #FFF;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  height: 55px;
+  line-height: 55px;
+}
