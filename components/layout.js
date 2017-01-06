@@ -19,7 +19,7 @@ export default class Layout extends Component {
           <Link to="/loadout" activeClassName="active" className="item">Loadout</Link>
           <Link to="/vault" activeClassName="active" className="item">Vault</Link>
         </div>
-        <div className="content">
+        <div className="box">
           { this.props.children }
         </div>
       </div>

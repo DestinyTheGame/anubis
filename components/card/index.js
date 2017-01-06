@@ -142,7 +142,7 @@ export default class Card extends Component {
           { losses }
         </G>
       </Svg>
-    )
+    );
   }
 }
 

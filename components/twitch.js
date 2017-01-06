@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Card from './card';
 
 /**
  * Twitch.
@@ -9,8 +10,13 @@ import React, { Component, PropTypes } from 'react';
 export default class Twitch extends Component {
   render() {
     return (
-      <div>
-        Twitch.
+      <div className="grid">
+        <div className="box">
+          Twitch.tv chat box ui.
+        </div>
+        <div className="box thirty">
+          <Card />
+        </div>
       </div>
     );
   }
