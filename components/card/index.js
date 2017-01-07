@@ -136,7 +136,7 @@ export default class Card extends Component {
     });
 
     return (
-      <Svg width={ props.width } height={ props.height }>
+      <Svg width={ props.width } height={ props.height } { ...this.props }>
         <G>
           { wins }
           { losses }

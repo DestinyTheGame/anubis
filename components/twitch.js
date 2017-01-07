@@ -15,7 +15,9 @@ export default class Twitch extends Component {
           Twitch.tv chat box ui.
         </div>
         <div className="box thirty">
-          <Card />
+          <div className="trials-card">
+            <Card />
+          </div>
         </div>
       </div>
     );
