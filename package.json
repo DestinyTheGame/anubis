@@ -30,7 +30,7 @@
     "bungie-auth": "0.0.x",
     "connected": "0.0.x",
     "destiny-api": "1.2.x",
-    "electron-json-storage": "2.1.x",
+    "electron-json-storage": "~3.0.0",
     "electron-packager": "8.4.x",
     "electron-prebuilt": "1.4.x",
     "express": "4.14.x",
