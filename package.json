@@ -48,7 +48,7 @@
     "yeast": "0.1.x"
   },
   "devDependencies": {
-    "asar": "~0.12.4",
+    "asar": "~0.13.0",
     "babel-register": "6.18.x",
     "concurrently": "3.1.x",
     "electron": "1.4.x",
