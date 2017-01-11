@@ -53,7 +53,7 @@
     "concurrently": "3.1.x",
     "electron": "1.4.x",
     "electron-devtools-installer": "2.0.x",
-    "electron-packager": "~8.4.0",
+    "electron-packager": "~8.5.0",
     "git-rev-sync": "1.8.0",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-middleware": "^1.8.4",
