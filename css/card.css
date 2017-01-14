@@ -1,0 +1,29 @@
+.trials {}
+.card {}
+
+.card .wins,
+.card .losses {
+  margin-bottom: 5px;
+}
+
+.dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 20px;
+  position: relative;
+  vertical-align: top;
+  margin-right: 5px;
+  width: 20px;
+}
+
+.dot.won {
+  background-color: #FFD700
+}
+
+.dot.lost {
+  background-color: #CA1313
+}
+
+.dot.unfilled {
+  background-color: #757643
+}
