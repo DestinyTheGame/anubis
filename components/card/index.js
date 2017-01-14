@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Svg, { Circle, G } from 'svgs';
 import WebSockets from '../websocket';
 import StaleState from 'stale-state';
 import Trials from './trials';
@@ -114,34 +113,34 @@ export default class Card extends Component {
 
     const trials = this.state.trials;
     const props = this.props;
-    const padding = 100;
-    const design = {
-      r: props.radius
-    };
 
     const wins = trials.progress(true, true).map((game, i) => {
-      const fill = game ? props.win : props.unfilled;
+      const className = [game ? props.win : props.unfilled, 'dot', 'win'].join(' ');
 
       return (
-        <circle key={ 'win-'+ i } cy={ 50 } cx={ 50 + (i * padding) } { ...design } fill={ fill } />
-      )
+        <div className={ className } key={ 'win-'+ i } />
+      );
     });
 
     const losses = trials.progress(true, false).map((game, i) => {
-      const fill = game ? props.loss : props.unfilled;
+      const className = [game ? props.loss : props.unfilled, 'dot', 'loss'].join(' ');
 
       return (
-        <circle key={ 'loss-'+ i} cy={ 50 + padding } cx={ 50 + (i * padding) } { ...design } fill={ fill } />
-      )
+        <div className={ className } key={ 'loss-'+ i } />
+      );
     });
 
     return (
-      <Svg width={ props.width } height={ props.height } { ...this.props }>
-        <G>
-          { wins }
-          { losses }
-        </G>
-      </Svg>
+      <div className="trials">
+        <div className="card">
+          <div className="wins">
+            { wins }
+          </div>
+          <div className="losses">
+            { losses }
+          </div>
+        </div>
+      </div>
     );
   }
 }
@@ -155,11 +154,7 @@ export default class Card extends Component {
 Card.propTypes = {
   unfilled: PropTypes.string,
   loss: PropTypes.string,
-  win: PropTypes.string,
-
-  height: PropTypes.number,
-  width: PropTypes.number,
-  radius: PropTypes.number
+  win: PropTypes.string
 };
 
 /**
@@ -177,12 +172,7 @@ Card.contextTypes = WebSockets.context;
  * @private
  */
 Card.defaultProps = {
-  loss: '#CA1313',
-  win: '#FFD700',
-  unfilled: '#757643',
-  border: '3',
-  radius: 40,
-
-  width: 900,
-  height: 250
+  unfilled: 'unfilled',
+  loss: 'lost',
+  win: 'won'
 };
