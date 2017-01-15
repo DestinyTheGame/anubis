@@ -117,7 +117,11 @@ export default class Card extends Component {
     //
     // We are still waiting for data at this point, so we can't really render.
     //
-    if (!this.state.trials) return null;
+    if (!this.state.trials) return (
+      <div className="trials loading">
+        { this.props.children }
+      </div>
+    );
 
     const trials = this.state.trials;
     const losses = [];

@@ -19,6 +19,10 @@
   height: 95px;
 }
 
+.trials-card .trials.loading {
+  text-align: center;
+}
+
 .trials-card .dot.unfilled {
   background: #51535e;
 }

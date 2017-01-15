@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Loading from 'halogen/ClipLoader';
 import Guardian from './guardian';
 import Card from './card';
 
@@ -17,7 +18,9 @@ export default class Sidebar extends Component {
         </div>
 
         <div className="trials-card">
-          <Card />
+          <Card>
+            <Loading color='#51535e' />
+          </Card>
         </div>
       </div>
     );
