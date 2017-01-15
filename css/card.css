@@ -15,6 +15,10 @@
   width: 25px;
 }
 
+.dot:last-child {
+  margin-right: 0
+}
+
 .dot.won {
   background-color: #FFD700
 }

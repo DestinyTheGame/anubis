@@ -124,13 +124,20 @@ export default class Card extends Component {
     );
 
     const trials = this.state.trials;
+    const boon = trials.boons;
+    const props = this.props;
     const losses = [];
     const boons = [];
     const wins = [];
 
-
     trials.won().forEach(this.dot(wins, 'win'));
     trials.loss().forEach(this.dot(losses, 'loss'));
+
+    if (props.boons) {
+      boons.push(<div key='mercy' className={['dot', 'mercy', trials.mercy ? 'active' : props.unfilled].join(' ') } />);
+      boons.push(<div key='favor' className={ ['dot', 'favor', boon.favor ? 'active' : props.unfilled].join(' ') } />);
+      boons.push(<div key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'active' : props.unfilled].join(' ') } />);
+    }
 
     return (
       <div className="trials">
