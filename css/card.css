@@ -1,19 +1,18 @@
 .trials {}
 .card {}
 
-.card .wins,
-.card .losses {
-  margin-bottom: 5px;
+.card .wins {
+  margin-bottom: 10px;
 }
 
 .dot {
   border-radius: 50%;
   display: inline-block;
-  height: 20px;
+  height: 25px;
   position: relative;
   vertical-align: top;
-  margin-right: 5px;
-  width: 20px;
+  margin-right: 10px;
+  width: 25px;
 }
 
 .dot.won {

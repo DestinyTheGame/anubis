@@ -11,10 +11,10 @@ export default class Twitch extends Component {
   render() {
     return (
       <div className="grid">
-        <div className="box">
+        <div className="box main">
           Twitch.tv chat box ui.
         </div>
-        <div className="box thirty">
+        <div className="box thirty sidebar">
           <div className="trials-card">
             <Card />
           </div>
