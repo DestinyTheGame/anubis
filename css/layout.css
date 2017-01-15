@@ -1,22 +1,26 @@
-.trials-card {
-  background: #2b2d39;
-  border-top: 1px solid #a1adc3;
-  position: absolute;
-  padding: 20px;
-  width: 100%;
-  bottom: 0;
-}
-
-.trials-card .dot.unfilled {
-  background: #51535e;
-}
-
 .sidebar {
   min-height: 100vh;
   background: #FFFFFF;
   border-left: 1px solid #a1adc3;
   outline: 5px solid #d2d5da;
-  min-width: 350px;
+  min-width: 320px;
+}
+
+.sidebar .details {
+  min-height: 100%;
+  margin-bottom: -95px;
+}
+
+.sidebar .trials-card {
+  background: #2b2d39;
+  border-top: 1px solid #a1adc3;
+  padding: 20px;
+  width: auto;
+  height: 95px;
+}
+
+.trials-card .dot.unfilled {
+  background: #51535e;
 }
 
 .main {

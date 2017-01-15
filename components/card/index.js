@@ -91,15 +91,6 @@ export default class Card extends Component {
   }
 
   /**
-   * Remove our message interception.
-   *
-   * @private
-   */
-  componentWillUnmount() {
-    this.timer.destroy();
-  }
-
-  /**
    * Generate the dots for the trials card.
    *
    * @param {Array} data Array where the dots need to be added.

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Card from './card';
+import Sidebar from './sidebar';
 
 /**
  * Twitch.
@@ -14,11 +14,8 @@ export default class Twitch extends Component {
         <div className="box main">
           Twitch.tv chat box ui.
         </div>
-        <div className="box thirty sidebar">
-          <div className="trials-card">
-            <Card />
-          </div>
-        </div>
+
+        <Sidebar />
       </div>
     );
   }
