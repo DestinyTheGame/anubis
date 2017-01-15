@@ -62,7 +62,7 @@ class Application extends Component {
       <WebSocket>
         <Router history={ hashHistory }>
           <Route path="/" component={ Layout }>
-            <IndexRedirect to="/guardian" />
+            <IndexRedirect to="twitch" />
 
             <Route path="guardian" component={ Guardian }>
               <Route path="settings" component={ Guardian.Settings }/>
