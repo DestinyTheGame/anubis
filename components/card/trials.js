@@ -41,7 +41,7 @@ export default class Trials {
    * @param {Boolean} unfilled Show unfilled dots.
    * @param {Boolean} wins Return win progress instead of loss
    * @returns {Array} Card progress.
-   * @public
+   * @private
    */
   progress(unfilled, wins) {
     //
@@ -53,6 +53,26 @@ export default class Trials {
     : new Array(unfilled ? this.max.loss : this.losses > 0 ? this.losses : 0);
 
     return dots.fill(true).map((item, i) => i < this[wins ? 'wins' : 'losses']);
+  }
+
+  /**
+   * Get all won rounds.
+   *
+   * @returns {Array} Wins on the card.
+   * @public
+   */
+  won() {
+    return this.progress(true, true);
+  }
+
+  /**
+   * Get all loss rounds.
+   *
+   * @returns {Array} Loss on the card.
+   * @public
+   */
+  loss() {
+    return this.progress(true, false);
   }
 
   /**

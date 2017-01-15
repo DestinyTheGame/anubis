@@ -100,6 +100,23 @@ export default class Card extends Component {
   }
 
   /**
+   * Generate the dots for the trials card.
+   *
+   * @param {Array} data Array where the dots need to be added.
+   * @param {String} prop Name of the property.
+   * @private
+   */
+  dot(data, prop) {
+    const props = this.props;
+
+    return (game, i) => {
+      const className = [game ? props[prop] : props.unfilled, 'dot', prop].join(' ');
+
+      data.push(<div className={ className } key={ prop +'-'+ i } />);
+    };
+  }
+
+  /**
    * Render the trials card.
    *
    * @returns {Component}
@@ -112,23 +129,13 @@ export default class Card extends Component {
     if (!this.state.trials) return null;
 
     const trials = this.state.trials;
-    const props = this.props;
+    const losses = [];
+    const boons = [];
+    const wins = [];
 
-    const wins = trials.progress(true, true).map((game, i) => {
-      const className = [game ? props.win : props.unfilled, 'dot', 'win'].join(' ');
 
-      return (
-        <div className={ className } key={ 'win-'+ i } />
-      );
-    });
-
-    const losses = trials.progress(true, false).map((game, i) => {
-      const className = [game ? props.loss : props.unfilled, 'dot', 'loss'].join(' ');
-
-      return (
-        <div className={ className } key={ 'loss-'+ i } />
-      );
-    });
+    trials.won().forEach(this.dot(wins, 'win'));
+    trials.loss().forEach(this.dot(losses, 'loss'));
 
     return (
       <div className="trials">
@@ -138,6 +145,9 @@ export default class Card extends Component {
           </div>
           <div className="losses">
             { losses }
+          </div>
+          <div className="boons">
+            { boons }
           </div>
         </div>
       </div>
@@ -173,6 +183,7 @@ Card.contextTypes = WebSockets.context;
  */
 Card.defaultProps = {
   unfilled: 'unfilled',
+  boon: 'boon',
   loss: 'lost',
   win: 'won'
 };
