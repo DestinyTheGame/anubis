@@ -134,9 +134,10 @@ export default class Card extends Component {
     trials.loss().forEach(this.dot(losses, 'loss'));
 
     if (props.boons) {
-      boons.push(<div key='mercy' className={['dot', 'mercy', trials.mercy ? 'active' : props.unfilled].join(' ') } />);
-      boons.push(<div key='favor' className={ ['dot', 'favor', boon.favor ? 'active' : props.unfilled].join(' ') } />);
-      boons.push(<div key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'active' : props.unfilled].join(' ') } />);
+      const mercy = boon.mercy ? (trials.mercy ? 'boon' : props.loss) : props.unfilled;
+      boons.push(<div key='mercy' className={['dot', 'mercy', mercy].join(' ') } />);
+      boons.push(<div key='favor' className={ ['dot', 'favor', boon.favor ? 'boon' : props.unfilled].join(' ') } />);
+      boons.push(<div key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'boon' : props.unfilled].join(' ') } />);
     }
 
     return (
@@ -145,11 +146,13 @@ export default class Card extends Component {
           <div className="wins">
             { wins }
           </div>
-          <div className="losses">
-            { losses }
-          </div>
-          <div className="boons">
-            { boons }
+          <div className="optional">
+            <div className="losses">
+              { losses }
+            </div>
+            <div className="boons">
+              { boons }
+            </div>
           </div>
         </div>
       </div>
