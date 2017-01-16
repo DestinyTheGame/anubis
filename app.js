@@ -6,13 +6,13 @@ import { render } from 'react-dom';
 // The various of components that we use to render our application.
 //
 import {
-  Card,         // Used for overlay.
   Layout,       // Default application layout.
   Twitch,       // Twitch chat integration.
+  Overlay,      // Default layout for when need to show overlay.
   NotFound,     // Something went horribly wrong.
   Guardian,     // Guardian.gg lookups
   Dashboard,    // Default rendering of the dashboard.
-  WebSocket     // Provides connectivity context.
+  WebSocket,    // Provides connectivity context.
 } from './components';
 
 /**
@@ -35,28 +35,17 @@ class Application extends Component {
   }
 
   /**
-   * Render a dedicated stream overlay which is completely different from our
-   * default application interface.
-   *
-   * @returns {Component}
-   * @private
-   */
-  overlay() {
-    return (
-      <WebSocket>
-        <Card />
-      </WebSocket>
-    );
-  }
-
-  /**
    * Render the UI elements.
    *
    * @returns {Component}
    * @private
    */
   render() {
-    if (this.streaming) return this.overlay();
+    if (this.streaming) return (
+      <WebSocket>
+        <Overlay />
+      </WebSocket>
+    );
 
     return (
       <WebSocket>

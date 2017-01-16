@@ -1,5 +1,6 @@
-.trials {}
-.card {}
+.trials {
+  width: 309px;
+}
 
 .card .wins {
   margin-bottom: 10px;
