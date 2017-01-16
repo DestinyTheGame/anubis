@@ -3,6 +3,7 @@
   background: #FFFFFF;
   border-left: 1px solid #a1adc3;
   outline: 5px solid #d2d5da;
+  min-width: 350px;
 }
 
 .sidebar .details {
