@@ -18,7 +18,7 @@ export default class Sidebar extends Component {
         </div>
 
         <div className="trials-card">
-          <Card boons={ true }>
+          <Card mercy={ true } boldness={ true } favor={ true }>
             <Loading color='#51535e' />
           </Card>
         </div>

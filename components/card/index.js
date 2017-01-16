@@ -130,14 +130,23 @@ export default class Card extends Component {
     const boons = [];
     const wins = [];
 
+    //
+    // Generate the normal dots.
+    //
     trials.won().forEach(this.dot(wins, 'win'));
     trials.loss().forEach(this.dot(losses, 'loss'));
 
-    if (props.boons) {
+    if (props.mercy) {
       const mercy = boon.mercy ? (trials.mercy ? 'boon' : props.loss) : props.unfilled;
-      boons.push(<div key='mercy' className={['dot', 'mercy', mercy].join(' ') } />);
-      boons.push(<div key='favor' className={ ['dot', 'favor', boon.favor ? 'boon' : props.unfilled].join(' ') } />);
-      boons.push(<div key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'boon' : props.unfilled].join(' ') } />);
+      boons.push(<div title="mercy" key='mercy' className={['dot', 'mercy', mercy].join(' ') } />);
+    }
+
+    if (props.favor) {
+      boons.push(<div title="favor" key='favor' className={ ['dot', 'favor', boon.favor ? 'boon' : props.unfilled].join(' ') } />);
+    }
+
+    if (props.boldness) {
+      boons.push(<div title="boldness" key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'boon' : props.unfilled].join(' ') } />);
     }
 
     return (
