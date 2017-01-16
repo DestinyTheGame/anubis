@@ -123,6 +123,7 @@ export default class Card extends Component {
       </div>
     );
 
+    const inline = this.props.inline ? ' inline' : '';
     const trials = this.state.trials;
     const boon = trials.boons;
     const props = this.props;
@@ -150,7 +151,7 @@ export default class Card extends Component {
     }
 
     return (
-      <div className='trials'>
+      <div className={ 'trials' + inline }>
         <div className='card'>
           <div className='wins'>
             { wins }
