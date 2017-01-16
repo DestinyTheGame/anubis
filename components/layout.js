@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, hashHistory } from 'react-router';
+import URL from 'url-parse';
 
 /**
  * Layout.
@@ -9,21 +10,47 @@ import { Link } from 'react-router';
  */
 export default class Layout extends Component {
   render() {
+    const url = new URL(location.href, true);
+    const overlay = new URL(url.query.server);
+
+    overlay.set('protocol', 'http');
+
     return (
       <div className="grid row">
         <div className="menu box twentyfive">
-          <Link to="/guardian" activeClassName="active" className="item">Guardian.gg</Link>
-          <Link to="/twitch" activeClassName="active" className="item">Twitch chat</Link>
-          <Link to="/bot" activeClassName="active" className="item">Anubis bot</Link>
-          <Link to="/duma" activeClassName="active" className="item">NetDuma</Link>
-          <Link to="/loadout" activeClassName="active" className="item">Loadout</Link>
-          <Link to="/vault" activeClassName="active" className="item">Vault</Link>
+          <Link to="/guardian" activeClassName="active" className="item">
+            Guardian.gg
+          </Link>
+          <Link to="/twitch" activeClassName="active" className="item">
+            Twitch chat
+          </Link>
+          <Link to="/bot" activeClassName="active" className="item">
+            Anubis bot
+          </Link>
+          <Link to="/duma" activeClassName="active" className="item">
+            NetDuma
+          </Link>
+          <Link to="/loadout" activeClassName="active" className="item">
+            Loadout
+          </Link>
+          <Link to="/vault" activeClassName="active" className="item">
+            Vault
+          </Link>
 
           <div className="bottom">
-            <Link to="/help" activeClassName="active" className="settings">Help</Link>
-            <Link to="/overlay" activeClassName="active" className="settings">Overlay</Link>
-            <Link to="/settings" activeClassName="active" className="settings">Settings</Link>
-            <Link to="/logout" activeClassName="active" className="settings">logout</Link>
+            <a href="https://discord.gg/kXn2NmQ" className="settings" target="_blank">
+              Help
+            </a>
+            <a href={ overlay.href } className="settings" target="_blank">
+              Overlay
+            </a>
+
+            <Link to="/settings" activeClassName="active" className="settings">
+              Settings
+            </Link>
+            <Link to="/logout" activeClassName="active" className="settings">
+              Logout
+            </Link>
           </div>
         </div>
         <div className="box">

@@ -1,4 +1,4 @@
-import electron, { app, BrowserWindow } from 'electron';
+import electron, { app, BrowserWindow, shell } from 'electron';
 import { gets } from './storage';
 import path from 'path';
 import url from 'url';
@@ -35,6 +35,19 @@ function create(boot) {
       protocol: 'file:',
       slashes: true
     }));
+
+    //
+    // General redirect handler.
+    //
+    const handleRedirect = (e, url) => {
+      if (url !== anubis.webContents.getURL()) {
+        e.preventDefault();
+        shell.openExternal(url);
+      }
+    };
+
+    anubis.webContents.on('will-navigate', handleRedirect);
+    anubis.webContents.on('new-window', handleRedirect);
   });
 }
 
