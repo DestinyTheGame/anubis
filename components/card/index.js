@@ -98,12 +98,30 @@ export default class Card extends Component {
    * @private
    */
   dot(data, prop) {
-    const props = this.props;
+    const names = Card.classNames;
+    const click = this.props.onClick;
 
     return (game, i) => {
-      const className = [game ? props[prop] : props.unfilled, 'dot', prop].join(' ');
+      const className = [game ? names[prop] : names.unfilled, 'dot', prop].join(' ');
 
-      data.push(<div className={ className } key={ prop +'-'+ i } />);
+      /**
+       * onClick handler so we can start supporting manual mode.
+       *
+       * @param {Event} e DOM Event
+       * @private
+       */
+      const onClick = (e) => {
+        e.preventDefault();
+        click(prop, i);
+      };
+
+      data.push(
+        <div
+          onClick={ click ? onClick : undefined }
+          className={ className }
+          key={ prop +'-'+ i }
+        />
+      );
     };
   }
 
@@ -114,16 +132,18 @@ export default class Card extends Component {
    * @private
    */
   render() {
+    const inline = this.props.inline ? ' inline' : '';
+
     //
     // We are still waiting for data at this point, so we can't really render.
     //
     if (!this.state.trials) return (
-      <div className="trials loading">
+      <div className={ 'trials loading' + inline }>
         { this.props.children }
       </div>
     );
 
-    const inline = this.props.inline ? ' inline' : '';
+    const classNames = Card.classNames;
     const trials = this.state.trials;
     const boon = trials.boons;
     const props = this.props;
@@ -138,16 +158,16 @@ export default class Card extends Component {
     if (!props.losses) trials.loss().forEach(this.dot(losses, 'loss'));
 
     if (props.mercy) {
-      const mercy = boon.mercy ? (trials.mercy ? 'boon' : props.loss) : props.unfilled;
+      const mercy = boon.mercy ? (trials.mercy ? 'boon' : classNames.loss) : classNames.unfilled;
       boons.push(<div title='mercy' key='mercy' className={['dot', 'mercy', mercy].join(' ') } />);
     }
 
     if (props.favor) {
-      boons.push(<div title='favor' key='favor' className={ ['dot', 'favor', boon.favor ? 'boon' : props.unfilled].join(' ') } />);
+      boons.push(<div title='favor' key='favor' className={ ['dot', 'favor', boon.favor ? 'boon' : classNames.unfilled].join(' ') } />);
     }
 
     if (props.boldness) {
-      boons.push(<div title='boldness' key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'boon' : props.unfilled].join(' ') } />);
+      boons.push(<div title='boldness' key='boldness' className={ ['dot', 'boldness', boon.boldness ? 'boon' : classNames.unfilled].join(' ') } />);
     }
 
     return (
@@ -171,15 +191,33 @@ export default class Card extends Component {
 }
 
 /**
- * PropType validation for the trials card.
+ * The classNames for the dots.
+ *
+ * @type {Object}
+ * @private
+ */
+Card.classNames = {
+  unfilled: 'unfilled',
+  boon: 'boon',
+  loss: 'lost',
+  win: 'won'
+};
+
+/**
+ * PropTypes validation for the trials card.
  *
  * @type {Object}
  * @private
  */
 Card.propTypes = {
-  unfilled: PropTypes.string,
-  loss: PropTypes.string,
-  win: PropTypes.string
+  inline: PropTypes.bool,
+  children: PropTypes.node,
+  losses: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
+  wins: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
+  mercy: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
+  favor: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
+  boldness: PropTypes.oneOfType([ PropTypes.string, PropTypes.bool ]),
+  onClick: PropTypes.func
 };
 
 /**
@@ -189,16 +227,3 @@ Card.propTypes = {
  * @private
  */
 Card.contextTypes = WebSockets.context;
-
-/**
- * Default Properties for the trials card.
- *
- * @type {Object}
- * @private
- */
-Card.defaultProps = {
-  unfilled: 'unfilled',
-  boon: 'boon',
-  loss: 'lost',
-  win: 'won'
-};
