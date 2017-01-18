@@ -8,8 +8,31 @@
   <body>
     <div class="app-base">
       <div id="root">
-        This is a place holder for a loading message. Because you're waiting for
-        stuff to load.
+        <div class="bootscreen">
+          <h1>Anubis</h1>
+          <h2>The Destiny Trials Companion</h2>
+
+          <div class="versioning">
+            <dl>
+              <script>
+                (function versioning() {
+                  var data = require('./package.json');
+                  document.write('<dt>Version:</dt> <dd>'+ data.version +'</dd>');
+                })();
+              </script>
+            </dl>
+            <dl>
+              <dt>Author:</dt>
+              <dd>Arnout Kazemier</dd>
+            </dl>
+            <dl>
+              <dt>PSN:</dt>
+              <dd>UVXlll</dd>
+            </dl>
+          </div>
+
+          <div class="screenshot"></div>
+        </div>
       </div>
     </div>
     <script>

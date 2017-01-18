@@ -1,0 +1,45 @@
+.bootscreen {
+  background: #2b2d39;
+  font-family: 'Arial';
+  min-height: 100vh;
+  color: #7e829b;
+  padding: 25px;
+}
+
+.bootscreen h2 {
+  font-size: 16px;
+  color: #ffc600;
+  font-weight: normal;
+}
+
+.bootscreen h1 {
+  font-size: 60px;
+  text-transform: uppercase;
+  color: #FFF;
+  line-height: 10px;
+  font-weight: normal;
+}
+
+.versioning {
+  margin-top: 100px;
+}
+
+.versioning dt {
+  font-weight: bold;
+  display: inline-block;
+  width: 60px;
+}
+.versioning dd {
+  display: inline-block
+}
+
+.screenshot {
+  background: url(https://www.bungie.net/img/theme/destiny/bgs/pgcrs/crucible_the_anomaly.jpg);
+  background-size: cover;
+  background-position: 50% 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 310px;
+  top: 0;
+}

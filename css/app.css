@@ -3,6 +3,11 @@
 @import './card.css';
 
 /*/
+ * Bootscreen: The CSS that is required for our initial bootup process.
+/*/
+@import './bootscreen.css';
+
+/*/
  * Application UI should be last so it can override CSS styling that might be
  * re-used in the overlay UI.
 /*/
