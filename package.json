@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "asar": "~0.12.4",
-    "babel-register": "6.18.x",
+    "babel-register": "~6.22.0",
     "concurrently": "3.1.x",
     "electron": "1.4.x",
     "electron-devtools-installer": "2.0.x",
