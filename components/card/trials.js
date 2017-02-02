@@ -4,18 +4,24 @@
  *
  * @constructor
  * @param {Object} trials Trials activity.
+ * @param {Object} boons Which boons should we fake.
  * @public
  */
 export default class Trials {
-  constructor(trials) {
+  constructor(trials, boons = {}) {
     const progress = trials.extended.scoreCard;
     const card = progress.ticketItem || {};
     const nodes = card.nodes;
 
     this.boons = {
-      mercy: nodes ? nodes[0].isActivated : false,    // nodeHash: 0
-      favor: nodes ? nodes[1].isActivated : false,    // nodeHash: 1
-      boldness: nodes ? nodes[2].isActivated : false  // nodeHash: 2
+      // nodeHash: 0
+      mercy: (nodes ? nodes[0].isActivated : false),
+
+      // nodeHash: 1
+      favor: (nodes ? nodes[1].isActivated : false),
+
+      // nodeHash: 2
+      boldness: (nodes ? nodes[2].isActivated : false)
     };
 
     this.wins = progress.wins;
@@ -24,6 +30,26 @@ export default class Trials {
       wins: progress.maxWins,
       loss: progress.maxLosses
     };
+
+    //
+    // Process the boons that were given to us to see if we need to nuke a loss
+    // or add extra wins etc. This needs to be processed before we set
+    // lighthouse or mercy so we can override stuff
+    //
+    if (boons) {
+      if (boons.mercy) {
+        this.boons.mercy = true;
+        if (this.losses) this.losses--;
+      }
+
+      //
+      // No really good way to check if we need to apply boldness. We can't
+      // really see if we had a first win or not based on the returned data of
+      // the API.
+      //
+      if (boons.boldness && this.wins) this.wins++;
+      if (boons.favor) this.wins++;
+    }
 
     //
     // Some more specific information that we can gather by checking data.
