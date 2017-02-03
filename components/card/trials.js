@@ -75,7 +75,7 @@ export default class Trials {
     if (boons && !this.applied) {
       if (boons.mercy) {
         this.boons.mercy = true;
-        if (this.losses) this.losses--;
+        this.losses--;
       }
 
       //

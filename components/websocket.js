@@ -17,14 +17,17 @@ export default class WebSockets extends Component {
     super(...arguments);
 
     this.broadcast = new EventEmitter();
-    this.config = {};
     this.rpcfn = {};
+    this.state = {
+      config: {}
+    };
 
     //
     // Pre-bind the methods that get shared between all components.
     //
     this.rpc = this.rpc.bind(this);
     this.send = this.send.bind(this);
+    this.configuration = this.configuration.bind(this);
     this.on = this.broadcast.addListener.bind(this.broadcast);
     this.off = this.broadcast.removeListener.bind(this.broadcast);
   }
@@ -45,7 +48,6 @@ export default class WebSockets extends Component {
     //
     this.websocket.onopen = () => {
       this.broadcast.emit('open');
-      this.send({ type: 'config' });
     };
 
     //
@@ -62,14 +64,17 @@ export default class WebSockets extends Component {
         this.rpcfn[data.id](...data.args);
         delete this.rpcfn[data.id];
       } else if (data.type == 'config' && data.payload) {
+        const config = Object.assign({}, this.state.config);
+
         Object.keys(data.payload).forEach((key) => {
           const value = data.payload[key];
 
-          this.config[key] = value;
+          config[key] = value;
           this.broadcast.emit('config:'+ key, value);
         });
 
-        this.broadcast.emit('config', this.config);
+        this.broadcast.emit('config', config);
+        this.setState({ config: config });
       } else {
         this.broadcast.emit('message', data);
       }
@@ -110,6 +115,16 @@ export default class WebSockets extends Component {
   }
 
   /**
+   * Get access to the current and most up to date configuration.
+   *
+   * @returns {Object} Configuration that is synced between server/client
+   * @public
+   */
+  configuration() {
+    return this.state.config;
+  }
+
+  /**
    * Send an RPC request to the server.
    *
    * @param {String} endpoint The RPC endpoint we want to hit.
@@ -136,7 +151,7 @@ export default class WebSockets extends Component {
    */
   getChildContext() {
     return {
-      config: this.object,
+      config: this.configuration,
       send: this.send,
       rpc: this.rpc,
       off: this.off,
@@ -162,7 +177,7 @@ export default class WebSockets extends Component {
  * @public
  */
 WebSockets.context = {
-  config: PropTypes.object,
+  config: PropTypes.func,
   send: PropTypes.func,
   off: PropTypes.func,
   rpc: PropTypes.func,

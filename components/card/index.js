@@ -17,28 +17,10 @@ export default class Card extends Component {
       interval: '10 second'
     });
 
-    this.config = this.config.bind(this);
     this.parser = this.parser.bind(this);
     this.state = {
-      trials: null,
-      boons: {}
+      trials: null
     };
-  }
-
-  /**
-   * Received new configuration changes from the server, process them.
-   *
-   * @param {Object} data Configuration object.
-   * @private
-   */
-  config(data) {
-    this.setState({
-      boons: {
-        mercy: data.mercy,
-        favor: data.favor,
-        boldness: data.boldness
-      }
-    });
   }
 
   /**
@@ -53,7 +35,7 @@ export default class Card extends Component {
     if (data.type !== 'advisors') return;
     if (!('trials' in data.activities)) return;
 
-    return new Trials(data.activities.trials);
+    return new Trials(data.activities.trials, this.context.config().boons);
   }
 
   /**
@@ -62,8 +44,6 @@ export default class Card extends Component {
    * @private
    */
   componentDidMount() {
-    this.context.on('config', this.config);
-
     //
     // We've received changes that are accepted so update the card.
     //
@@ -110,15 +90,6 @@ export default class Card extends Component {
     // Retrieve initial set of data.
     //
     this.stale.fetch();
-  }
-
-  /**
-   * Unmounted the component.
-   *
-   * @private
-   */
-  componentWillUnmount() {
-    this.context.off('config', this.config);
   }
 
   /**
@@ -180,7 +151,7 @@ export default class Card extends Component {
     //
     // Apply the boons.
     //
-    trials.apply(this.state.boons);
+    trials.apply(this.context.config().boons);
 
     const boon = trials.boons;
     const props = this.props;

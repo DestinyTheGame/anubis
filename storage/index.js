@@ -81,6 +81,7 @@ function all(fn) {
  * @public
  */
 function set(key, data, fn) {
+  console.log(key, data);
   storage.set(key, data, (err) => {
     if (!err) emitter.emit('config', key, data);
     fn(err, data);

@@ -8,6 +8,7 @@ import { render } from 'react-dom';
 import {
   Layout,       // Default application layout.
   Twitch,       // Twitch chat integration.
+  Config,       // Generic configuration page.
   Overlay,      // Default layout for when need to show overlay.
   NotFound,     // Something went horribly wrong.
   Guardian,     // Guardian.gg lookups
@@ -60,6 +61,8 @@ class Application extends Component {
             <Route path="twitch" component={ Twitch }>
               <Route path="settings" component={ Twitch.Settings }/>
             </Route>
+
+            <Route path="settings" component={ Config } />
 
             <Route path="*" component={ NotFound }/>
           </Route>

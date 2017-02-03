@@ -1,4 +1,4 @@
-import { emitter, all } from './storage';
+import { emitter, all, set } from './storage';
 import diagnostics from 'diagnostics';
 
 //
@@ -42,11 +42,22 @@ function incoming(boot) {
     }
 
     emitter.on('config', update);
+    all(function allstorage(err, data) {
+      client.send(JSON.stringify({ type: 'config', payload: data }), () => {
+        //
+        // Catch potential errors.
+        //
+      });
+    });
 
     //
     // All our supported RPC endpoints.
     //
     const endpoints = {
+      'config.set': function configchange(data, next) {
+        set(data.key, data.value, next);
+      },
+
       'destiny.active.advisors': function advisors(data, next) {
         destiny.go(function go() {
           const active = destiny.characters.active();
@@ -74,7 +85,7 @@ function incoming(boot) {
 
       if (data.type === 'rpc') {
         if (data.endpoint in endpoints) {
-          return endpoints[data.endpoint](data, (...args) => {
+          return endpoints[data.endpoint](data.data, (...args) => {
             client.send(JSON.stringify({ type: 'rpc', id: data.id, args: args }), () => {
               //
               // This flow is completely async, so it could be that by the time we
@@ -86,14 +97,6 @@ function incoming(boot) {
         }
 
         debug('unknown rpc(%s) endpoint, for id %s', data.endpoint, data.id);
-      } else if (data.type === 'config') {
-        all(function allstorage(err, data) {
-          client.send(JSON.stringify({ type: 'config', payload: data }), () => {
-            //
-            // Catch potential errors.
-            //
-          });
-        });
       }
     });
 
