@@ -13,22 +13,22 @@
           <h2>The Destiny Trials Companion</h2>
 
           <div class="versioning">
-            <dl>
-              <script>
-                (function versioning() {
-                  var data = require('./package.json');
-                  document.write('<dt>Version:</dt> <dd>'+ data.version +'</dd>');
-                })();
-              </script>
-            </dl>
-            <dl>
-              <dt>Author:</dt>
-              <dd>Arnout Kazemier</dd>
-            </dl>
-            <dl>
-              <dt>PSN:</dt>
-              <dd>UVXlll</dd>
-            </dl>
+            <script>
+              (function versioning() {
+                var data = require('./manifest.json');
+
+                //
+                // This is a desktop app, who gives a flying fuck about
+                // document.write - this wouldn't really be bottle neck in the app
+                //
+                document.write('<dl><dt>Author:</dt><dd>Arnout Kazemier</dd></dl>')
+                document.write('<dl><dt>PSN:</dt><dd>UVXlll</dd></dl>')
+                document.write('<dl><dt>Rev:</dt> <dd>'+ data.sha +'</dd></dl>');
+                document.write('<dl><dt>Version:</dt> <dd>'+ data.version +'</dd></dl>');
+                document.write('<dl><dt>Release:</dt> <dd>'+ data.branch +'</dd></dl>');
+                document.write('<p class="thanks">Contributors: '+ data.authors.join(', ') +'</p>');
+              })();
+            </script>
           </div>
 
           <div class="screenshot"></div>

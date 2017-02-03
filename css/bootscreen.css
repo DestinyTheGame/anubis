@@ -33,6 +33,15 @@
   display: inline-block
 }
 
+.versioning p {
+  margin-top: 30px;
+  font-size: 10px;
+  width: 260px;
+  opacity: .5;
+  position: fixed;
+  bottom: 0px;
+}
+
 .screenshot {
   background: url(https://www.bungie.net/img/theme/destiny/bgs/pgcrs/crucible_the_anomaly.jpg);
   background-size: cover;

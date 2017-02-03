@@ -6,8 +6,9 @@
   "scripts": {
     "start": "NODE_ENV=development DEBUG=bungie-auth* electron .",
     "webpack": "node -r babel-register webpack.js",
-    "dev": "concurrently -k 'npm run webpack' 'npm start'",
-    "prod": "NODE_ENV=production webpack --config webpack.prod.babel.js",
+    "dev": "npm run manifest && concurrently -k 'npm run webpack' 'npm start'",
+    "prod": "npm run manifest && NODE_ENV=production webpack --config webpack.prod.babel.js",
+    "manifest": "node ./tools/build.js",
     "release": "npm run prod && electron-packager . Anubis --all --prune --overwrite --ignore builds --out builds"
   },
   "keywords": [
@@ -34,6 +35,7 @@
     "electron-packager": "8.4.x",
     "electron-prebuilt": "1.4.x",
     "express": "4.14.x",
+    "git-shizzle": "0.0.3",
     "halogen": "0.2.x",
     "intl-messageformat": "1.3.x",
     "portfinder": "1.0.x",
