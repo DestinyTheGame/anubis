@@ -24,6 +24,7 @@ export default class Trials {
       boldness: (nodes ? nodes[2].isActivated : false)
     };
 
+    this.applied = false;
     this.wins = progress.wins;
     this.losses = progress.losses;
     this.max = {
@@ -32,33 +33,10 @@ export default class Trials {
     };
 
     //
-    // Process the boons that were given to us to see if we need to nuke a loss
-    // or add extra wins etc. This needs to be processed before we set
-    // lighthouse or mercy so we can override stuff
+    // Apply the fake boons if they exists, if not it will still update the
+    // mercy/lighthouse game information.
     //
-    if (boons) {
-      if (boons.mercy) {
-        this.boons.mercy = true;
-        if (this.losses) this.losses--;
-      }
-
-      //
-      // No really good way to check if we need to apply boldness. We can't
-      // really see if we had a first win or not based on the returned data of
-      // the API.
-      //
-      if (boons.boldness && this.wins) this.wins++;
-      if (boons.favor) this.wins++;
-    }
-
-    //
-    // Some more specific information that we can gather by checking data.
-    //
-    // lighthouse: Enough games have been won to grant access to the lighthouse.
-    // mercy: Indication if mercy has been used.
-    //
-    this.lighthouse = this.wins >= 9;
-    this.mercy = this.boons.mercy && this.losses === -1;
+    this.apply(boons);
   }
 
   /**
@@ -79,6 +57,50 @@ export default class Trials {
     : new Array(unfilled ? this.max.loss : this.losses > 0 ? this.losses : 0);
 
     return dots.fill(true).map((item, i) => i < this[wins ? 'wins' : 'losses']);
+  }
+
+  /**
+   * Apply fake boons to the card so we can simulate the UI on streams without
+   * having to actually buy the boons.
+   *
+   * @param {Object} boons Boons that need to be applied.
+   * @private
+   */
+  apply(boons = {}) {
+    //
+    // Process the boons that were given to us to see if we need to nuke a loss
+    // or add extra wins etc. This needs to be processed before we set
+    // lighthouse or mercy so we can override stuff
+    //
+    if (boons && !this.applied) {
+      if (boons.mercy) {
+        this.boons.mercy = true;
+        if (this.losses) this.losses--;
+      }
+
+      //
+      // No really good way to check if we need to apply boldness. We can't
+      // really see if we had a first win or not based on the returned data of
+      // the API.
+      //
+      if (boons.boldness && this.wins) this.wins++;
+      if (boons.favor) this.wins++;
+
+      //
+      // Prevent boons from being applied multiple times in a row as that would
+      // lead to incorrect data.
+      //
+      this.applied = true;
+    }
+
+    //
+    // Some more specific information that we can gather by checking data.
+    //
+    // lighthouse: Enough games have been won to grant access to the lighthouse.
+    // mercy: Indication if mercy has been used.
+    //
+    this.lighthouse = this.wins >= 9;
+    this.mercy = this.boons.mercy && this.losses === -1;
   }
 
   /**

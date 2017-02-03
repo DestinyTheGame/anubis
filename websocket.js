@@ -1,3 +1,4 @@
+import { emitter, all } from './storage';
 import diagnostics from 'diagnostics';
 
 //
@@ -22,6 +23,34 @@ function incoming(boot) {
   return function connection(client) {
     const destiny = boot.get('destiny');
 
+    /**
+     * Process updates for the config.
+     *
+     * @param {String} key name of the config value that changed
+     * @param {Mixed} value New value
+     * @private
+     */
+    function update(key, value) {
+      const payload = {};
+      payload[key] = value;
+
+      client.send(JSON.stringify({ type: 'config', payload: payload }), () => {
+        //
+        // Catch potential errors.
+        //
+      });
+    }
+
+    emitter.on('config', update);
+
+    all(function allstorage(err, data) {
+      client.send(JSON.stringify({ type: 'config', payload: data }), () => {
+        //
+        // Catch potential errors.
+        //
+      });
+    });
+
     //
     // All our supported RPC endpoints.
     //
@@ -33,12 +62,14 @@ function incoming(boot) {
           if (active) active.advisors(function advisors(err, data) {
             if (err) return next(err);
 
+            console.log(JSON.stringify(data.activities.trials, null, 2));
+
             data.type = 'advisors';
             next(undefined, data);
           });
         });
       }
-    }
+    };
 
     //
     // Handle incoming RPC messages from the client.
@@ -64,6 +95,10 @@ function incoming(boot) {
 
         debug('unknown rpc(%s) endpoint, for id %s', data.endpoint, data.id);
       }
+    });
+
+    client.on('close', function () {
+      emitter.off('config', update);
     });
   }
 }

@@ -17,6 +17,7 @@ export default class WebSockets extends Component {
     super(...arguments);
 
     this.broadcast = new EventEmitter();
+    this.config = {};
     this.rpcfn = {};
 
     //
@@ -59,6 +60,15 @@ export default class WebSockets extends Component {
       if (data.type == 'rpc' && data.id in this.rpcfn) {
         this.rpcfn[data.id](...data.args);
         delete this.rpcfn[data.id];
+      } else if (data.type == 'config' && data.payload) {
+        Object.keys(data.payload).forEach((key) => {
+          const value = data.payload[key];
+
+          this.config[key] = value;
+          this.broadcast.emit('config:'+ key, value);
+        });
+
+        this.broadcast.emit('config', this.config);
       } else {
         this.broadcast.emit('message', data);
       }
@@ -125,6 +135,7 @@ export default class WebSockets extends Component {
    */
   getChildContext() {
     return {
+      config: this.object,
       send: this.send,
       rpc: this.rpc,
       off: this.off,
@@ -150,6 +161,7 @@ export default class WebSockets extends Component {
  * @public
  */
 WebSockets.context = {
+  config: PropTypes.object,
   send: PropTypes.func,
   off: PropTypes.func,
   rpc: PropTypes.func,

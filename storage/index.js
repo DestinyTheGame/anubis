@@ -1,4 +1,5 @@
 import storage from 'electron-json-storage';
+import EventEmitter from 'eventemitter3';
 import reduce from 'async/reduce';
 import messages from './messages';
 import defaults from './defaults';
@@ -8,6 +9,7 @@ import defaults from './defaults';
 // API's we will try and pull the information from this instead.
 //
 const config = Object.assign({}, defaults, messages);
+const emitter = new EventEmitter();
 
 /**
  * Fetch an item from our configuration.
@@ -57,6 +59,16 @@ function gets(...keys) {
 }
 
 /**
+ * Get all configuration values.
+ *
+ * @param {Function} fn Completion callback.
+ * @public
+ */
+function all(fn) {
+  storage.getAll(fn);
+}
+
+/**
  * Store a new configuration value.
  *
  * @param {String} key Name of the configuration item.
@@ -66,6 +78,7 @@ function gets(...keys) {
  */
 function set(key, data, fn) {
   storage.set(key, data, (err) => {
+    if (!err) emitter.emit('config', key, data);
     fn(err, data);
   });
 }
@@ -73,4 +86,4 @@ function set(key, data, fn) {
 //
 // Expose the API.
 //
-export { get, gets, set };
+export { get, gets, set, all, emitter };
