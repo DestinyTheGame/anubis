@@ -42,7 +42,17 @@ function create(boot) {
     const handleRedirect = (e, url) => {
       if (url !== anubis.webContents.getURL()) {
         e.preventDefault();
-        shell.openExternal(url);
+        return shell.openExternal(url);
+      }
+
+      //
+      // Special case for logout, we really want to just kill the app after
+      // nuking all logout information.
+      //
+      if (url === '/logout') {
+        storage.remove('accessToken', 'refreshToken', (err) => {
+          app.quit();
+        });
       }
     };
 
@@ -62,7 +72,7 @@ export default function start(err, boot) {
   // to stay active until the user quits explicitly with Cmd + Q
   //
   app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
+    if (process.platform !== 'darwin') app.quit();
   });
 
   //

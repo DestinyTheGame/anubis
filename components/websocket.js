@@ -45,6 +45,7 @@ export default class WebSockets extends Component {
     //
     this.websocket.onopen = () => {
       this.broadcast.emit('open');
+      this.send({ type: 'config' });
     };
 
     //

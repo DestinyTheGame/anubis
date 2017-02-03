@@ -48,9 +48,10 @@ export default class Layout extends Component {
             <Link to="/settings" activeClassName="active" className="settings">
               Settings
             </Link>
-            <Link to="/logout" activeClassName="active" className="settings">
+
+            <a href="/logout" className="settings">
               Logout
-            </Link>
+            </a>
           </div>
         </div>
         <div className="box">

@@ -43,14 +43,6 @@ function incoming(boot) {
 
     emitter.on('config', update);
 
-    all(function allstorage(err, data) {
-      client.send(JSON.stringify({ type: 'config', payload: data }), () => {
-        //
-        // Catch potential errors.
-        //
-      });
-    });
-
     //
     // All our supported RPC endpoints.
     //
@@ -62,7 +54,7 @@ function incoming(boot) {
           if (active) active.advisors(function advisors(err, data) {
             if (err) return next(err);
 
-            console.log(JSON.stringify(data.activities.trials, null, 2));
+            //console.log(JSON.stringify(data.activities.trials, null, 2));
 
             data.type = 'advisors';
             next(undefined, data);
@@ -94,6 +86,14 @@ function incoming(boot) {
         }
 
         debug('unknown rpc(%s) endpoint, for id %s', data.endpoint, data.id);
+      } else if (data.type === 'config') {
+        all(function allstorage(err, data) {
+          client.send(JSON.stringify({ type: 'config', payload: data }), () => {
+            //
+            // Catch potential errors.
+            //
+          });
+        });
       }
     });
 

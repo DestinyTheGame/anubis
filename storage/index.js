@@ -65,7 +65,11 @@ function gets(...keys) {
  * @public
  */
 function all(fn) {
-  storage.getAll(fn);
+  storage.getAll(function getAll(err, data) {
+    if (err) return fn(err);
+
+    fn(undefined, Object.assign({}, config, data || {}));
+  });
 }
 
 /**
@@ -83,7 +87,30 @@ function set(key, data, fn) {
   });
 }
 
+/**
+ * Remove keys.
+ *
+ * @param {String} ...keys Multiple keys that need to be removed.
+ * @param {Function} fn Completion callback.
+ * @public
+ */
+function remove(...keys) {
+  const fn = keys.pop();
+
+  reduce(keys, [], (errors, key, next) => {
+    storage.remove(key, function remove(err) {
+      if (err) errors.push(err);
+
+      next(undefined, errors);
+    });
+  }, function processed(err, memo) {
+    if (err) return fn(err);
+
+    fn(memo.pop());
+  });
+}
+
 //
 // Expose the API.
 //
-export { get, gets, set, all, emitter };
+export { get, remove, gets, set, all, emitter };
