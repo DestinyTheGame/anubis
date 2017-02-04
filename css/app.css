@@ -8,6 +8,14 @@
 @import './bootscreen.css';
 
 /*/
+ * External CSS files that have been copy and pasted from modules to our directory.
+ * codemirror.css -> codemirror
+ * toggle.css -> react-toggle
+/*/
+@import './codemirror.css';
+@import './toggle.css';
+
+/*/
  * Application UI should be last so it can override CSS styling that might be
  * re-used in the overlay UI.
 /*/

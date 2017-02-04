@@ -6,11 +6,6 @@
   margin-bottom: 25px;
 }
 
-.config label {
-  display: block;
-  font-weight: bold;
-}
-
 .config .note {
   color: #7e829b;
   font-size: 10px;

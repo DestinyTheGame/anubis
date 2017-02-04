@@ -1,5 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import CSSSMode from 'codemirror/mode/css/css';
+import CodeMirror from 'react-codemirror';
 import WebSockets from './websocket';
+import Toggle from 'react-toggle';
 
 /**
  * Representation of a single configuration control.
@@ -8,12 +11,6 @@ import WebSockets from './websocket';
  * @private
  */
 class Control extends Component {
-  constructor() {
-    super(...arguments);
-
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
   /**
    * Generate the correct element that can hold the configuration value.
    *
@@ -22,19 +19,23 @@ class Control extends Component {
    */
   value() {
     const data = this.context.config()[this.props.name];
+    const change = (event) => {
+      const value = event.target.checked ? this.props.value : null;
+
+      this.context.rpc('config.set', {
+        key: this.props.name,
+        value: value
+      }, () => { });
+    };
 
     switch (this.props.type) {
       case 'textarea': return (
         <textarea ref='element' id={ this.props.name } defaultValue={ data } />
       );
 
-      case 'input': return (
-        <input type='text' defaultValue={ data } ref='element' id={ this.props.name } />
+      case 'toggle': return (
+        <Toggle id={ this.props.name } defaultChecked={ !!data } onChange={ change } />
       );
-
-      case 'checkbox': return (
-        <input type='checkbox' defaultChecked={ !!data } ref='element' id={ this.props.name } />
-      )
     }
   }
 
@@ -54,30 +55,6 @@ class Control extends Component {
   }
 
   /**
-   * Handle submission of the form.
-   *
-   * @param {Event} e Browser event.
-   * @private
-   */
-  onSubmit(e) {
-    e.preventDefault();
-
-    const element = this.refs.element;
-    const props = this.props;
-
-    let value = props.value || element.value;
-
-    if (props.type === 'checkbox') {
-      value = element.checked ? value : null;
-    }
-
-    this.context.rpc('config.set', {
-      key: this.props.name,
-      value: value
-    }, () => { });
-  }
-
-  /**
    * Render the configuration control.
    *
    * @returns
@@ -87,15 +64,14 @@ class Control extends Component {
     const value = this.value();
 
     return (
-      <form onSubmit={ this.onSubmit } method='POST' action='#'>
-        <label htmlFor={ props.name }>{ props.name }</label>
-        <p className='note'>{ props.children } { this.experimental() }</p>
-
+      <div className='grid row gutters'>
+        <div className='box twentyfive'>
         { this.value() }
-        <button type='submit'>
-          OK
-        </button>
-      </form>
+        </div>
+        <div className='box note'>
+          { props.children } { this.experimental() }
+        </div>
+      </div>
     );
   }
 }
@@ -111,21 +87,42 @@ Control.contextTypes = WebSockets.context;
 export default class Config extends Component {
   render() {
     const boons = {
-       mercy: true,
-       favor: true,
-       boldness: true
+      mercy: true,
+      favor: true,
+      boldness: true
     };
 
     return (
       <div className='config'>
-        <Control name='css' type='textarea'>
-          Change the CSS that is present on the overlay page. This allows you to
-          fully customize the look and feel of your trials card.
-        </Control>
-
-        <Control name='boons' type='checkbox' value={ boons } experimental>
+        <Control name='boons' type='toggle' value={ boons } experimental>
           Do you want to "fake" boons on your card
         </Control>
+
+        <Control name='hideWins' type='toggle' value={ true }>
+          Do we want to hide wins on the overlay.
+        </Control>
+
+        <Control name='hideLosses' type='toggle' value={ true }>
+          Do we want to hide losses on the overlay.
+        </Control>
+
+        <Control name='showMercy' type='toggle' value={ true }>
+          Should we show mercy boon on the overlay
+        </Control>
+
+        <Control name='showFavor' type='toggle' value={ true }>
+          Should we show favor boon on the overlay
+        </Control>
+
+        <Control name='showBoldness' type='toggle' value={ true }>
+          Should we show boldness boon on the overlay
+        </Control>
+
+        <CodeMirror value={ this.context.config().css } options={{
+          lineNumbers: true,
+          tabSize: 2,
+          mode: 'css'
+        }} />
       </div>
     );
   }

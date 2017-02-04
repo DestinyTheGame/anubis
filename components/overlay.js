@@ -10,43 +10,6 @@ import { Card } from './';
  * @public
  */
 export default class Overlay extends Component {
-  constructor() {
-    super(...arguments);
-
-    this.config = this.config.bind(this);
-    this.state = {
-      css: null
-    };
-  }
-
-  /**
-   * Process the configuration changes.
-   *
-   * @param {Mixed} value The value of the CSS
-   * @private
-   */
-  config(value) {
-    this.setState({ css: value });
-  }
-
-  /**
-   * The component has been successfully mounted.
-   *
-   * @private
-   */
-  componentDidMount() {
-    this.context.on('config:css', this.config);
-  }
-
-  /**
-   * Unmounted the component.
-   *
-   * @private
-   */
-  componentWillUnmount() {
-    this.context.off('config:css', this.config);
-  }
-
   /**
    * Conditionally render additional style in to the page. This is custom CSS
    * that people can use to create a custom styling for the overlay.
@@ -55,11 +18,12 @@ export default class Overlay extends Component {
    * @private
    */
   css() {
-    if (!this.state.css) return;
+    const config = this.context.config();
+    if (!config.css) return null;
 
     return (
       <style type="text/css">
-        { this.state.css }
+        { config.css }
       </style>
     );
   }
@@ -71,8 +35,16 @@ export default class Overlay extends Component {
    * @private
    */
   render() {
-    const url = new URL(location.href, true);
-    const props = url.query;
+    const config = this.context.config();
+    const props = {
+      wins: config.hideWins,
+      losses: config.hideLosses,
+
+      mercy: config.showMercy,
+      favor: config.showFavor,
+      boldness: config.showBoldness,
+      inline: config.showInline
+    };
 
     return (
       <div id="overlay">
