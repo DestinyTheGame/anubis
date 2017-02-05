@@ -1,6 +1,6 @@
 {
   "name": "anubis",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A lightweight trials companion for destiny the game.",
   "main": "index.js",
   "scripts": {
