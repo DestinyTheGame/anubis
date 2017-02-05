@@ -25,12 +25,13 @@ export default class Editor extends Component {
     if (value === null) value = config[mode];
     if (!value) value = [
       '/*/',
-      ' * This is where you can add custom CSS styling to your overlay',
-      ' * You can override things like color of the wins, losses.',
+      ' * This is where you can add custom CSS',
+      ' * styling to your overlay.',
       ' * ',
-      ' * Useful class names are:',
+      ' * Usefull class names are:',
       ' * ',
-      ' * .dot, .card .wins, .won, .lost, .losses, .unfilled, .boons',
+      ' * .dot, .card .wins, .won, .lost',
+      ' * .losses, .unfilled, .boons',
       '/*/',
     ].join('\n');
 
