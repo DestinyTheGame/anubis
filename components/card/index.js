@@ -163,7 +163,7 @@ export default class Card extends Component {
     // Generate the normal dots.
     //
     if (!props.wins) trials.won().forEach(this.dot(wins, 'win'));
-    if (!props.losses) trials.loss().forEach(this.dot(losses, 'loss'));
+    if (!props.losses) trials.lost().forEach(this.dot(losses, 'loss'));
 
     if (props.mercy) {
       const mercy = boon.mercy ? (trials.mercy ? 'boon' : classNames.loss) : classNames.unfilled;
