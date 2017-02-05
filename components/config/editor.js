@@ -13,14 +13,26 @@ export default class Editor extends Component {
   constructor() {
     super(...arguments);
 
-    this.state = { code: '' };
+    this.state = { code: null };
   }
 
   render() {
     const props = this.props;
     const config = this.context.config();
     const mode = props.mode;
-    const value = this.state.code || config[mode];
+
+    let value = this.state.code;
+    if (value === null) value = config[mode];
+    if (!value) value = [
+      '/*/',
+      ' * This is where you can add custom CSS styling to your overlay',
+      ' * You can override things like color of the wins, losses.',
+      ' * ',
+      ' * Useful class names are:',
+      ' * ',
+      ' * .dot, .card .wins, .won, .lost, .losses, .unfilled, .boons',
+      '/*/',
+    ].join('\n');
 
     const options = {
       scrollbarStyle: 'simple',
@@ -36,15 +48,17 @@ export default class Editor extends Component {
      * @private
      */
     const onChange = (code) => {
-      this.setState({ code: code });
+      this.setState({ code: code || '' });
       this.context.rpc('config.set', {
         key: props.mode,
-        value: value
+        value: code
       }, () => { });
     }
 
     return (
-      <CodeMirror value={ value } options={ options } onChange={ onChange } />
+      <div>
+        <CodeMirror value={ value } options={ options } onChange={ onChange } />
+      </div>
     );
   }
 }

@@ -11,6 +11,12 @@
   margin-bottom: -95px;
 }
 
+.sidebar .header {
+  background: #2b2d39;
+  padding: 10px 25px;
+  color: #FFF;
+}
+
 .sidebar .trials-card {
   background: #2b2d39;
   border-top: 1px solid #a1adc3;
