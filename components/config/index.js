@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import CodeMirror from 'react-codemirror';
 import WebSockets from '../websocket';
-import Tooltip from 'react-tooltip';
 import Toggle from './toggle';
 import Editor from './editor';
 
@@ -56,8 +55,6 @@ export default class Config extends Component {
             <Editor />
           </div>
         </div>
-
-        <Tooltip />
       </div>
     );
   }

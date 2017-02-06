@@ -33,13 +33,14 @@ export default class Editor extends Component {
       ' * .dot, .card .wins, .won, .lost',
       ' * .losses, .unfilled, .boons',
       '/*/',
+      ''
     ].join('\n');
 
     const options = {
-      scrollbarStyle: 'simple',
-      lineNumbers: true,
-      tabSize: 2,
-      mode: mode
+      scrollbarStyle: 'simple',   // Simple DOM based scroll bars.
+      lineNumbers: true,          // Show line numbers.
+      tabSize: 2,                 // Tab inserts 2 spaces.
+      mode: mode                  // The mode should the editor run in.
     };
 
     /**

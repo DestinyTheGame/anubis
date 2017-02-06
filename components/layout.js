@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
+import Tooltip from 'react-tooltip';
 import URL from 'url-parse';
 
 /**
@@ -57,6 +58,8 @@ export default class Layout extends Component {
         <div className="box">
           { this.props.children }
         </div>
+
+        <Tooltip />
       </div>
     );
   }
