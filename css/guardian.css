@@ -1,0 +1,53 @@
+.guardian form {
+  border-bottom: 1px solid #A1ADC3;
+  padding: 15px;
+}
+
+.guardian input {
+  width: 100%;
+  border: 0;
+}
+
+.guardian .loading {
+  margin-top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.guardian input:focus {
+  outline: 0;
+}
+
+.guardian fieldset {
+  border: 1px solid #A1ADC3;
+  border-radius: 20px;
+  padding: 7px 20px;
+  position: relative;
+}
+
+.guardian button {
+  background: #2b2d39;
+  border-radius: 20px;
+  border: 0;
+  color: #e2ecff;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin: -1px -1px 0 0;
+  padding: 10px 20px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  top: 0;
+}
+
+.guardian button:hover {
+  background: #1f212a;
+}
+
+.guardian .results {
+  height: 100%
+}
