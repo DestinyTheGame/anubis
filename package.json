@@ -41,7 +41,7 @@
     "react": "15.4.x",
     "react-codemirror": "0.3.x",
     "react-dom": "15.4.x",
-    "react-router": "3.0.x",
+    "react-router": "~4.0.0-beta.6",
     "react-toggle": "2.2.x",
     "react-tooltip": "3.2.x",
     "stale-state": "1.1.x",
