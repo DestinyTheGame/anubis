@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "asar": "0.13.x",
-    "concurrently": "3.1.x",
+    "concurrently": "~3.2.0",
     "electron": "1.4.x",
     "electron-devtools-installer": "2.1.x",
     "electron-packager": "8.5.x",
