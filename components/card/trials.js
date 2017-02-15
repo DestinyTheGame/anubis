@@ -83,9 +83,12 @@ export default class Trials {
       // really see if we had a first win or not based on the returned data of
       // the API.
       //
-      if (!this.boons.boldness && fake.boldness && this.wins) {
+      if (!this.boons.boldness && fake.boldness) {
         this.boons.boldness = true;
-        this.wins++;
+
+        if (this.wins) {
+          this.wins++;
+        }
       }
 
       if (!this.boons.favor && fake.favor) {
