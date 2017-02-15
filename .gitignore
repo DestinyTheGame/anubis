@@ -1,8 +1,7 @@
 node_modules
-Anubis-darwin-x64/
 dist
 .DS_Store
-npm-debug.log
+npm-debug.*
 builds
 .tern-port
 manifest.json
