@@ -25,6 +25,17 @@ git.parse('authors', {
 });
 
 //
+// List of our amazing beta, pre 1.0 testers <3. Sorted alphabetically
+// because of OCD.
+//
+const beta = [
+  'Ainger25uk',
+  'ApexCris',
+  'Jay-V',
+  'Lyncher1'
+];
+
+//
 // Include various of information that might be needed to draft a new
 // build.
 //
@@ -33,6 +44,7 @@ const release = {
   version: pkgjson.version,
   branch: rev.branch(),
   sha: rev.short(),
+  beta: beta
 };
 
 fs.writeFileSync(path.join(__dirname, '..', 'manifest.json'), JSON.stringify(release, null, 2));
