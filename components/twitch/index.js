@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Sidebar from './sidebar';
+import Sidebar from '../sidebar';
 
 /**
  * Twitch.

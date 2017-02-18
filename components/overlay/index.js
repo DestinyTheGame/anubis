@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import WebSockets from './websocket';
+import WebSockets from '../websocket';
 import URL from 'url-parse';
-import { Card } from './';
+import { Card } from '../';
 
 /**
  * Overlay.

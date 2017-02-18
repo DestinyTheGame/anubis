@@ -16,6 +16,10 @@
             <script>
               (function versioning() {
                 var data = require('./manifest.json');
+                var thanks = [
+                  'Contributors: '+ data.authors.join(', '),
+                  'Beta testers: ' + data.beta.join(', ')
+                ].join('. ');
 
                 //
                 // This is a desktop app, who gives a flying fuck about
@@ -26,7 +30,7 @@
                 document.write('<dl><dt>Rev:</dt> <dd>'+ data.sha +'</dd></dl>');
                 document.write('<dl><dt>Version:</dt> <dd>'+ data.version +'</dd></dl>');
                 document.write('<dl><dt>Branch:</dt> <dd>'+ data.branch +'</dd></dl>');
-                document.write('<p class="thanks">Contributors: '+ data.authors.join(', ') +'</p>');
+                document.write('<p class="thanks">'+ thanks +'</p>');
               })();
             </script>
           </div>

@@ -1,6 +1,7 @@
 import { XMLHttpRequest } from 'xmlhttprequest';
 import Bungie from 'bungie-auth/electron';
 import { gets, set } from '../storage';
+import Guardian from 'guardian.gg';
 import Destiny from 'destiny-api';
 
 /**
@@ -42,14 +43,10 @@ export default function preboot(boot, next) {
       }
     });
 
-    //
-    // Use the created authentication handler to connect us with Destiny API
-    // module.
-    //
-    const destiny = new Destiny(bungie, {
-      XHR: XMLHttpRequest
-    });
+    const destiny = new Destiny(bungie, { XHR: XMLHttpRequest });
+    const guardian = new Guardian({ XHR: XMLHttpRequest });
 
+    boot.set('guardian', guardian);
     boot.set('destiny', destiny);
     boot.set('bungie', bungie);
 

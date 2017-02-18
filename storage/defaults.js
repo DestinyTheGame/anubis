@@ -19,7 +19,12 @@ const defaults = {
   // Application registration.
   //
   'url': 'https://www.bungie.net/en/Application/Authorize/11069',
-  'key': '8b00abdac5844cc2aa0b68b52df4e9fe'
+  'key': '8b00abdac5844cc2aa0b68b52df4e9fe',
+
+  //
+  // Platform we're playing on.
+  //
+  'platform': 2
 };
 
 //

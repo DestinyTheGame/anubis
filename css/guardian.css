@@ -8,7 +8,7 @@
   border: 0;
 }
 
-.guardian .loading {
+.guardian .center {
   margin-top: 50%;
   display: flex;
   justify-content: center;
@@ -44,10 +44,146 @@
   top: 0;
 }
 
+.guardian .tiers {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin: 0 0 -1px;
+}
+
+.guardian .tiers dl {
+  margin: 0 0 0 1px;
+  height: 65px;
+}
+
+.guardian .tiers dd {
+  padding-top: 12px;
+  margin: 0;
+}
+
+.guardian .tiers dt {
+  background: rgba(0, 0, 0, .05);
+  text-transform: uppercase;
+  font-size: 9px;
+  padding: 2px 10px;
+}
+
+.guardian .help {
+  color: #7e829b;
+  font-style: italic;
+  padding: 0 25px;
+  text-align: center;
+}
+
 .guardian button:hover {
   background: #1f212a;
 }
 
 .guardian .results {
   height: 100%
+}
+
+.guardian .stats {
+  position: relative;
+  background: #2b2d39;
+  margin-bottom: 2px;
+  height: 31%;
+  width: 120px;
+}
+
+.guardian .stats .fill {
+  display: block;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  bottom: 0;
+  background: #7e829b;
+}
+
+.guardian .stats .info {
+  position: absolute;
+  text-align: left;
+  height: 100%;
+  top: 3px;
+  left: 5px;
+  width: 100%;
+  font-size: 12px;
+  color: #fff;
+}
+
+.guardian .stats span {
+  font-weight: 400;
+}
+
+.guardian .stats .value {
+  font-weight: 700;
+  padding-right: 4px;
+}
+
+.emblem {
+  position: relative;
+  background-size: 100%;
+  height: 65px;
+}
+
+.emblem img {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.emblem .name {
+  position: absolute;
+  left: 80px;
+  top: 16px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.emblem .class {
+  position: absolute;
+  left: 80px;
+  top: 36px;
+  font-size: 13px;
+  color: #fff;
+}
+
+.emblem .light {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  font-size: 18px;
+  color: #f5dc56;
+}
+
+.emblem .light:before {
+  content: "\2726";
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.emblem .kd {
+  position: absolute;
+  right: 10px;
+  top: 36px;
+  font-size: 16px;
+  color: #FFF;
+}
+
+.guardian .member {
+  position: relative;
+  padding-left: 16px;
+}
+
+.guardian .elo {
+  color: rgba(255,255,255,.71);
+  font-size: 12px;
+  left: -58px;
+  position: absolute;
+  text-align: center;
+  top: 55px;
+  transform: rotate(90deg);
+  width: 129px;
+  z-index: 1;
 }

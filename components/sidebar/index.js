@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Loading from 'halogen/ClipLoader';
-import Guardian from './guardian';
-import Card from './card';
+import Guardian from '../guardian';
+import Card from '../card';
 
 /**
  * Default sidebar.

@@ -1,4 +1,5 @@
 import { emitter, all, set } from './storage';
+import TrialsReport from './trialsreport';
 import diagnostics from 'diagnostics';
 
 //
@@ -21,6 +22,7 @@ function incoming(boot) {
    * @private
    */
   return function connection(client) {
+    const report = new TrialsReport(boot);
     const destiny = boot.get('destiny');
 
     /**
@@ -71,8 +73,35 @@ function incoming(boot) {
             next(undefined, data);
           });
         });
+      },
+
+      'destiny.trials.report': function search(username, next) {
+        report.search(username, (failed) => {
+          next(failed);
+        });
       }
     };
+
+    report.on('fireteam', () => {
+      client.send(JSON.stringify({
+        type: 'report',
+        fireteam: report.fireteam
+      }));
+    });
+
+    report.on('loadout', () => {
+      client.send(JSON.stringify({
+        type: 'report',
+        loadout: report.loadout
+      }));
+    });
+
+    report.on('error', (err) => {
+      client.send(JSON.stringify({
+        type: 'report',
+        err: err
+      }));
+    });
 
     //
     // Handle incoming RPC messages from the client.
@@ -102,6 +131,7 @@ function incoming(boot) {
 
     client.on('close', function () {
       emitter.off('config', update);
+      report.destroy();
     });
   }
 }

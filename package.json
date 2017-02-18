@@ -4,7 +4,7 @@
   "description": "A lightweight trials companion for destiny the game.",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development DEBUG=bungie-auth* electron .",
+    "start": "NODE_ENV=development DEBUG=bungie-auth*,destiny* electron .",
     "webpack": "node -r babel-register webpack.js",
     "dev": "concurrently -k 'npm run webpack' 'npm start'",
     "prod": "NODE_ENV=production webpack --config webpack.prod.babel.js",
@@ -33,6 +33,7 @@
     "destiny-api": "1.2.x",
     "electron-json-storage": "3.0.x",
     "electron-prebuilt": "1.4.x",
+    "eventemitter3": "2.0.x",
     "express": "4.14.x",
     "git-shizzle": "0.0.x",
     "guardian.gg": "0.0.x",
