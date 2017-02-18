@@ -9,7 +9,7 @@
     "dev": "concurrently -k 'npm run webpack' 'npm start'",
     "prod": "NODE_ENV=production webpack --config webpack.prod.babel.js",
     "manifest": "node ./tools/build.js",
-    "release": "npm run prod && electron-packager . Anubis --all --prune --overwrite --ignore builds --out builds"
+    "release": "npm run manifest && npm run prod && electron-packager . Anubis --all --prune --overwrite --ignore builds --out builds"
   },
   "keywords": [
     "trials",
