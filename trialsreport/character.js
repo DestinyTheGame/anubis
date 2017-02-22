@@ -17,29 +17,108 @@ export default class Character {
   }
 
   /**
-   * Cooldown calculations.
+   * Cool down calculations.
    *
    * @param {String} type Name of the stat.
-   * @param {Number} teir Teir of the stat.
+   * @param {Number} tier Tier of the stat.
    * @public
    */
   cooldown(type, tier) {
-    let cooldowns = [ '1:00', '0:55', '0:49', '0:42', '0:34', '0:25' ];
-
-    //
-    // Intellect has different cooldowns for different supers. Things like
-    // discipline and strength doesn't change based on subclass.
-    //
-    if ('intellect' !== type) return cooldowns[teir];
-
     const subclass = this.subclassName();
-    cooldowns = [ '5:30', '5:14', '4:57', '4:39', '4:20', '4:00' ];
+    let cooldowns;
 
-    if (['Sunsinger', 'Defender', 'Striker', 'Nightstalker'].indexOf(this.subclassName())) {
-      cooldowns = [ '5:00', '4:46', '4:31', '4:15', '3:58', '3:40' ];
+    switch (type) {
+      //
+      // Discipline is the only cool down that is consistent between all
+      // subclasses.
+      //
+      case 'discipline':
+        cooldowns = [ '1:00', '0:55', '0:49', '0:42', '0:34', '0:25' ];
+      break;
+
+      //
+      // For intellect, most "defensive" supers have a lower cool down that
+      // other supers so we need to return the correct set based on subclass.
+      //
+      case 'intellect':
+        if (['Sunsinger', 'Defender', 'Striker', 'Nightstalker'].indexOf(subclass)) {
+          cooldowns = [ '5:00', '4:46', '4:31', '4:15', '3:58', '3:40' ];
+        } else {
+          cooldowns = [ '5:30', '5:14', '4:57', '4:39', '4:20', '4:00' ];
+        }
+      break;
+
+      //
+      // Basically if you have an active charge that can throw stuff, it will take
+      // longer to charge so again, return the correct set based on subclass.
+      //
+      case 'strength':
+        if (['Gunslinger', 'Nightstalker'].indexOf(subclass)) {
+          cooldowns = [ '1:10', '1:04', '0:57', '0:49', '0:40', '0:29' ];
+        } else {
+          cooldowns = [ '1:00', '0:55', '0:49', '0:42', '0:34', '0:25' ];
+        }
+      break;
     }
 
-    return cooldowns[teir];
+    return cooldowns[tier];
+  }
+
+  /**
+   * Returns the correct bucket id for a given slot.
+   *
+   * @returns {Number} Bucket id.
+   * @public
+   */
+  slot(what) {
+    switch (what) {
+      case 'primary':
+      return 1498876634;
+
+      case 'special':
+      case 'secondary':
+      return 2465295065;
+
+      case 'heavy':
+      return 953998645;
+
+      case 'ghost':
+      return 4023194814;
+
+      case 'head':
+      case 'helmet':
+      return 3448274439;
+
+      case 'chest':
+      case 'body':
+      return 14239492;
+
+      case 'arm':
+      case 'arms':
+      case 'glove':
+      case 'gloves':
+      case 'gauntlet':
+      case 'gauntlets':
+      return 3551918588;
+
+      case 'leg':
+      case 'legs':
+      case 'boot':
+      case 'boots':
+      case 'greave':
+      case 'greaves':
+      return 20886954;
+
+      case 'class':
+      case 'mark':
+      case 'bond':
+      case 'cape':
+      case 'cloak':
+      return 1585787867;
+
+      case 'artifact':
+      return 0;
+    }
   }
 
   /**
