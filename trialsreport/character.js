@@ -14,6 +14,24 @@ export default class Character {
 
     this.base = character.characterBase;
     this.stats = character.stats;
+    this.character = character;
+  }
+
+  /**
+   * All the information that is present on the emblem.
+   *
+   * @returns {Object}
+   * @public
+   */
+  emblem() {
+    return {
+      background: this.character.backgroundPath,
+      icon: this.character.emblemPath,
+
+      grimoire: +this.base.grimoire,
+      level: +this.character.characterLevel,
+      lightlevel: +this.base.powerLevel,
+    }
   }
 
   /**
@@ -65,10 +83,65 @@ export default class Character {
   }
 
   /**
+   * Find the weapon that the user currently has equipped.
+   *
+   * @param {String} slot What slot should it be in.
+   * @returns {Object|Undefined} The found item.
+   * @public
+   */
+  equipped(slot) {
+    const bucket = this.slot(slot);
+    const item = this.inventory.items.filter((item) => {
+      //
+      // When we look up our self, we get _everything_ that is in our inventory,
+      // even shit that is not equipped. We don't want that. We only want to know
+      // what is equipped so we're going to ignore these items.
+      //
+      if (item.transferStatus !== 1) return false;
+      return item.bucketHash === bucket;
+    }).pop();
+
+    //
+    // Unfortunately we couldn't find the requested item so we're going to
+    // return here early.
+    //
+    if (!item) return;
+
+    const element = this.definitions.damageTypes[item.damageTypeHash];
+    const stats = Object.keys(item.stats).map((statHash) => {
+      const statDetails = this.definitions.stats[statHash];
+      const stat = item.stats[statHash];
+
+      return {
+        name: statDetails.statName,
+        title: statDetails.statDescription,
+        minimum: stat.minimum,
+        maximum: stat.maximum,
+        value: stat.value
+      }
+    });
+
+    return {
+      title: item.itemDescription,
+      type: item.itemTypeName,
+      name: item.itemName,
+      icon: item.icon,
+
+      stats: stats,
+      element: element && {
+        name: element.damageTypeName,
+        title: element.description,
+        icon: element.iconPath
+      }
+    }
+  }
+
+  /**
    * Returns the correct bucket id for a given slot.
    *
+   * @param {String} what Name of the slot we're searching for
    * @returns {Number} Bucket id.
-   * @public
+   * @private
    */
   slot(what) {
     switch (what) {
@@ -117,7 +190,7 @@ export default class Character {
       return 1585787867;
 
       case 'artifact':
-      return 0;
+      return 434908299;
     }
   }
 
@@ -162,6 +235,8 @@ export default class Character {
     if (id === 2271682572) return 'Warlock';
     if (id === 671679327) return 'Hunter';
     if (id === 3655393761) return 'Titan';
+
+    return 'Unknown';
   }
 
   /**
@@ -171,7 +246,9 @@ export default class Character {
    * @public
    */
   subclassName() {
-    const id = '';
+    if (!this.base.peerView) return 'Unknown';
+
+    const id = this.base.peerView.equipment[0].itemHash;
 
     if (id === 21395672) return 'Sunbreaker';
     if (id === 2007186000) return 'Defender';
