@@ -149,23 +149,6 @@ export default class TrialsReport extends EventEmitter {
     const charBase = character.characterBase;
     const build = charBase.stats;
 
-    //
-    // Transform the items array to something useful.
-    //
-    const definitions = inventory.definitions.items;
-    const items = inventory.data.items.reduce((memo, item) => {
-      //
-      // When we look up our self, we get _everything_ that is in our inventory,
-      // even shit that is not equipped. We don't want that. We only want to know
-      // what is equipped so we're going to ignore these items.
-      //
-      if (item.transferStatus !== 1) return memo;
-
-      const details = definitions[item.itemHash];
-      memo[details.itemTypeName] = Object.assign(item, details);
-      return memo;
-    }, {});
-
     return {
       elo: +guardian.elo ? Math.round(guardian.elo) : '-',
       kills: +guardian.kills || 0,
@@ -178,7 +161,7 @@ export default class TrialsReport extends EventEmitter {
         name: guardian.name,
         lightlevel: +charBase.powerLevel,
         level: +character.characterLevel,
-        grimoire: +charBase.grimoire,
+        grimoire: +charBase.grimoireScore,
         playtime: +charBase.minutesPlayedThisSession,
         className: this.className(charBase)
       },
@@ -193,7 +176,9 @@ export default class TrialsReport extends EventEmitter {
         recovery: build.STAT_RECOVERY.value
       },
 
-      items: items
+      inventory: inventory,
+      character: character,
+      guardian: guardian
     };
   }
 
