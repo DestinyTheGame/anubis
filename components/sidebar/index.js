@@ -14,7 +14,7 @@ export default class Sidebar extends Component {
     return (
       <div className="box thirty sidebar">
         <div className="details">
-          <Guardian />
+          <Guardian small={ true } />
         </div>
 
         <div className="trials-card">
