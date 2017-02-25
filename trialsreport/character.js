@@ -1,46 +1,3 @@
-const hideNodes = [
-  21956111,   // Orange Chroma
-  73039185,   // Blue Chroma
-  74523350,   // Cannibalism
-  193091484,  // Increase Strength
-  213547364,  // Will of Light
-  217480046,  // Twist Fate
-  300289986,  // Dreg Burn
-  431265444,  // Mutineer
-  472357138,  // Void Damage
-  519240296,  // White Chroma
-  617082448,  // Reforge Ready
-  643689081,  // Kinetic Damage
-  994456416,  // Burgeoning Hunger
-  1034209669, // Increase Intellect
-  1259277924, // Red Chroma
-  1263323987, // Increase Discipline
-  1270552711, // Infuse
-  1305317488, // Aspect Swap
-  1450441122, // Demotion
-  1516989546, // Magenta Chroma
-  1644354530, // Sword Strike
-  1782221257, // Shank Burn
-  1891493121, // Dark Breaker
-  1920788875, // Ascend
-  1975859941, // Solar Damage
-  2086308543, // Upgrade Defense
-  2133116599, // Deactivate Chroma
-  2470010183, // Hive Disruptor
-  2493487228, // Green Chroma
-  2688431654, // Arc Damage
-  2689436406, // Upgrade Damage
-  2845051978, // Ice Breaker
-  2978058659, // Oracle Disruptor
-  3200611139, // Scabbard
-  3575189929, // Hands-On
-  3707521590, // Vandal Burn
-  3742851299, // Lich Bane
-  3838454323, // Yellow Chroma
-  3985040583, // Disciplinarian
-  4197414939  // Inverse Shadow
-];
-
 /**
  * Character model.
  *
@@ -211,6 +168,7 @@ export default class Character {
       type: item.itemTypeName,
       name: item.itemName,
       icon: item.icon,
+      tier: item.tierTypeName,
 
       stats: stats,
       element: element && {
@@ -221,6 +179,32 @@ export default class Character {
 
       perks: this.findPerks(item)
     }
+  }
+
+  /**
+   * Get the complete loadout of the character.
+   *
+   * @returns {Object}
+   * @public
+   */
+  loadout() {
+    let armor = this.equipped('helmet');
+
+    //
+    // Try and find an exotic piece of armor to present.
+    //
+    if (!armor.tier === 'Exotic') armor = this.equipped('arms');
+    if (!armor.tier === 'Exotic') armor = this.equipped('body');
+    if (!armor.tier === 'Exotic') armor = this.equipped('legs');
+
+    return {
+      primary: this.equipped('primary'),
+      special: this.equipped('special'),
+      heavy: this.equipped('heavy'),
+
+      artifact: this.equipped('artifact'),
+      armor: armor
+    };
   }
 
   /**
@@ -308,6 +292,8 @@ export default class Character {
     else if (rating >= 1300 && rating <= 1499) return 'gold';
     else if (rating >= 1500 && rating <= 1699) return 'platinum';
     else if (rating >= 1700 && rating <= 9999) return 'diamond';
+
+    return 'unranked';
   }
 
   /**
@@ -346,5 +332,56 @@ export default class Character {
     if (id === 1716862031) return 'Gunslinger';
     if (id === 4143670657) return 'Nightstalker';
     if (id === 2962927168) return 'Bladedancer';
+
+    return 'Unknown';
   }
 }
+
+/**
+ * List of stepNodeHashes that we don't want to show up as weapon perks.
+ *
+ * @type {Array}
+ * @private
+ */
+const hideNodes = [
+  21956111,   // Orange Chroma
+  73039185,   // Blue Chroma
+  74523350,   // Cannibalism
+  193091484,  // Increase Strength
+  213547364,  // Will of Light
+  217480046,  // Twist Fate
+  300289986,  // Dreg Burn
+  431265444,  // Mutineer
+  472357138,  // Void Damage
+  519240296,  // White Chroma
+  617082448,  // Reforge Ready
+  643689081,  // Kinetic Damage
+  994456416,  // Burgeoning Hunger
+  1034209669, // Increase Intellect
+  1259277924, // Red Chroma
+  1263323987, // Increase Discipline
+  1270552711, // Infuse
+  1305317488, // Aspect Swap
+  1450441122, // Demotion
+  1516989546, // Magenta Chroma
+  1644354530, // Sword Strike
+  1782221257, // Shank Burn
+  1891493121, // Dark Breaker
+  1920788875, // Ascend
+  1975859941, // Solar Damage
+  2086308543, // Upgrade Defense
+  2133116599, // Deactivate Chroma
+  2470010183, // Hive Disruptor
+  2493487228, // Green Chroma
+  2688431654, // Arc Damage
+  2689436406, // Upgrade Damage
+  2845051978, // Ice Breaker
+  2978058659, // Oracle Disruptor
+  3200611139, // Scabbard
+  3575189929, // Hands-On
+  3707521590, // Vandal Burn
+  3742851299, // Lich Bane
+  3838454323, // Yellow Chroma
+  3985040583, // Disciplinarian
+  4197414939  // Inverse Shadow
+];
