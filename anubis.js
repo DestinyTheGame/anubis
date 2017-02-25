@@ -1,5 +1,5 @@
 import electron, { app, BrowserWindow, shell } from 'electron';
-import { gets } from './storage';
+import { gets, remove } from './storage';
 import path from 'path';
 import url from 'url';
 
@@ -39,18 +39,20 @@ function create(boot) {
     //
     // General redirect handler.
     //
-    const handleRedirect = (e, url) => {
-      if (url !== anubis.webContents.getURL()) {
+    const handleRedirect = (e, href) => {
+      const parsed = url.parse(href);
+
+      if ('file:' !== parsed.protocol) {
         e.preventDefault();
-        return shell.openExternal(url);
+        return shell.openExternal(href);
       }
 
       //
       // Special case for logout, we really want to just kill the app after
       // nuking all logout information.
       //
-      if (url === '/logout') {
-        storage.remove('accessToken', 'refreshToken', (err) => {
+      if ('/logout' === parsed.pathname) {
+        remove('accessToken', 'refreshToken', (err) => {
           app.quit();
         });
       }
