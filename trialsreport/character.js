@@ -193,9 +193,9 @@ export default class Character {
     //
     // Try and find an exotic piece of armor to present.
     //
-    if (!armor.tier === 'Exotic') armor = this.equipped('arms');
-    if (!armor.tier === 'Exotic') armor = this.equipped('body');
-    if (!armor.tier === 'Exotic') armor = this.equipped('legs');
+    if (armor.tier !== 'Exotic') armor = this.equipped('arms');
+    if (armor.tier !== 'Exotic') armor = this.equipped('body');
+    if (armor.tier !== 'Exotic') armor = this.equipped('legs');
 
     return {
       primary: this.equipped('primary'),
