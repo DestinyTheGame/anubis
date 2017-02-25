@@ -43,13 +43,19 @@ export default function preboot(boot, next) {
       }
     });
 
-    const destiny = new Destiny(bungie, { XHR: XMLHttpRequest });
-    const guardian = new Guardian({ XHR: XMLHttpRequest });
+    //
+    // Request an active token to ensure that this shit is working as intended
+    // before we continue with showing the rest of the UI.
+    //
+    bungie.token((err) => {
+      const destiny = new Destiny(bungie, { XHR: XMLHttpRequest });
+      const guardian = new Guardian({ XHR: XMLHttpRequest });
 
-    boot.set('guardian', guardian);
-    boot.set('destiny', destiny);
-    boot.set('bungie', bungie);
+      boot.set('guardian', guardian);
+      boot.set('destiny', destiny);
+      boot.set('bungie', bungie);
 
-    next();
+      next(err);
+    });
   });
 };
