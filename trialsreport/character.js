@@ -164,6 +164,7 @@ export default class Character {
     });
 
     return {
+      attack: item.primaryStat.value,
       title: item.itemDescription,
       type: item.itemTypeName,
       name: item.itemName,
