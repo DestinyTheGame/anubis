@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Character from '../../trialsreport/character';
 import Loading from 'halogen/PulseLoader';
 import WebSockets from '../websocket';
 import Emblem from './emblem';
@@ -129,6 +130,9 @@ export default class Guardian extends Component {
           { this.state.loadout.map((loadout, i) => {
             const emblem = loadout.emblem;
             const build = loadout.build;
+
+            // const char = new Character(loadout.character, loadout.inventory.data, loadout.inventory.definitions);
+            // console.log(char, char.subclassName(), char.loadout());
 
             return (
               <div key={ 'loadout'+ i } className='member'>
