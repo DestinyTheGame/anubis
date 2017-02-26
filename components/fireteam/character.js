@@ -13,7 +13,7 @@ export default class Character {
     this.inventory = inventory;
 
     this.base = character.characterBase;
-    this.stats = character.stats;
+    this.stats = this.base.stats;
     this.character = character;
   }
 
@@ -180,6 +180,55 @@ export default class Character {
 
       perks: this.findPerks(item)
     }
+  }
+
+  /**
+   * Return the users abilities and their cool downs.
+   *
+   * @returns {Object} Abilities and their cool downs.
+   * @public
+   */
+  abilities() {
+    const discipline = this.stats.STAT_DISCIPLINE.value;
+    const disciplineTier = this.tier(discipline);
+
+    const strength = this.stats.STAT_STRENGTH.value;
+    const strengthTier = this.tier(strength);
+
+    const intellect = this.stats.STAT_INTELLECT.value;
+    const intellectTier = this.tier(intellect);
+
+    return {
+      discipline: {
+        value: discipline,
+        tier: disciplineTier,
+        cooldown: this.cooldown('discipline', disciplineTier)
+      },
+      intellect: {
+        value: intellect,
+        tier: intellectTier,
+        cooldown: this.cooldown('intellect', intellectTier)
+      },
+      strength: {
+        value: strength,
+        tier: strengthTier,
+        cooldown: this.cooldown('strength', strengthTier)
+      }
+    };
+  }
+
+  /**
+   * Return the build of the account.
+   *
+   * @returns {Object} The build.
+   * @public
+   */
+  build() {
+    return {
+      armor: this.stats.STAT_ARMOR.value,
+      agility: this.stats.STAT_AGILITY.value,
+      recovery: this.stats.STAT_RECOVERY.value
+    };
   }
 
   /**
