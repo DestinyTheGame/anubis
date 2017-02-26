@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import Character from '../../trialsreport/character';
 import Loading from 'halogen/PulseLoader';
 import WebSockets from '../websocket';
-import Emblem from './emblem';
-import Stats from './stats';
-import Elo from './elo';
+import Fireteam from '../fireteam';
 
 /**
- * Guardian.
+ * Guardian.GG / Trials report searching.
  *
  * @constructor
  * @public
@@ -47,6 +44,8 @@ export default class Guardian extends Component {
    * @private
    */
   parser(data) {
+    const fireteam = data.loadout;
+
     if (data.type !== 'report') return;
 
     if ('err' in data) return this.setState({
@@ -54,9 +53,9 @@ export default class Guardian extends Component {
       results: Guardian.ERROR
     });
 
-    if ('loadout' in data) return this.setState({
+    if (fireteam) return this.setState({
       results: Guardian.FOUND,
-      loadout: data.loadout
+      members: fireteam
     });
   }
 
@@ -76,97 +75,105 @@ export default class Guardian extends Component {
   }
 
   /**
+   * Render a loading screen.
+   *
+   * @returns {Component} The loading panel.
+   * @private
+   */
+  loading() {
+    return (
+      <div className='loading center'>
+        <Loading color='#eaedf3' />
+      </div>
+    );
+  }
+
+  /**
+   * Show help instructions on how to use this page.
+   *
+   * @returns {Component} The help panel.
+   * @private
+   */
+  help() {
+    return (
+      <div className='help center'>
+        <p>
+          Enter the name of one of your opponents in the search box above to
+          generate a trials report of their fire team.
+        </p>
+      </div>
+    );
+  }
+
+  /**
+   * Received an invalid username, can't search it up so.
+   *
+   * @returns {Component} The help panel.
+   * @private
+   */
+  invalid() {
+    return (
+      <div className='help center'>
+        <p>
+          The supplied username does not exist, did you make typo?
+        </p>
+      </div>
+    );
+  }
+
+  /**
+   * Render an error state while looking up the users.
+   *
+   * @returns {Component} The help panel.
+   * @private
+   */
+  error() {
+    return (
+      <div className='help center'>
+        <p>
+          Received an unknown error while searching: <strong>{ this.state.message }</strong>
+        </p>
+      </div>
+    );
+  }
+
+  /**
+   * Present the search results.
+   *
+   * @returns {Component} The status of the search.
+   * @private
+   */
+  results() {
+    switch (this.state.results) {
+      case Guardian.LOADING:
+        return this.loading();
+      break;
+
+      case Guardian.HINT:
+        return this.help();
+      break;
+
+      case Guardian.ERROR:
+        return this.error();
+      break;
+
+      case Guardian.INVALID:
+        return this.invalid();
+      break;
+
+      default:
+        return <Fireteam members={ this.state.members } small={ this.props.small } />
+      break;
+    }
+  }
+
+  /**
    * Render the guardian.gg layout
    *
    * @returns {Component}
    * @private
    */
   render() {
-    let results;
-
-    switch (this.state.results) {
-      case Guardian.LOADING:
-        results = (
-          <div className='loading center'>
-            <Loading color='#eaedf3' />
-          </div>
-        );
-      break;
-
-      case Guardian.HINT:
-        results = (
-          <div className='help center'>
-            <p>
-              Enter the name of one of your opponents in the search box above to
-              generate a trials report of their fire team.
-            </p>
-          </div>
-        );
-      break;
-
-      case Guardian.ERROR:
-        results = (
-          <div className='help center'>
-            <p>
-              Received an unknown error while searching: <strong>{ this.state.message }</strong>
-            </p>
-          </div>
-        );
-      break;
-
-      case Guardian.INVALID:
-        results = (
-          <div className='help center'>
-            <p>
-              The supplied username does not exist, did you make typo?
-            </p>
-          </div>
-        );
-      break;
-
-      default:
-        results = (
-          <div className='fireteam'>
-          { this.state.loadout.map((loadout, i) => {
-            const emblem = loadout.emblem;
-            const build = loadout.build;
-
-            // const char = new Character(loadout.character, loadout.inventory.data, loadout.inventory.definitions);
-            // console.log(char, char.subclassName(), char.loadout());
-
-            return (
-              <div key={ 'loadout'+ i } className='member'>
-                <Elo rating={ loadout.elo } />
-                <Emblem { ...emblem } kd={ (loadout.kills / loadout.deaths).toFixed(2) } />
-
-                <div className='tiers'>
-                  <div className='base'>
-                    <Stats name='Armour' value={ build.armor } />
-                    <Stats name='Recovery' value={ build.recovery } />
-                    <Stats name='Agility' value={ build.agility } />
-                  </div>
-
-                  <dl>
-                    <dt>Intellect</dt>
-                    <dd>T{ build.intellect.tier }</dd>
-                  </dl>
-                  <dl>
-                    <dt>Discipline</dt>
-                    <dd>T{ build.discipline.tier }</dd>
-                  </dl>
-                  <dl>
-                    <dt>Strength</dt>
-                    <dd>T{ build.strength.tier }</dd>
-                  </dl>
-                </div>
-              </div>
-            );
-          })}
-          </div>
-        );
-      break;
-    }
-
     return (
       <div className='guardian'>
         <form action='#' onSubmit={ this.search.bind(this) }>
@@ -179,7 +186,7 @@ export default class Guardian extends Component {
         </form>
 
         <div className='results'>
-          { results }
+          { this.results() }
         </div>
       </div>
     );
@@ -205,24 +212,3 @@ Guardian.FOUND    = 5;
  * @private
  */
 Guardian.contextTypes = WebSockets.context;
-
-/**
- * Guardian Settings Page.
- *
- * @constructor
- * @public
- */
-class Settings extends Component {
-  render() {
-    return (
-      <div>
-        Guardian Settings page.
-      </div>
-    );
-  }
-}
-
-//
-// Expose the Settings page on the Guardian constructor.
-//
-Guardian.Settings = Settings;
