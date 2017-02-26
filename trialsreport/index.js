@@ -107,38 +107,6 @@ export default class TrialsReport extends EventEmitter {
   }
 
   /**
-   * Calculate the tier of their int/dis/str build.
-   *
-   * @param {Number} value Int, Dis or Str.
-   * @returns {Object} Tier specification.
-   * @private
-   */
-  tier(value) {
-    const max = 300;
-    const tierValue = max / 5;
-
-    return {
-      value: value,
-      tier: Math.floor(Math.min(value, max) / tierValue)
-    }
-  }
-
-  /**
-   * ClassName of the class.
-   *
-   * @param {Object} base Character base.
-   * @returns {String} character classname
-   * @private
-   */
-  className(base) {
-    const id = base.classHash;
-
-    if (id === 2271682572) return 'Warlock';
-    if (id === 671679327) return 'Hunter';
-    if (id === 3655393761) return 'Titan';
-  }
-
-  /**
    * Format all the presented data and format it in something useful.
    *
    * @param {Object} guardian Guardian.GG member information.
@@ -146,35 +114,11 @@ export default class TrialsReport extends EventEmitter {
    * @param {Object} inventory Users active inventory.
    */
   format(guardian, character, inventory) {
-    const charBase = character.characterBase;
-    const build = charBase.stats;
-
     return {
       elo: +guardian.elo ? Math.round(guardian.elo) : '-',
       kills: +guardian.kills || 0,
       deaths: +guardian.deaths || 0,
       assists: +guardian.assists || 0,
-
-      emblem: {
-        icon: character.emblemPath,
-        background: character.backgroundPath,
-        name: guardian.name,
-        lightlevel: +charBase.powerLevel,
-        level: +character.characterLevel,
-        grimoire: +charBase.grimoireScore,
-        playtime: +charBase.minutesPlayedThisSession,
-        className: this.className(charBase)
-      },
-
-      build: {
-        discipline: this.tier(build.STAT_DISCIPLINE.value),
-        intellect: this.tier(build.STAT_INTELLECT.value),
-        strength: this.tier(build.STAT_STRENGTH.value),
-
-        armor: build.STAT_ARMOR.value,
-        agility: build.STAT_AGILITY.value,
-        recovery: build.STAT_RECOVERY.value
-      },
 
       inventory: inventory,
       character: character,
