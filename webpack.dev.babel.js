@@ -5,7 +5,7 @@ const config = {
   devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client?reload=true&path=http://localhost:9000/__webpack_hmr',
-    './app',
+    './components/app/index.js',
   ],
   module: {
     rules: [
@@ -16,6 +16,10 @@ const config = {
       {
         test: /\.png|\.svg$/,
         loader: 'file-loader'
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
   },

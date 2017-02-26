@@ -1,0 +1,98 @@
+.trials {
+  width: 309px;
+}
+
+.card {
+  .wins {
+    margin-bottom: 10px;
+  }
+
+  .optional {
+    overflow: hidden;
+  }
+
+  .losses {
+    float: left ;
+  }
+
+  .boons {
+    float: right;
+    margin-right: 4px;
+  }
+}
+
+.dot {
+  border-radius: 50%;
+  display: inline-block;
+  height: 25px;
+  margin-right: 10px;
+  position: relative;
+  vertical-align: top;
+  width: 25px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.won {
+    background-color: #FFD700;
+  }
+
+  &.lost {
+    background-color: #CA1313;
+  }
+
+  &.boon {
+    background-color: #306bd8;
+  }
+
+  &.unfilled {
+    background-color: #757643;
+  }
+
+  &.mercy {
+    position: relative;
+
+    &:after {
+      content: '';
+      height: 6px;
+      width: 13px;
+      border-radius: 90px 90px 0 0;
+      background: white;
+      position: absolute;
+      transform: rotate(130deg);
+      top: 12px;
+      left: 8px;
+    }
+  }
+
+  &.favor {
+    position: relative;
+
+    &:after {
+      content: '';
+      height: 10px;
+      width: 10px;
+      border-radius: 90px;
+      border: 3px solid #FFF;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+  }
+
+  &.boldness {
+    position: relative;
+
+    &:after {
+      content: '';
+      height: 13px;
+      width: 13px;
+      border-radius: 90px;
+      background: white;
+      position: absolute;
+      top: 6px;
+      left: 6px;
+    }
+  }
+}

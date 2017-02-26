@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import WebSockets from '../websocket';
 import StaleState from 'stale-state';
 import Trials from './trials';
+import './card.scss';
 
 /**
  * Rendering of the Trials card.

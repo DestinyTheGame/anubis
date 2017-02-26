@@ -1,0 +1,38 @@
+.sidebar {
+  background: #FFFFFF;
+  border-left: 1px solid #A1ADC3;
+  min-height: 100vh;
+  min-width: 350px;
+  outline: 5px solid #D2D5DA;
+
+  .details {
+    margin-bottom: -95px;
+    min-height: 100%;
+  }
+
+  .header {
+    background: #2B2D39;
+    color: #FFF;
+    padding: 10px 25px;
+  }
+
+  .trials-card {
+    background: #2B2D39;
+    border-top: 1px solid #A1ADC3;
+    height: 95px;
+    padding: 20px;
+    width: auto;
+
+    .trials.loading {
+      text-align: center;
+    }
+
+    .dot.unfilled {
+      background: #51535E;
+    }
+  }
+}
+
+.main {
+  background: #EAEDF3;
+}

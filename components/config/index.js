@@ -4,6 +4,7 @@ import WebSockets from '../websocket';
 import Tooltip from 'react-tooltip';
 import Toggle from './toggle';
 import Editor from './editor';
+import './config.scss';
 
 //
 // Add some addons to the editor.

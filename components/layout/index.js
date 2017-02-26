@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, hashHistory } from 'react-router';
 import URL from 'url-parse';
+import './menu.scss';
 
 /**
  * Layout.

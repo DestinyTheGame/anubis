@@ -1,6 +1,7 @@
 import { Router, Route, IndexRedirect, hashHistory } from 'react-router';
 import React, { Component, PropTypes } from 'react';
 import { render } from 'react-dom';
+import './grid.scss';
 
 //
 // The various of components that we use to render our application.
@@ -14,7 +15,7 @@ import {
   Guardian,     // Guardian.gg lookups
   Dashboard,    // Default rendering of the dashboard.
   WebSocket,    // Provides connectivity context.
-} from './components';
+} from '../';
 
 /**
  * The actual application that is presented to our users.

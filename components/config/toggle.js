@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import WebSockets from '../websocket';
 import Toggler from 'react-toggle';
+import './toggle.scss';
 
 /**
  * Toggle a setting.

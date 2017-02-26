@@ -16,11 +16,42 @@ export default class Fireteam extends Component {
   constructor(props) {
     super(...arguments);
 
+    this.process(props);
+  }
+
+  /**
+   * Process the properties so we can pre-transform the data structures in to
+   * workable models.
+   *
+   * @param {Object} props Component props.
+   * @private
+   */
+  process(props) {
     this.members = props.members.map((data) => {
       return Object.assign(data, {
         character: new Character(data.character, data.inventory.data, data.inventory.definitions),
       });
     });
+  }
+
+  /**
+   * Process the properties.
+   *
+   * @param {Object} props Component props.
+   * @private
+   */
+  componentWillReceiveProps(props) {
+    //
+    // TODO: We've received a new fire team, check if this is the same fire team
+    // as before and when this is the case we can start detecting possible
+    // changes in their load out and display that to the user. We probably want
+    // to look for changes in
+    //
+    // - Subclass, Primary, Special, Heavy, Armor, Artifact
+    //
+    const members = this.members;
+
+    this.process(props);
   }
 
   /**
@@ -43,7 +74,7 @@ export default class Fireteam extends Component {
   }
 
   /**
-   * Render the emblem of a fireteam member including all of its details.
+   * Render the emblem of a fire team member including all of its details.
    *
    * @param {Object} data All the gathered data.
    * @returns {Component} User emblem.

@@ -44,9 +44,10 @@ export default class Elo extends Component {
   render() {
     const rating = this.props.rating;
     const league = this.league(rating);
+    const title = 'The bigger the Elo, the smaller the PP. ('+ league +')';
 
     return (
-      <div className='elo' title={ league } style={{ background: this.colors[league] }}>
+      <div className='elo' title={ title } style={{ background: this.colors[league] }}>
         { rating }
       </div>
     );

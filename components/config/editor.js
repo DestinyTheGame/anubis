@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import CSSSMode from 'codemirror/mode/css/css';
 import CodeMirror from 'react-codemirror';
 import WebSockets from '../websocket';
+import './editor.scss';
 
 /**
  * Code Editor.

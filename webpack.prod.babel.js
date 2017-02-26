@@ -4,7 +4,7 @@ import webpack from 'webpack';
 //
 // Override our development configuration with prod locations.
 //
-config.entry = './app';
+config.entry = './components/app/index.js';
 config.output = {
   path: __dirname + '/dist',
   publicPath: './dist/',

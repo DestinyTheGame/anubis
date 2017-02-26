@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Loading from 'halogen/PulseLoader';
 import WebSockets from '../websocket';
 import Fireteam from '../fireteam';
+import './guardian.scss';
 
 /**
  * Guardian.GG / Trials report searching.
