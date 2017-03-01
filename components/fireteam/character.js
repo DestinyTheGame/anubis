@@ -125,7 +125,7 @@ export default class Character {
    * @public
    */
   equipped(slot) {
-    const bucketHash = this.slot(slot);
+    const { name, bucketHash } = this.slot(slot);
     const items = this.inventory.buckets.Equippable
 
     let item = items.filter((item) => {
@@ -170,6 +170,7 @@ export default class Character {
       name: item.itemName,
       icon: item.icon,
       tier: item.tierTypeName,
+      slot: name,
 
       stats: stats,
       element: element && {
@@ -218,6 +219,56 @@ export default class Character {
   }
 
   /**
+   * Get the quality rating of a given armor piece.
+   *
+   * @param {Object|String} item The result of #equipped()
+   * @returns {Number} Stat rating.
+   * @public
+   */
+  quality(item) {
+    if ('string' === typeof item) item = this.equipped(item);
+
+    const { slot, stat } = item;
+    let split;
+
+    //
+    // First step is finding the maximum split roll that every piece of armor
+    // could get. Most of this information is directly sourced from reddit <3
+    //
+    // https://www.reddit.com/r/DestinyTheGame/comments/4geixn/a_shift_in_how_we_view_stat_infusion_12tier
+    //
+    switch (slot) {
+      case 'helmet':
+        split = 46;
+      break;
+
+      case 'gauntlets':
+        split = 41;
+      break;
+
+      case 'chest':
+        split = 61;
+      break;
+
+      case 'legs':
+        split = 56;
+      break;
+
+      case 'ghost':
+      case 'class item':
+        split = 25;
+      break;
+
+      case 'artifact':
+        split = 38;
+      break;
+
+      default:
+        split = 0;
+    }
+  }
+
+  /**
    * Return the build of the account.
    *
    * @returns {Object} The build.
@@ -261,31 +312,49 @@ export default class Character {
    * Returns the correct bucket id for a given slot.
    *
    * @param {String} what Name of the slot we're searching for
-   * @returns {Number} Bucket id.
+   * @returns {Object} The bucketHash and normalized name.
    * @private
    */
   slot(what) {
     switch (what) {
       case 'primary':
-      return 1498876634;
+      return {
+        name: 'primary',
+        bucketHash: 1498876634
+      };
 
       case 'special':
       case 'secondary':
-      return 2465295065;
+      return {
+        name: 'special',
+        bucketHash: 2465295065
+      };
 
       case 'heavy':
-      return 953998645;
+      return {
+        name: 'heavy',
+        bucketHash: 953998645
+      };
 
       case 'ghost':
-      return 4023194814;
+      return {
+        name: 'ghost',
+        bucketHash: 4023194814
+      }
 
       case 'head':
       case 'helmet':
-      return 3448274439;
+      return {
+        name: 'helmet',
+        bucketHash: 3448274439
+      };
 
       case 'chest':
       case 'body':
-      return 14239492;
+      return {
+        name: 'chest',
+        bucketHash: 14239492
+      };
 
       case 'arm':
       case 'arms':
@@ -293,7 +362,10 @@ export default class Character {
       case 'gloves':
       case 'gauntlet':
       case 'gauntlets':
-      return 3551918588;
+      return {
+        name: 'gauntlets',
+        bucketHash: 3551918588
+      };
 
       case 'leg':
       case 'legs':
@@ -301,17 +373,27 @@ export default class Character {
       case 'boots':
       case 'greave':
       case 'greaves':
-      return 20886954;
+      return {
+        name: 'legs',
+        bucketHash: 20886954
+      }
 
+      case 'class item':
       case 'class':
       case 'mark':
       case 'bond':
       case 'cape':
       case 'cloak':
-      return 1585787867;
+      return {
+        name: 'class item',
+        bucketHash: 1585787867
+      };
 
       case 'artifact':
-      return 434908299;
+      return {
+        name: 'artifact',
+        bucketHash: 434908299
+      };
     }
   }
 

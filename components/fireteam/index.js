@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import Abilities from '../abilities';
 import Character from './character';
 import Tooltip from 'react-tooltip';
-import Equipped from './equipped';
-import Emblem from './emblem';
-import Stats from './stats';
+import Equipped from '../equipped';
+import Emblem from '../emblem';
+import Stats from '../stats';
 import Elo from './elo';
+import './fireteam.scss';
 
 /**
  * Fireteam component.
@@ -98,41 +100,9 @@ export default class Fireteam extends Component {
    */
   abilities(data) {
     const { character } = data;
-    const { intellect, discipline, strength } = character.abilities();
 
     return (
-      <div className='abilities'>
-        <dl>
-          <dt>Intellect</dt>
-          <dd>
-            T{ intellect.tier }
-
-            <span className='cooldown'>
-              { intellect.cooldown }
-            </span>
-          </dd>
-        </dl>
-        <dl>
-          <dt>Discipline</dt>
-          <dd>
-            T{ discipline.tier }
-
-            <span className='cooldown'>
-              { discipline.cooldown }
-            </span>
-          </dd>
-        </dl>
-        <dl>
-          <dt>Strength</dt>
-          <dd>
-            T{ strength.tier }
-
-            <span className='cooldown'>
-              { strength.cooldown }
-            </span>
-          </dd>
-        </dl>
-      </div>
+      <Abilities { ...character.abilities() } />
     );
   }
 

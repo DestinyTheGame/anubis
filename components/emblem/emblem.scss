@@ -1,0 +1,50 @@
+.emblem {
+  position: relative;
+  background-size: 100%;
+  height: 65px;
+
+  img {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  .name {
+    color: #FFF;
+    font-size: 18px;
+    left: 80px;
+    position: absolute;
+    top: 16px;
+  }
+
+  .class {
+    color: #FFF;
+    font-size: 13px;
+    left: 80px;
+    position: absolute;
+    top: 36px;
+  }
+
+  .light {
+    color: #F5DC56;
+    font-size: 18px;
+    position: absolute;
+    right: 10px;
+    top: 15px;
+
+    &:before {
+      content: "\2726";
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .kd {
+    color: #FFF;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 36px;
+  }
+}

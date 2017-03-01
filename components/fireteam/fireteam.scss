@@ -1,0 +1,18 @@
+.fireteam {
+  .member {
+    position: relative;
+    padding-left: 16px;
+  }
+
+  .elo {
+    color: rgba(255,255,255,.71);
+    font-size: 12px;
+    left: -58px;
+    position: absolute;
+    text-align: center;
+    top: 55px;
+    transform: rotate(90deg);
+    width: 129px;
+    z-index: 1;
+  }
+}

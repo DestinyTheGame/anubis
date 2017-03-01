@@ -1,4 +1,5 @@
 import React from 'react';
+import './stats.scss';
 
 /**
  * Representation of a single stat bar.
