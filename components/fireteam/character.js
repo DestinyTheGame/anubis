@@ -517,5 +517,15 @@ const hideNodes = [
   3742851299, // Lich Bane
   3838454323, // Yellow Chroma
   3985040583, // Disciplinarian
-  4197414939  // Inverse Shadow
+  4197414939, // Inverse Shadow
+
+  //
+  // Ornaments
+  //
+  889765000,  // Spec ops
+  3714326989, // Artic Survial
+  4021291143, // Dunemaker
+  2102232042, // Nanohance
+  2490282438, // Fallen Ass.
+  888337503,  // Crucible ass.
 ];
