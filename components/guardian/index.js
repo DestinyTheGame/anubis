@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Loading from 'halogen/PulseLoader';
 import WebSockets from '../websocket';
+import classnames from 'classnames';
 import Fireteam from '../fireteam';
 import './guardian.scss';
 
@@ -82,9 +83,11 @@ export default class Guardian extends Component {
    * @private
    */
   loading() {
+    const color = this.props.small ? '#EAEDF3' : '#7E829B';
+
     return (
       <div className='loading center'>
-        <Loading color='#eaedf3' />
+        <Loading color={ color } />
       </div>
     );
   }
@@ -175,8 +178,12 @@ export default class Guardian extends Component {
    * @private
    */
   render() {
+    const className = classnames('guardian', {
+      main: !this.props.small
+    });
+
     return (
-      <div className='guardian'>
+      <div className={ className }>
         <form action='#' onSubmit={ this.search.bind(this) }>
           <fieldset>
             <input type='text' placeholder='Search for username' ref={ r => { this.input = r } } />

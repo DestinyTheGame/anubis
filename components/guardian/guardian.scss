@@ -1,5 +1,14 @@
 .guardian {
+  &.main {
+    min-height: 100vh;
+
+    .center {
+      margin-top: 50vh;
+    }
+  }
+
   form {
+    background: #FFF;
     border-bottom: 1px solid #A1ADC3;
     padding: 15px;
   }
