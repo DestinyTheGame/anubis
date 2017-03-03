@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Abilities from '../abilities';
 import Character from './character';
 import Tooltip from 'react-tooltip';
+import classnames from 'classnames';
+import Ability from '../abilities';
 import Equipped from '../equipped';
 import Emblem from '../emblem';
 import Stats from '../stats';
@@ -11,6 +12,7 @@ import './fireteam.scss';
 /**
  * Fireteam component.
  *
+ * @param {Object} props The properties of the component.
  * @constructor
  * @private
  */
@@ -30,8 +32,10 @@ export default class Fireteam extends Component {
    */
   process(props) {
     this.members = props.members.map((data) => {
+      const { character, inventory } = data;
+
       return Object.assign(data, {
-        character: new Character(data.character, data.inventory.data, data.inventory.definitions),
+        character: new Character(character, inventory.data, inventory.definitions)
       });
     });
   }
@@ -67,27 +71,11 @@ export default class Fireteam extends Component {
     const { armor, agility, recovery } = character.build();
 
     return (
-      <div className='base'>
+      <div className='build'>
         <Stats name='Armour' value={ armor } />
         <Stats name='Recovery' value={ recovery } />
         <Stats name='Agility' value={ agility } />
       </div>
-    );
-  }
-
-  /**
-   * Render the emblem of a fire team member including all of its details.
-   *
-   * @param {Object} data All the gathered data.
-   * @returns {Component} User emblem.
-   * @private
-   */
-  emblem(data) {
-    const { character, kills, deaths } = data;
-    const kd = (kills / deaths).toFixed(2);
-
-    return (
-      <Emblem { ...character.emblem() } kd={ kd } />
     );
   }
 
@@ -100,9 +88,30 @@ export default class Fireteam extends Component {
    */
   abilities(data) {
     const { character } = data;
+    const { intellect, discipline, strength } = character.abilities();
 
     return (
-      <Abilities { ...character.abilities() } />
+      <div className='abilities'>
+        <Ability name='Super' stat={ intellect } />
+        <Ability name='Nade' stat={ discipline } />
+        <Ability name='Melee' stat={ strength } />
+      </div>
+    );
+  }
+
+  /**
+   * Render the emblem of a fire team member including all of its details.
+   *
+   * @param {Object} data All the gathered data.
+   * @returns {Component} User emblem.
+   * @private
+   */
+  emblem(data) {
+    const { character, guardian } = data;
+    const kd = (guardian.kills / guardian.deaths).toFixed(2);
+
+    return (
+      <Emblem { ...guardian } { ...character.emblem() } kd={ kd } />
     );
   }
 
@@ -138,8 +147,13 @@ export default class Fireteam extends Component {
    * @private
    */
   render() {
+    const className = classnames('fireteam', {
+      large: !this.props.small,
+      small: this.props.small,
+    });
+
     return (
-      <div className='fireteam'>
+      <div className={ className }>
         {
           this.members.map((data, index) => {
             return (

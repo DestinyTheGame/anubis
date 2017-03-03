@@ -105,9 +105,11 @@ export default class Character {
         || !step
         || !step.nodeStepName
         || ~hideNodes.indexOf(step.nodeStepHash)
+        || node.hidden
       ) return;
 
       nodes.push({
+        id: step.nodeStepHash,
         name: step.nodeStepName,
         title: step.nodeStepDescription,
         icon: step.icon

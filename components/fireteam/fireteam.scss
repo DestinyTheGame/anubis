@@ -1,7 +1,26 @@
 .fireteam {
+  display: flex;
+
+  &.large {
+    flex-direction: row;
+
+    .member {
+      width: 33.33%;
+    }
+  }
+
+  &.small {
+    flex-direction: column;
+  }
+
   .member {
     position: relative;
-    padding-left: 16px;
+  }
+
+  .tiers {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
   }
 
   .elo {
