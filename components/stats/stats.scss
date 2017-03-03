@@ -1,36 +1,39 @@
-.stats {
-  background: #2b2d39;
-  height: 31%;
-  margin-bottom: 2px;
-  position: relative;
-  width: 120px;
+.build {
+  width: 25%;
 
-  .fill {
-    background: #7e829b;
-    bottom: 0;
-    display: block;
-    height: 100%;
-    position: absolute;
-    top: 0;
-  }
+  .stats {
+    background: #404040;
+    height: 31%;
+    margin-bottom: 2px;
+    position: relative;
 
-  .info {
-    color: #fff;
-    font-size: 12px;
-    height: 100%;
-    left: 5px;
-    position: absolute;
-    text-align: left;
-    top: 3px;
-    width: 100%;
-  }
+    .fill {
+      background: #7e829b;
+      bottom: 0;
+      display: block;
+      height: 100%;
+      position: absolute;
+      top: 0;
+    }
 
-  span {
-    font-weight: 400;
-  }
+    .info {
+      color: #fff;
+      font-size: 12px;
+      height: 100%;
+      left: 5px;
+      position: absolute;
+      text-align: left;
+      top: 3px;
+      width: 100%;
+    }
 
-  .value {
-    font-weight: 700;
-    padding-right: 4px;
+    span {
+      font-weight: 400;
+    }
+
+    .value {
+      font-weight: 700;
+      padding-right: 4px;
+    }
   }
 }
