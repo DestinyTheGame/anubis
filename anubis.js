@@ -64,7 +64,11 @@ function create(boot) {
 }
 
 /**
- * Every part of our application is booted and setup. So we can safely
+ * Every part of our application is booted and setup. So we can safely.
+ *
+ * @param {Error} err Optional error.
+ * @param {Map} boot boot object.
+ * @private.
  */
 export default function start(err, boot) {
   if (err) throw err; // @TODO display an error page.
