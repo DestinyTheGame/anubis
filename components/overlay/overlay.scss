@@ -1,18 +1,17 @@
-html { background-color: #00FF00 }
+.overlay {
+  background-color: #00FF00;
 
-/*/
- * Trials card specific changes.
-/*/
-.trials.inline {
-  width: auto;
-}
+  .trials.inline {
+    width: auto;
 
-.trials.inline .dot:last-child {
-  margin-right: 10px;
-}
+    .dot:last-child {
+      margin-right: 10px;
+    }
 
-.trials.inline .wins,
-.trials.inline .losses,
-.trials.inline .boons {
-  float: left;
+    .wins,
+    .losses,
+    .boons {
+      float: left;
+    }
+  }
 }

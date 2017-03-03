@@ -12,6 +12,16 @@ import './overlay.scss';
  */
 export default class Overlay extends Component {
   /**
+   * Put the CSS in overlay mode so we can apply custom styling to the page
+   * which does not bleed through on the application it self.
+   *
+   * @private
+   */
+  componentDidMount() {
+    document.documentElement.className = 'overlay';
+  }
+
+  /**
    * Conditionally render additional style in to the page. This is custom CSS
    * that people can use to create a custom styling for the overlay.
    *
