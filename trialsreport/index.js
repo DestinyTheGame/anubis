@@ -115,11 +115,6 @@ export default class TrialsReport extends EventEmitter {
    */
   format(guardian, character, inventory) {
     return {
-      elo: +guardian.elo ? Math.round(guardian.elo) : '-',
-      kills: +guardian.kills || 0,
-      deaths: +guardian.deaths || 0,
-      assists: +guardian.assists || 0,
-
       inventory: inventory,
       character: character,
       guardian: guardian
