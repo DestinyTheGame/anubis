@@ -1,4 +1,6 @@
+import classnames from 'classnames';
 import React from 'react';
+import './equipped.scss';
 
 /**
  * Render an equipped item.
@@ -8,34 +10,39 @@ import React from 'react';
  * @private
  */
 export default function Equipped(props) {
+  const attack = classnames('attack', {
+    [props.element && props.element.name]: props.element
+  });
+
   return (
     <div className='equipped'>
       <div className='icon'>
-        <span className='attack'>{ props.attack }</span>
+        <span className={ attack }>{ props.attack }</span>
         <img src={ 'https://bungie.net' + props.icon } />
       </div>
       <div className='details'>
         <h3 title={ props.title }>{ props.name }</h3>
-
         <div className='perks'>
-          {
-            props.perks.map((perk, index) => {
-              const tooltip = `
-                <div classe='perk-info'>
-                  <h2>${ perk.name }</h2>
-                  <p>${ perk.title }</p>
-                </div>
-              `;
+        {
+          props.perks.map((perk, index) => {
+            const tooltip = `
+              <div classe='perk-info'>
+                <h2>${ perk.name }</h2>
+                <p>${ perk.title }</p>
+              </div>
+            `;
 
-              return (
+            return (
+              <div className='perk' key={ 'perk-'+ index }>
                 <img
-                  key={ 'perk-'+ index }
+                  id={ 'hash-'+ perk.id }
                   src={ 'https://bungie.net/'+ perk.icon }
                   data-tip={ tooltip }
                 />
-              );
-            })
-          }
+              </div>
+            );
+          })
+        }
         </div>
       </div>
     </div>
