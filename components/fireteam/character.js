@@ -31,6 +31,7 @@ export default class Character {
       grimoire: +this.base.grimoire,
       level: +this.character.characterLevel,
       lightlevel: +this.base.powerLevel,
+      subclass: this.subclassName()
     }
   }
 
