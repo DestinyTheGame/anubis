@@ -523,10 +523,34 @@ const hideNodes = [
   //
   // Ornaments
   //
-  889765000,  // Spec ops
-  3714326989, // Artic Survial
-  4021291143, // Dunemaker
-  2102232042, // Nanohance
+  889765000,  // Spec ops.
+  3714326989, // Artic Survival.
+  4021291143, // Dunemaker.
+  2102232042, // Nanohance.
   2490282438, // Fallen Ass.
   888337503,  // Crucible ass.
+  3823075448, // Rose of Acid.
+  533595882,  // Rose of Corruption.
+  194511534,  // Sequel.
+  1463501299, // Addendum.
+  1361713467, // Not a toy.
+  1415759877, // Shock hazard.
+  3914911278, // Storms reproach.
+  2483806592, // Iconoclast.
+  1526284575, // Wolves Remember.
+  3537067099, // Born in Fire.
+  1061944774, // Heart of gold.
+  3764272115, // Prototype.
+  3638091012, // Queens Command.
+  3111908153, // Lingering Vestege.
+  1745108047, // Dragons Bane.
+  2456762628, // Hoodoom.
+  968615526,  // Bureau of Aeronautics.
+  239679421,  // Last Warmind.
+  1427027527, // Carrion.
+  961419189,  // Moon glow.
+  2435978606, // Superspy.
+  773941200,  // Royal Flush.
+  539788817,  // Meteorite.
+  1622904372, // Silver Bullet.
 ];
