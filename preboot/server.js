@@ -23,7 +23,7 @@ export default function preboot(boot, next) {
 
     app
     .use('/dist', express.static(path.join(__dirname, '..', 'dist')))
-    .use('/css', express.static(path.join(__dirname, '..', 'css')))
+    .use('/design', express.static(path.join(__dirname, '..', 'design')))
     .use(function req(req, res) {
       res.setHeader('Content-Type', 'text/html');
       res.sendFile(path.join(__dirname, '..', 'overlay.html'));
