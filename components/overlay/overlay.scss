@@ -1,17 +1,3 @@
 .overlay {
   background-color: #00FF00;
-
-  .trials.inline {
-    width: auto;
-
-    .dot:last-child {
-      margin-right: 10px;
-    }
-
-    .wins,
-    .losses,
-    .boons {
-      float: left;
-    }
-  }
 }

@@ -1,0 +1,77 @@
+@import '../../design/variables.scss';
+
+.topbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  background: #FFF;
+  height: $topbar;
+
+  .trials-card {
+    padding: 25px 0 0 25px;
+    margin-left: 75px;
+    height: 100%;
+    border-left: 2px solid palette(white, background);
+    display: inline-block;
+
+    .unfilled {
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06)
+    }
+
+    .win.unfilled {
+      background-color: rgba(palette(card, won), .1);
+    }
+
+    .loss.unfilled {
+      background-color: rgba(palette(card, lost), .1);
+    }
+
+    .mercy.unfilled,
+    .favor.unfilled,
+    .boldness.unfilled {
+      background-color: rgba(palette(card, boon), .1);
+    }
+  }
+
+  .countdown {
+    float: right;
+    padding-right: $padding;
+    line-height: 75px;
+
+    div {
+      display: inline-block;
+    }
+
+    span {
+      display: none;
+    }
+
+    .map {
+      color: palette(gray);
+
+      strong {
+        color: palette(primary, light);
+      }
+    }
+
+    .finalcountdown {
+      color: palette(primary, light);
+    }
+  }
+}
+
+.bm-burger-button {
+  position: absolute;
+  width: 36px;
+  height: 30px;
+  left: 20px;
+  top: 20px;
+}
+
+.right .bm-burger-button {
+  left: initial;
+  right: 36px;
+}
+
+.bm-burger-bars {
+  background: palette(grey);
+}

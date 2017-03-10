@@ -10,8 +10,8 @@ import Sidebar from '../sidebar';
 export default class Twitch extends Component {
   render() {
     return (
-      <div className="grid">
-        <div className="box main">
+      <div className='main'>
+        <div className='panel'>
           Twitch.tv chat box ui.
         </div>
 

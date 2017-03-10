@@ -1,0 +1,61 @@
+/**
+ * Select a color from the palette.
+ *
+ * @param {String} $palette Name of the palette we want to use.
+ * @param {String} $tone Tone of the palette.
+ * @param {String} $color If we want the normal color or the contrast.
+ * @returns {String} Color code.
+ * @public
+ */
+@function palette($palette, $tone: 'base', $color: 'color') {
+  @if ( map-has-key($palette-colors, $palette) == false ) {
+    @error "'#{$palette}' is not a palette color.";
+  }
+
+  @if ( map-has-key(map-get($palette-colors, $palette), $tone) == false ) {
+    @error "'#{$tone}' is not a palette tone.";
+  }
+
+  @return map-get(map-get(map-get($palette-colors, $palette), $tone), $color);
+}
+
+//
+// Various of padding, heights and other sizes.
+//
+$padding: 20px;
+$topbar: 75px;
+
+//
+// The colors that we want to use in our design.
+//
+$palette-colors: (
+  white: (
+    base: ( color: #FFFFFF, contrast: #2B2B2B ),
+    background: ( color: #f4f4f4 )
+  ),
+  gray: (
+    base: ( color: #9ca0a9, contrast: #FFFFFF ),
+    mid: ( color: #E2E2E2, contrast: #000000 ),
+    dark: ( color: #000000, contrast: #FFFFFF ),
+    background: ( color: #F5F4F3, contrast: #7E7670 )
+  ),
+  black: (
+    base: ( color: #111111, contrast: #FFFFFF ),
+    dark: ( color: #000000, contrast: #FFFFFF )
+  ),
+  accent: (
+    base: ( color: #FD3B4B, contrast: #FFFFFF ),
+  ),
+  primary: (
+    light: ( color: #563992, contrast: #FFFFFF ),
+    base: ( color: #392860, contrast: #FFFFFF ),
+    mid: ( color: #2C1D48, contrast: #FFFFFF ),
+    dark: ( color: #190F27, contrast: rgba(255, 255, 255, 0.5) )
+  ),
+  card: (
+    won: ( color: #FFD700, contrast: #FFFFFF ),
+    lost: ( color: #CA1313, contrast: #FFFFFF ),
+    boon: ( color: #306BD8, contrast: #FFFFFF ),
+    unfilled: ( color: #757643, contrast: #FFFFFF )
+  )
+) !default;

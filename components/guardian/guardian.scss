@@ -1,17 +1,7 @@
+@import '../../design/variables.scss';
+
 .guardian {
-  &.main {
-    min-height: 100vh;
-
-    .center {
-      margin-top: 50vh;
-    }
-  }
-
-  form {
-    background: #FFF;
-    border-bottom: 1px solid #A1ADC3;
-    padding: 15px;
-  }
+  width: 100%;
 
   input {
     border: 0;
@@ -27,13 +17,14 @@
     border: 1px solid #A1ADC3;
     padding: 7px 20px;
     position: relative;
+    width: 100%;
   }
 
   button {
-    background: #2b2d39;
+    background: palette(primary, light);
     border-radius: 20px;
     border: 0;
-    color: #e2ecff;
+    color: palette(primary, light, contrast);
     cursor: pointer;
     display: block;
     font-size: 14px;
@@ -47,15 +38,8 @@
     top: 0;
 
     &:hover {
-      background: #1f212a;
+      background: palette(primary, mid);
     }
-  }
-
-  .center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    margin-top: 50%;
   }
 
   .help {
@@ -63,9 +47,6 @@
     font-style: italic;
     padding: 0 25px;
     text-align: center;
-  }
-
-  .results {
-    height: 100%;
+    margin-top: 40vh;
   }
 }

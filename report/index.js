@@ -1,4 +1,5 @@
 import EventEmitter from 'eventemitter3';
+import parallel from 'async/parallel';
 import { get } from '../storage';
 import map from 'async/map';
 
@@ -23,7 +24,7 @@ export default class TrialsReport extends EventEmitter {
   }
 
   /**
-   * Search for a players fire team.
+   * Search for a player.
    *
    * @param {String} username Username.
    * @param {Function} fn Completion callback.
@@ -45,25 +46,86 @@ export default class TrialsReport extends EventEmitter {
         //
         this.membership = matches[0].membershipId;
         fn();
-
-        this.guardian.fireteam(this.membership, 14, (err, fireteam) => {
-          if (err) return this.emit('error', err);
-
-          this.fireteam = fireteam;
-          this.emit('fireteam');
-
-          this.inventory();
-        });
       });
     });
   }
 
   /**
-   * Update the inventory of the users.
+   * Search for a players fire team.
    *
+   * @param {String} username Username.
+   * @param {Function} fn Completion callback.
    * @private
    */
-  inventory() {
+  lookup(username, fn) {
+    this.search(username, (err) => {
+      if (err) return fn(err);
+
+      this.members((err) => {
+        if (err) return fn(err);
+
+        parallel({
+          user: this.user.bind(this),
+          trialsreport: this.trialsreport.bind(this)
+        }, this.loadout(username, fn));
+      });
+    });
+  }
+
+  /**
+   * Lookup members of a users fireteam.
+   *
+   * @param {Function} fn Completion callback.
+   * @private
+   */
+  members(fn) {
+    this.guardian.fireteam(this.membership, 14, (err, fireteam) => {
+      if (err) return fn(err);
+
+      this.fireteam = fireteam;
+      this.emit('fireteam');
+
+      fn(undefined, fireteam);
+    });
+  }
+
+  /**
+   * Lookup trials report information.
+   *
+   * @param {Function} fn Completion callback.
+   * @private
+   */
+  trialsreport(fn) {
+    fn();
+  }
+
+  /**
+   * Generate loadout gather stuff.
+   *
+   * @param {String} username Username of the original lookup.
+   * @param {Function} fn Completion callback.
+   * @returns {Function} Gathering function.
+   * @private
+   */
+  loadout(username, fn) {
+    return (err, gathered) => {
+      if (err) return fn(err);
+      if (this.username !== username) return;
+
+      this.loadout = gathered.user;
+      this.emit('loadout');
+
+      fn(undefined, gathered.user)
+    };
+  }
+
+  /**
+   * Gather all the user and equipment information.
+   *
+   * @param {Function} fn Completion callback.
+   * @public
+   */
+  user(fn) {
     const username = this.username;
 
     map(this.fireteam, (member, next) => {
@@ -89,36 +151,14 @@ export default class TrialsReport extends EventEmitter {
         this.destiny.character.inventory(platform, id, charBase.characterId, (err, inv) => {
           if (err) return next(err);
 
-          next(undefined, this.format(member, char, inv));
+          next(undefined, {
+            guardian: member,
+            character: char,
+            inventory: inventory
+          });
         });
       });
-    }, (err, loadouts) => {
-      //
-      // Concurrency check, if we are no longer actively searching for the same
-      // username / fire team we should discard all the results.
-      //
-      if (this.username !== username) return;
-
-      if (err) return this.emit('error', err);
-
-      this.loadout = loadouts;
-      this.emit('loadout');
-    });
-  }
-
-  /**
-   * Format all the presented data and format it in something useful.
-   *
-   * @param {Object} guardian Guardian.GG member information.
-   * @param {Object} character Active character information.
-   * @param {Object} inventory Users active inventory.
-   */
-  format(guardian, character, inventory) {
-    return {
-      inventory: inventory,
-      character: character,
-      guardian: guardian
-    };
+    }, fn);
   }
 
   /**

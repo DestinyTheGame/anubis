@@ -60,6 +60,7 @@ function create(boot) {
 
     anubis.webContents.on('will-navigate', handleRedirect);
     anubis.webContents.on('new-window', handleRedirect);
+    anubis.maximize();
   });
 }
 

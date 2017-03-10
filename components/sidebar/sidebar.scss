@@ -1,38 +1,33 @@
-.sidebar {
-  background: #FFFFFF;
-  border-left: 1px solid #A1ADC3;
-  min-height: 100vh;
-  min-width: 350px;
-  outline: 5px solid #D2D5DA;
+@import '../../design/variables.scss';
 
-  .details {
-    margin-bottom: -95px;
-    min-height: 100%;
+.panel {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  background: #FFFFFF;
+  border-radius: 3px;
+  display: flex;
+  margin-right: $padding;
+  width: 100%;
+  padding: $padding;
+
+  &:last-of-type {
+    margin-right: 0;
   }
+}
+
+.sidebar {
+  justify-content: flex-end;
 
   .header {
     background: #2B2D39;
     color: #FFF;
     padding: 10px 25px;
   }
-
-  .trials-card {
-    background: #2B2D39;
-    border-top: 1px solid #A1ADC3;
-    height: 95px;
-    padding: 20px;
-    width: auto;
-
-    .trials.loading {
-      text-align: center;
-    }
-
-    .dot.unfilled {
-      background: #51535E;
-    }
-  }
 }
 
 .main {
-  background: #EAEDF3;
+  background: palette(white, background);
+  flex-direction: row;
+  padding: $padding;
+  display: flex;
+  min-height: calc(100vh - 75px);
 }
