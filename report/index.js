@@ -67,7 +67,7 @@ export default class TrialsReport extends EventEmitter {
         parallel({
           user: this.user.bind(this),
           trialsreport: this.trialsreport.bind(this)
-        }, this.loadout(username, fn));
+        }, this.gather(username, fn));
       });
     });
   }
@@ -83,7 +83,7 @@ export default class TrialsReport extends EventEmitter {
       if (err) return fn(err);
 
       this.fireteam = fireteam;
-      this.emit('fireteam');
+      this.emit('fireteam', fireteam);
 
       fn(undefined, fireteam);
     });
@@ -107,13 +107,13 @@ export default class TrialsReport extends EventEmitter {
    * @returns {Function} Gathering function.
    * @private
    */
-  loadout(username, fn) {
+  gather(username, fn) {
     return (err, gathered) => {
       if (err) return fn(err);
       if (this.username !== username) return;
 
       this.loadout = gathered.user;
-      this.emit('loadout');
+      this.emit('loadout', this.loadout);
 
       fn(undefined, gathered.user)
     };
@@ -154,7 +154,7 @@ export default class TrialsReport extends EventEmitter {
           next(undefined, {
             guardian: member,
             character: char,
-            inventory: inventory
+            inventory: inv
           });
         });
       });
