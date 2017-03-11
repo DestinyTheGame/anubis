@@ -156,8 +156,12 @@ export default class Fireteam extends Component {
       <div className={ className }>
         {
           this.members.map((data, index) => {
+            const member = classnames('member', {
+              panel: !this.props.small,
+            });
+
             return (
-              <div className='member' key={ 'loadout'+ index }>
+              <div className={ member } key={ 'loadout'+ index }>
                 { this.emblem(data) }
 
                 <div className='tiers'>

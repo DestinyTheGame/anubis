@@ -1,0 +1,23 @@
+@import '../../design/variables.scss';
+
+.panel {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  background: #FFFFFF;
+  border-radius: 3px;
+  display: flex;
+  margin-right: $padding;
+  width: 100%;
+  padding: $padding;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.main {
+  background: palette(white, background);
+  flex-direction: row;
+  padding: $padding;
+  display: flex;
+  min-height: calc(100vh - 75px);
+}

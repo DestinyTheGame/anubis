@@ -63,8 +63,6 @@ export default class TopBar extends Component {
   render() {
     const state = this.state;
 
-    console.log(state);
-
     return (
       <div className='topbar'>
         <div className='trials-card'>

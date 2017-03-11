@@ -1,5 +1,7 @@
+@import '../../design/variables.scss';
+
 .abilities {
-  color: #404040;
+  color: palette(gray);
   display: flex;
   flex-direction: row;
   height: 72px;
@@ -15,7 +17,7 @@
       margin: 0 0 5px;
 
       &.max {
-        color: red;
+        color: palette(primary, light);
       }
     }
 

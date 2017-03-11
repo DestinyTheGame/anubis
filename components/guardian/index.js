@@ -70,10 +70,15 @@ export default class Guardian extends Component {
     evt.preventDefault();
 
     this.context.rpc('destiny.trials.report', this.input.value, (invalid) => {
-      this.setState({
-        results: invalid ? Guardian.INVALID : Guardian.LOADING
+      if (invalid) this.setState({
+        results: Guardian.INVALID
       });
     });
+
+    this.setState({
+      results: Guardian.LOADING,
+      members: null
+    })
   }
 
   /**
@@ -195,6 +200,14 @@ export default class Guardian extends Component {
 
         <div className='results'>
           { this.results() }
+        </div>
+
+        <div className='thanks'>
+          Stats provided by
+
+          <a href='https://destinytrialsreport.com/?withlovefrom=anubis' target='_blank'>
+            Destiny<span>Trials</span>Report
+          </a>
         </div>
       </div>
     );

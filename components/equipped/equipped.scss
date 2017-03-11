@@ -1,7 +1,9 @@
+@import '../../design/variables.scss';
+
 .equipped {
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  margin-bottom: $padding;
 
   .perks {
     display: flex;
@@ -36,7 +38,7 @@
     width: 65px;
     height: 65px;
     position: relative;
-    margin-right: 20px;
+    margin-right: $padding;
 
     .attack {
       bottom: 0;
