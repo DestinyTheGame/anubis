@@ -21,8 +21,8 @@ export default class Config extends Component {
     };
 
     return (
-      <div className='grid'>
-        <div className='box main config'>
+      <div className='main'>
+        <div className='panel config'>
           <Toggle label='Fake boons' name='boons' type='toggle' value={ boons } experimental>
             Fake the purchase of the mercy, favor and boldness boons.
           </Toggle>
@@ -52,7 +52,7 @@ export default class Config extends Component {
           </Toggle>
         </div>
 
-        <div className="box thirty sidebar">
+        <div className="panel">
           <div className="details">
             <Editor />
           </div>

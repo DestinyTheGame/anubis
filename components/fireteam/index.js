@@ -33,6 +33,7 @@ export default class Fireteam extends Component {
   process(props) {
     this.members = props.members.map((data) => {
       const { character, inventory } = data;
+      console.log(data);
 
       return Object.assign(data, {
         character: new Character(character, inventory.data, inventory.definitions)
@@ -107,11 +108,18 @@ export default class Fireteam extends Component {
    * @private
    */
   emblem(data) {
-    const { character, guardian } = data;
-    const kd = (guardian.kills / guardian.deaths).toFixed(2);
+    const { character, guardian, report } = data;
+
+    let overall = (guardian.kills / guardian.deaths).toFixed(2);
+    let weekly;
+
+    if (report && report.currentWeek) {
+      const current = report.currentWeek;
+      weekly = (current.kills / current.deaths).toFixed(2);
+    }
 
     return (
-      <Emblem { ...guardian } { ...character.emblem() } kd={ kd } />
+      <Emblem { ...guardian } { ...character.emblem() } kd={ overall } weekly={ weekly } />
     );
   }
 

@@ -31,12 +31,13 @@ export default class Toggle extends Component {
     };
 
     return (
-      <div className='grid row gutters'>
-        <div className='box twentyfive'>
+      <div className='toggle'>
+        <div className='control'>
           <Toggler id={ props.name } defaultChecked={ !!data } onChange={ change } />
         </div>
-        <div className='box'>
-          <strong className='label' data-tip={ props.children }>{ props.label }</strong>
+        <div className='label'>
+          <strong>{ props.label }</strong>
+          <p>{ props.children }</p>
         </div>
       </div>
     );

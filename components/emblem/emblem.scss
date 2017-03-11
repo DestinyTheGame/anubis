@@ -15,7 +15,7 @@
   .name {
     color: #FFF;
     font-size: 18px;
-    left: 80px;
+    left: 95px;
     position: absolute;
     top: 16px;
   }
@@ -23,7 +23,7 @@
   .class {
     color: #FFF;
     font-size: 13px;
-    left: 80px;
+    left: 95px;
     position: absolute;
     top: 43px;
   }
@@ -32,7 +32,7 @@
     color: #F5DC56;
     font-size: 18px;
     position: absolute;
-    right: 10px;
+    right: $padding;
     top: 15px;
 
     &:before {
@@ -43,10 +43,22 @@
   }
 
   .kd {
-    color: #FFF;
+    color: palette(white);
     font-size: 16px;
     position: absolute;
-    right: 10px;
+    right: $padding;
     top: 43px;
+
+    small {
+      font-size: 16px;
+    }
+
+    &.weekly {
+      small {
+        color: rgba(palette(white), .5);
+        margin-right: 5px;
+        font-size: 12px;
+      }
+    }
   }
 }
