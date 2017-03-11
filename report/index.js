@@ -1,6 +1,8 @@
 import EventEmitter from 'eventemitter3';
 import parallel from 'async/parallel';
+import reduce from 'async/reduce';
 import { get } from '../storage';
+import request from 'request';
 import map from 'async/map';
 
 /**
@@ -90,13 +92,35 @@ export default class TrialsReport extends EventEmitter {
   }
 
   /**
-   * Lookup trials report information.
+   * Lookup trials report information if available. When we cannot get this data
+   * we'll just fail silently.
    *
    * @param {Function} fn Completion callback.
    * @private
    */
   trialsreport(fn) {
-    fn();
+    reduce(this.fireteam, {}, (memo, member, next) => {
+      const id = member.membershipId;
+
+      request({
+        url: 'https://api.destinytrialsreport.com/anubis/'+ id,
+        timeout: 10000,
+        json: true
+      }, function trialsreport(err, res, body) {
+        if (err) {
+          debug('API call to destinytrials report failed', err);
+          return next(undefined, memo);
+        }
+
+        if (res.statusCode !== 200) {
+          debug('API call to destinytrials returned invalid statusCode', res.statusCode);
+          return next(undefined, memo);
+        }
+
+        memo[id] = body[0];
+        next(undefined, memo);
+      });
+    }, fn);
   }
 
   /**
@@ -112,10 +136,24 @@ export default class TrialsReport extends EventEmitter {
       if (err) return fn(err);
       if (this.username !== username) return;
 
-      this.loadout = gathered.user;
+      let { user, trialsreport } = gathered;
+
+      user.forEach((data) => {
+        data.report = trialsreport[data.guardian.membershipId];
+      });
+
+      //
+      // Sort the users on Elo, highest first so we get consistent results when
+      // we're looking up people in a fireteam.
+      //
+      user = user.sort((a, b) => {
+        return b.guardian.elo - a.guardian.elo;
+      });
+
+      this.loadout = user;
       this.emit('loadout', this.loadout);
 
-      fn(undefined, gathered.user)
+      fn(undefined, user);
     };
   }
 
