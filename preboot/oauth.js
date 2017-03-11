@@ -22,6 +22,7 @@ export default function preboot(boot, next) {
     const bungie = new Bungie({
       refreshToken: config.refreshToken,
       accessToken: config.accessToken,
+      redirectURL: 'anubis://oauth',
       key: config.key,
       url: config.url,
 
