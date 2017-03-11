@@ -49,6 +49,8 @@ export default function preboot(boot, next) {
     // before we continue with showing the rest of the UI.
     //
     bungie.token((err) => {
+      if (err) return next(err);
+
       const destiny = new Destiny(bungie, { XHR: XMLHttpRequest });
       const guardian = new Guardian({ XHR: XMLHttpRequest });
 
@@ -56,7 +58,7 @@ export default function preboot(boot, next) {
       boot.set('destiny', destiny);
       boot.set('bungie', bungie);
 
-      next(err);
+      next();
     });
   });
 };
