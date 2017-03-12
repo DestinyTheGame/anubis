@@ -48,7 +48,11 @@ export default class Elo extends Component {
 
     return (
       <div className='elo' title={ title } style={{ background: this.colors[league] }}>
-        { rating }
+        <strong>
+        { Math.round(rating) }
+        </strong>
+
+        <span>Elo rating</span>
       </div>
     );
   }

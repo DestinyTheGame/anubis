@@ -149,9 +149,37 @@ export default class Fireteam extends Component {
   }
 
   /**
+   * Render a player's Elo.
+   *
+   * @returns {Component} Elo component.
+   * @private
+   */
+  elo(data) {
+    const { guardian } = data;
+
+    return (
+      <Elo rating={ guardian.elo } />
+    );
+  }
+
+  /**
+   * Report a statistic from Trials Report
+   *
+   * @param {Object} data Things.
+   * @param {String} what What do we want to display.
+   * @returns {Component} Report card
+   * @private
+   */
+  report(data, what) {
+    return (
+      <Report { ...data.report } display={ what } />
+    );
+  }
+
+  /**
    * Render the Fireteam component.
    *
-   * @returns {Component}
+   * @returns {Component} The fireteam member.
    * @private
    */
   render() {
@@ -175,6 +203,10 @@ export default class Fireteam extends Component {
                 <div className='tiers'>
                   { this.stats(data) }
                   { this.abilities(data) }
+                </div>
+
+                <div className='weekly'>
+                  { this.elo(data) }
                 </div>
 
                 { this.gear(data) }
