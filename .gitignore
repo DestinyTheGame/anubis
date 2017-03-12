@@ -5,3 +5,4 @@ npm-debug.*
 builds
 .tern-port
 manifest.json
+anubis.log
