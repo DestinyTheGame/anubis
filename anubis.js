@@ -81,7 +81,10 @@ function create(boot) {
  * @private.
  */
 export default function start(err, boot) {
-  if (err) throw err; // @TODO display an error page.
+  if (err) {
+    if (err.message === 'User closed the oAuth window') return app.quit();
+    throw err; // @TODO display an error page.
+  }
 
   //
   // On OS X it is common for applications and their menu bar
