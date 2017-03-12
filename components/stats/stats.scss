@@ -1,14 +1,17 @@
+@import '../../design/variables.scss';
+
 .build {
   width: 25%;
 
   .stats {
-    background: #404040;
+    background: palette(primary, dark);
     height: 31%;
     margin-bottom: 2px;
     position: relative;
+    overflow: hidden;
 
     .fill {
-      background: #7e829b;
+      background: palette(primary, light);
       bottom: 0;
       display: block;
       height: 100%;
@@ -21,6 +24,7 @@
       font-size: 12px;
       height: 100%;
       left: 5px;
+      line-height: 16px;
       position: absolute;
       text-align: left;
       top: 3px;

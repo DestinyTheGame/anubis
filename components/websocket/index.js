@@ -61,8 +61,11 @@ export default class WebSockets extends Component {
       catch (err) { return this.broadcast.emit('error', err); }
 
       if (data.type == 'rpc' && data.id in this.rpcfn) {
-        this.rpcfn[data.id](...data.args);
+        const rpc = this.rpcfn[data.id];
         delete this.rpcfn[data.id];
+
+        rpc.fn(...data.args);
+        this.broadcast.emit(rpc.endpoint, ...data.args);
       } else if (data.type == 'config' && data.payload) {
         const config = Object.assign({}, this.state.config);
 
@@ -139,7 +142,7 @@ export default class WebSockets extends Component {
     }
 
     const id = yeast();
-    this.rpcfn[id] = fn;
+    this.rpcfn[id] = { endpoint: endpoint, fn: fn };
     this.send({ type: 'rpc', endpoint: endpoint, id: id, data: data });
   }
 

@@ -1,3 +1,5 @@
+@import '../../design/variables.scss';
+
 .fireteam {
   display: flex;
 
@@ -15,23 +17,37 @@
 
   .member {
     position: relative;
+    flex-direction: column;
   }
 
   .tiers {
     display: flex;
     flex-direction: row;
-    margin: 10px 0;
+    margin: $padding 0;
   }
 
-  .elo {
-    color: rgba(255,255,255,.71);
-    font-size: 12px;
-    left: -58px;
-    position: absolute;
-    text-align: center;
-    top: 55px;
-    transform: rotate(90deg);
-    width: 129px;
-    z-index: 1;
+  .weekly {
+    margin-bottom: $padding;
+
+    .elo {
+      color: palette(white);
+      text-align: center;
+      width: 25%;
+      height: $topbar;
+      display: flex;
+      flex-direction: column;
+
+      strong {
+        font-size: 23px;
+        margin-top: 16px;
+      }
+
+      span {
+        color: rgba(palette(white), .5);
+        margin-top: 3px;
+        font-size: 12px;
+        display: block;
+      }
+    }
   }
 }

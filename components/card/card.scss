@@ -1,5 +1,21 @@
+@import '../../design/variables.scss';
+
 .trials {
   width: 309px;
+
+  &.inline {
+    width: auto;
+
+    .dot:last-child {
+      margin-right: 10px;
+    }
+
+    .wins,
+    .losses,
+    .boons {
+      float: left;
+    }
+  }
 }
 
 .card {
@@ -35,19 +51,19 @@
   }
 
   &.won {
-    background-color: #FFD700;
+    background-color: palette(card, won);
   }
 
   &.lost {
-    background-color: #CA1313;
+    background-color: palette(card, lost);
   }
 
   &.boon {
-    background-color: #306bd8;
+    background-color: palette(card, boon);
   }
 
   &.unfilled {
-    background-color: #757643;
+    background-color: palette(card, unfilled)
   }
 
   &.mercy {
@@ -58,7 +74,7 @@
       height: 6px;
       width: 13px;
       border-radius: 90px 90px 0 0;
-      background: white;
+      background: palette(card, boon, contrast);
       position: absolute;
       transform: rotate(130deg);
       top: 12px;
@@ -74,7 +90,7 @@
       height: 10px;
       width: 10px;
       border-radius: 90px;
-      border: 3px solid #FFF;
+      border: 3px solid palette(card, boon, contrast);
       position: absolute;
       top: 5px;
       left: 5px;
@@ -89,7 +105,7 @@
       height: 13px;
       width: 13px;
       border-radius: 90px;
-      background: white;
+      background: palette(card, boon, contrast);
       position: absolute;
       top: 6px;
       left: 6px;

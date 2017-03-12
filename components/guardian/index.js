@@ -70,10 +70,15 @@ export default class Guardian extends Component {
     evt.preventDefault();
 
     this.context.rpc('destiny.trials.report', this.input.value, (invalid) => {
-      this.setState({
-        results: invalid ? Guardian.INVALID : Guardian.LOADING
+      if (invalid) this.setState({
+        results: Guardian.INVALID
       });
     });
+
+    this.setState({
+      results: Guardian.LOADING,
+      members: null
+    })
   }
 
   /**
@@ -172,19 +177,19 @@ export default class Guardian extends Component {
   }
 
   /**
-   * Render the guardian.gg layout
+   * Render the actual lookup form.
    *
-   * @returns {Component}
+   * @returns {Component} The lookup form.
    * @private
    */
-  render() {
-    const className = classnames('guardian', {
-      main: !this.props.small
+  lookup() {
+    const className = classnames('search', {
+      panel: !this.props.small
     });
 
     return (
-      <div className={ className }>
-        <form action='#' onSubmit={ this.search.bind(this) }>
+      <div className='guardian'>
+        <form className={ className } action='#' onSubmit={ this.search.bind(this) }>
           <fieldset>
             <input type='text' placeholder='Search for username' ref={ r => { this.input = r } } />
             <button type='submit'>
@@ -196,6 +201,30 @@ export default class Guardian extends Component {
         <div className='results'>
           { this.results() }
         </div>
+
+        <div className='thanks'>
+          Stats provided by
+
+          <a href='https://destinytrialsreport.com/?withlovefrom=anubis' target='_blank'>
+            Destiny<span>Trials</span>Report
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Render the guardian.gg layout
+   *
+   * @returns {Component} Page wrapper.
+   * @private
+   */
+  render() {
+    if (this.props.small) return this.lookup();
+
+    return (
+      <div className='main'>
+        { this.lookup() }
       </div>
     );
   }

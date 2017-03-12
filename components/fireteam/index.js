@@ -33,6 +33,7 @@ export default class Fireteam extends Component {
   process(props) {
     this.members = props.members.map((data) => {
       const { character, inventory } = data;
+      console.log(data);
 
       return Object.assign(data, {
         character: new Character(character, inventory.data, inventory.definitions)
@@ -107,11 +108,18 @@ export default class Fireteam extends Component {
    * @private
    */
   emblem(data) {
-    const { character, guardian } = data;
-    const kd = (guardian.kills / guardian.deaths).toFixed(2);
+    const { character, guardian, report } = data;
+
+    let overall = (guardian.kills / guardian.deaths).toFixed(2);
+    let weekly;
+
+    if (report && report.currentWeek) {
+      const current = report.currentWeek;
+      weekly = (current.kills / current.deaths).toFixed(2);
+    }
 
     return (
-      <Emblem { ...guardian } { ...character.emblem() } kd={ kd } />
+      <Emblem { ...guardian } { ...character.emblem() } kd={ overall } weekly={ weekly } />
     );
   }
 
@@ -141,9 +149,37 @@ export default class Fireteam extends Component {
   }
 
   /**
+   * Render a player's Elo.
+   *
+   * @returns {Component} Elo component.
+   * @private
+   */
+  elo(data) {
+    const { guardian } = data;
+
+    return (
+      <Elo rating={ guardian.elo } />
+    );
+  }
+
+  /**
+   * Report a statistic from Trials Report
+   *
+   * @param {Object} data Things.
+   * @param {String} what What do we want to display.
+   * @returns {Component} Report card
+   * @private
+   */
+  report(data, what) {
+    return (
+      <Report { ...data.report } display={ what } />
+    );
+  }
+
+  /**
    * Render the Fireteam component.
    *
-   * @returns {Component}
+   * @returns {Component} The fireteam member.
    * @private
    */
   render() {
@@ -156,13 +192,21 @@ export default class Fireteam extends Component {
       <div className={ className }>
         {
           this.members.map((data, index) => {
+            const member = classnames('member', {
+              panel: !this.props.small,
+            });
+
             return (
-              <div className='member' key={ 'loadout'+ index }>
+              <div className={ member } key={ 'loadout'+ index }>
                 { this.emblem(data) }
 
                 <div className='tiers'>
                   { this.stats(data) }
                   { this.abilities(data) }
+                </div>
+
+                <div className='weekly'>
+                  { this.elo(data) }
                 </div>
 
                 { this.gear(data) }

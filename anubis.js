@@ -41,17 +41,26 @@ function create(boot) {
     //
     const handleRedirect = (e, href) => {
       const parsed = url.parse(href);
+      e.preventDefault();
 
       if ('file:' !== parsed.protocol) {
-        e.preventDefault();
         return shell.openExternal(href);
       }
+
+      //
+      // Platform edge case:
+      //
+      // On windows the pathname that is supplied is prefixed with the name of
+      // the hard drive so instead of an URL file:///logout you got
+      // file://C:/logout so the pathname ends up as /C:/logout
+      //
+      const pathname = parsed.pathname.split('/').pop();
 
       //
       // Special case for logout, we really want to just kill the app after
       // nuking all logout information.
       //
-      if ('/logout' === parsed.pathname) {
+      if ('logout' === pathname) {
         remove('accessToken', 'refreshToken', (err) => {
           app.quit();
         });
@@ -60,6 +69,7 @@ function create(boot) {
 
     anubis.webContents.on('will-navigate', handleRedirect);
     anubis.webContents.on('new-window', handleRedirect);
+    anubis.maximize();
   });
 }
 

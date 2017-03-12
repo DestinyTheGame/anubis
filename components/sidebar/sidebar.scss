@@ -1,38 +1,15 @@
+@import '../../design/variables.scss';
+
 .sidebar {
-  background: #FFFFFF;
-  border-left: 1px solid #A1ADC3;
-  min-height: 100vh;
-  min-width: 350px;
-  outline: 5px solid #D2D5DA;
+  justify-content: flex-end;
+  width: 33%;
 
   .details {
-    margin-bottom: -95px;
-    min-height: 100%;
+    width: 100%;
   }
 
-  .header {
-    background: #2B2D39;
-    color: #FFF;
-    padding: 10px 25px;
+  .loading {
+    margin: 40vh auto 0;
+    width: 100px;
   }
-
-  .trials-card {
-    background: #2B2D39;
-    border-top: 1px solid #A1ADC3;
-    height: 95px;
-    padding: 20px;
-    width: auto;
-
-    .trials.loading {
-      text-align: center;
-    }
-
-    .dot.unfilled {
-      background: #51535E;
-    }
-  }
-}
-
-.main {
-  background: #EAEDF3;
 }

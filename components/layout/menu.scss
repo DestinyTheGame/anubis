@@ -1,68 +1,87 @@
-.menu {
-  background: #2b2d39;
-  border-right: 5px solid #d2d5da;
-  font-family: 'Arial';
-  min-height: 100vh;
+@import '../../design/variables.scss';
+
+#menu {
+  background-image: linear-gradient(-180deg, palette(primary, base) 0%, palette(primary, dark) 100%);
+
+  .app-name {
+    background: palette(primary, light);
+    color: palette(white);
+    padding: $padding;
+    height: 75px;
+    margin-bottom: $padding;
+
+    h5 {
+      font-weight: normal;
+      font-size: 18px;
+      margin: 0;
+      padding: 0;
+    }
+
+    h6 {
+      font-weight: normal;
+      margin-top: 5px;
+      color: rgba(palette(white), .3);
+    }
+  }
 
   a {
+    padding: 0.8em;
+    color: #b8b7ad;
     text-decoration: none;
+
+    span {
+      margin-right: $padding;
+      font-weight: 700;
+    }
+
+    &:hover,
+    &:focus {
+      color: #c94e50;
+    }
   }
 
   .item {
     border-left: 5px solid transparent;
-    color: #FFF;
+    color: rgba(palette(white), .3);
     display: block;
-    font-size: 14px;
-    font-weight: bold;
-    height: 55px;
-    line-height: 55px;
+    line-height: $padding;
     margin-bottom: 1px;
-    padding-left: 25px;
-
-    &:nth-child(1) {
-      background: #1f212A;
-    }
-
-    &:nth-child(2) {
-      background: #22232D;
-    }
-
-    &:nth-child(3) {
-      background: #242630;
-    }
-
-    &:nth-child(4) {
-      background: #262833;
-    }
-
-    &:nth-child(5) {
-      background: #292B36;
-    }
-
-    &:hover,
-    &.active {
-      border-left-color: #E2ECFF;
-    }
-
-    &.active {
-      background-color: #14151A;
-    }
-  }
-}
-
-.bottom {
-  position: fixed;
-  margin-top: 25px;
-  bottom: 0;
-
-  .settings {
-    display: block;
-    color: #7E829B;
-    margin-left: 30px;
-    margin-bottom: 20px;
+    padding-left: $padding;
 
     &:hover {
-      color: #999EBC;
+      color: palette(white);
+    }
+
+    &.active {
+      color: palette(white);
+      border-left-color: palette(white);
+      background-color: rgba(palette(white), .1)
+    }
+  }
+
+  .bm-cross-button {
+    margin: 16px 10px 0 0;
+    cursor: pointer;
+
+    .bm-cross {
+      background: palette(white);
+      cursor: pointer;
+    }
+  }
+
+  .bottom {
+    position: fixed;
+    margin-top: 25px;
+    bottom: 0;
+
+    .settings {
+      display: block;
+      color: rgba(palette(white), .3);
+      margin-left: 12px;
+
+      &:hover {
+        color: palette(white);
+      }
     }
   }
 }

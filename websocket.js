@@ -1,6 +1,6 @@
 import { emitter, all, set } from './storage';
-import TrialsReport from './trialsreport';
 import diagnostics from 'diagnostics';
+import Report from './report';
 
 //
 // Setup a debug instance.
@@ -22,7 +22,7 @@ function incoming(boot) {
    * @private
    */
   return function connection(client) {
-    const report = new TrialsReport(boot);
+    const report = new Report(boot);
     const destiny = boot.get('destiny');
 
     /**
@@ -76,7 +76,7 @@ function incoming(boot) {
       },
 
       'destiny.trials.report': function search(username, next) {
-        report.search(username, (failed) => {
+        report.lookup(username, (failed) => {
           next(failed);
         });
       }
