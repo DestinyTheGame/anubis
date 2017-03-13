@@ -1,8 +1,67 @@
 # Anubis
 
-Anubis is a lightweight desktop application that is written in
-[Electron][electron]. It's goal is to provide you with information and stats
-that might be useful when you are participating in the Trials of Osiris.
+- [For users](#Users)
+- [For developers](#developers)
+
+# Users
+
+Anubis is a lightweight trials companion for the desktop. It's a tool that will
+help trials sherpa's and streamers when participating in the Trials of Osiris
+event in Destiny the Game.
+
+#### Lookup of opposing teams
+
+We fetch information of your opponents from the Bungie API, Guaridan.GG and
+DestinyTrialsReport so you know exactly who you're up against.
+
+![](/docs/screenshots/lookup.png)
+
+
+#### Green screen twitch overlays
+
+The progress of your trials can be presented on stream by using our overlay
+page which we host on your computer. 
+
+![](/docs/screenshots/overlay.png)
+
+
+And much more features are on it's way:
+
+- **Twitch chat** Engage with your audience through the app.
+- **Twitch bot** Dedicated bot that integrates with the API and allows the app
+  to be controlled by your Twitch moderators.
+- **Loadout and vault support**. Switch weapons or complete loadouts at a click
+  of a button.
+- **NetDuma integration** Connection quality, geo information will be neatly
+  presented in the application.
+- **Notifications** Get notified in the app when people switch gear or load outs
+  mid match, when you get a new follower on twitch and what not.
+
+### That sounds pretty sweet, how do I get the app?
+
+First of all, thanks for taking the effort to try the application. Any feedback
+good or bad is much appreciated. To install the application you need to download
+the correct build for Operating System. We currently support
+
+- Mac OS
+- Windows (32 and 64 bit)
+
+The applications are uploaded to our [releases] page at:
+
+https://github.com/DestinyTheGame/anubis/releases
+
+Each version has a *downloads* section where you can select and download the
+application that matches your system. 
+
+Please note that we do not have auto updating setup yet, so you need to
+*manually* check if new builds are available by looking at our
+[releases][releases] page. We also announce new builds in our discord release
+channel.
+
+If you have issues installing the application either create an issue in our
+issue tracker or [join us on discord][discord].
+
+# Developers
 
 This repository holds the code for the application it self. We did write some
 additional projects to make this application tick. These projects are also Open
@@ -45,7 +104,8 @@ information.
 
 Please note that we do not have auto updating setup yet, so you need to
 *manually* check if new builds are available by looking at our
-[releases][releases] page.
+[releases][releases] page. We also announce new builds in our discord release
+channel.
 
 If you have issues installing the application either create an issue in our
 issue tracker or [join us on discord][discord].
