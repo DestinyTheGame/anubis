@@ -62,6 +62,13 @@ export default class TopBar extends Component {
    */
   render() {
     const state = this.state;
+    const map = state.flavor ? (
+      <div className='map'>
+        Map of the week is <strong>{ state.flavor }</strong>
+      </div>
+    ) : (
+      <Loading color='#51535e' />
+    );
 
     return (
       <div className='topbar'>
@@ -71,10 +78,8 @@ export default class TopBar extends Component {
           </Card>
         </div>
 
-        <Countdown date={ this.state.startDate }>
-          <div className='map'>
-            Map of the week is <strong>{ state.flavor }</strong>
-          </div>
+        <Countdown date={ this.state.startDate } prefix='Trials will be live in '>
+          { map }
         </Countdown>
       </div>
     );
