@@ -14,6 +14,15 @@ export default function Equipped(props) {
     [props.element && props.element.name]: props.element
   });
 
+  const usage = !props.usage ? null : (
+    <div className='usage' style={{ width: props.usage.percentage + '%' }}></div>
+  );
+
+  //
+  // User didn't have this item unlocked yet, so we cannot display it.
+  //
+  if (!props.name) return null;
+
   return (
     <div className='equipped'>
       <div className='icon'>
@@ -24,7 +33,7 @@ export default function Equipped(props) {
         <h3 title={ props.title }>{ props.name }</h3>
         <div className='perks'>
         {
-          props.perks.map((perk, index) => {
+          props.perks && props.perks.map((perk, index) => {
             const tooltip = `
               <div classe='perk-info'>
                 <h2>${ perk.name }</h2>
@@ -45,6 +54,8 @@ export default function Equipped(props) {
         }
         </div>
       </div>
+
+      { usage }
     </div>
   );
 }

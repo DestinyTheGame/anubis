@@ -1,0 +1,12 @@
+.split {
+  flex-direction: column;
+  display: flex;
+
+  .bottom {
+    display: flex;
+  }
+
+  .top {
+    display: flex;
+  }
+}

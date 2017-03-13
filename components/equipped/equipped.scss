@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: row;
   margin-bottom: $padding;
+  position: relative;
+  overflow: hidden;
 
   .perks {
     display: flex;
@@ -27,6 +29,7 @@
   .details {
     display: flex;
     flex-direction: column;
+    z-index: 2;
 
     h3 {
       margin: 0 0 15px 0;
@@ -39,6 +42,7 @@
     height: 65px;
     position: relative;
     margin-right: $padding;
+    z-index: 2;
 
     .attack {
       bottom: 0;
@@ -47,6 +51,7 @@
       padding: 2px 3px;
       position: absolute;
       right: 0;
+      z-index: 3;
 
       &.Solar {
         background: #D46B00;
@@ -60,5 +65,15 @@
         background: #58C7DD;
       }
     }
+  }
+
+  .usage {
+    background: rgba(palette(grey), .3);
+    bottom: 0;
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
   }
 }

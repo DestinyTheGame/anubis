@@ -8,13 +8,14 @@
  * @private
  */
 export default class Character {
-  constructor(character, inventory, definitions) {
+  constructor(character, inventory, definitions, report) {
     this.definitions = definitions;
     this.inventory = inventory;
 
     this.base = character.characterBase;
     this.stats = this.base.stats;
     this.character = character;
+    this.report = report;
   }
 
   /**

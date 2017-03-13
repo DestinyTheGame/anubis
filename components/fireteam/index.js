@@ -136,6 +136,10 @@ export default class Fireteam extends Component {
     const { character } = data;
     const { primary, special, heavy, artifact, armor } = character.loadout();
 
+    this.usage(data, primary);
+    this.usage(data, special);
+    this.usage(data, heavy);
+
     return (
       <div className='loadout'>
         <Equipped { ...primary } />
@@ -149,6 +153,34 @@ export default class Fireteam extends Component {
   }
 
   /**
+   * Calculate the weapon usage based on the Trials Report stats.
+   *
+   * @param {Object} data Received data.
+   * @param {Object} item Weapon to check.
+   * @private
+   */
+  usage(data, item) {
+    const weapons = data.report.thisWeekWeapons;
+    const week = data.report.currentWeek;
+
+    if (!Array.isArray(weapons) || !week) return;
+
+    let match;
+
+    if (!weapons.some((weapon) => {
+      if (weapon.itemTypeName === item.type) {
+        match = weapon;
+      }
+
+      return !!match;
+    })) return;
+
+    item.usage = Object.assign({
+      percentage: (100 / week.kills) * match.sum_kills
+    }, match);
+  }
+
+  /**
    * Render a player's Elo.
    *
    * @returns {Component} Elo component.
@@ -159,20 +191,6 @@ export default class Fireteam extends Component {
 
     return (
       <Elo rating={ guardian.elo } />
-    );
-  }
-
-  /**
-   * Report a statistic from Trials Report
-   *
-   * @param {Object} data Things.
-   * @param {String} what What do we want to display.
-   * @returns {Component} Report card
-   * @private
-   */
-  report(data, what) {
-    return (
-      <Report { ...data.report } display={ what } />
     );
   }
 
