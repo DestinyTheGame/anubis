@@ -55,16 +55,9 @@ class Application extends Component {
           <Route path="/" component={ Layout }>
             <IndexRedirect to="twitch" />
 
-            <Route path="guardian" component={ Guardian }>
-              <Route path="settings" component={ Guardian.Settings }/>
-            </Route>
-
-            <Route path="twitch" component={ Twitch }>
-              <Route path="settings" component={ Twitch.Settings }/>
-            </Route>
-
+            <Route path="guardian" component={ Guardian } />
+            <Route path="twitch" component={ Twitch } />
             <Route path="settings" component={ Config } />
-
             <Route path="*" component={ NotFound }/>
           </Route>
         </Router>
