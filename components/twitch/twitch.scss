@@ -1,0 +1,11 @@
+@import '../../design/variables.scss';
+
+.twitch {
+  .notice {
+    color: palette(primary, light);
+    text-align: center;
+    align-self: center;
+    margin: 0 auto;
+    width: 300px;
+  }
+}
