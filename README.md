@@ -11,13 +11,13 @@ event in Destiny the Game.
 
 #### Lookup of opposing teams
 
-We fetch information of your opponents from the Bungie API, Guaridan.GG and
+We fetch information of your opponents from the Bungie API, Guardian.GG and
 DestinyTrialsReport so you know exactly who you're up against.
 
 ![](/docs/screenshots/lookup.png)
 
 
-#### Green screen twitch overlays
+#### Green screen Twitch overlays
 
 The progress of your trials can be presented on stream by using our overlay
 page which we host on your computer. 
@@ -30,12 +30,12 @@ And much more features are on it's way:
 - **Twitch chat** Engage with your audience through the app.
 - **Twitch bot** Dedicated bot that integrates with the API and allows the app
   to be controlled by your Twitch moderators.
-- **Loadout and vault support**. Switch weapons or complete loadouts at a click
+- **Loadout and vault support**. Switch weapons or a complete loadout at a click
   of a button.
 - **NetDuma integration** Connection quality, geo information will be neatly
   presented in the application.
-- **Notifications** Get notified in the app when people switch gear or load outs
-  mid match, when you get a new follower on twitch and what not.
+- **Notifications** Get notified in the app when people switch gear or loadout
+  mid-match, when you get a new follower on twitch and what not.
 
 ### That sounds pretty sweet, how do I get the app?
 
@@ -64,23 +64,23 @@ issue tracker or [join us on discord][discord].
 ### Documentation
 
 [See the docs folder](/docs) and if you need help setting up the application or
-have questions that are not answered by the docs please reacht out on [discord].
+have questions that are not answered by the docs please reach out on [discord].
 
 # Developers
 
-This repository holds the code for the application it self. We did write some
+This repository holds the code for the application. We did write some
 additional projects to make this application tick. These projects are also Open
 Sourced under the `destinythegame` project:
 
 - [destiny-api][destiny-api] A JavaScript based API client that interacts with Bungie.net's API.
-- [bungie-auth][bungie-auth] A JavaScript based oauth sign-in flow for Bungie's weird Oauth 2 implementation.
+- [bungie-auth][bungie-auth] A JavaScript based OAuth sign-in flow for Bungie's weird OAuth 2 implementation.
 
 If you are interested in the development of the app, want to receive updates on
 the progress or just want to chat with the fine folks that make it app, [join our
 Discord server!][discord]
 
-The application it self is build upon the [Electron][electron] which allows us
-to build cross platform applications using JavaScript, HTML and CSS. Electron
+The application is build upon the [Electron][electron] which allows us
+to build cross platform applications using JavaScript, HTML, and CSS. Electron
 uses Node.js and Chromium to build the application. So for development purposes
 we assume that you have the following development tools installed locally:
 
@@ -116,11 +116,11 @@ during development.
 Until the project has matured to a 1.0 release assume that every release
 contains breaking changes. We iterate at a rapid phase in order to release the
 features we want. During the development of these features it could be that we
-need to re-write some of our internals that break backwards compatibility.
+need to re-write some of our internals that break backward compatibility.
 
 Once we've reached our 1.0.0 status the version numbers will follow semver 2.0
 strictly. Meaning that the first number in the version indicates a Major
-release which are usually containing breaking changes. The second digit
+release which is usually containing breaking changes. The second digit
 indicates a minor version which is used to indicate the release of new features
 and functionality. The last version number indicates the patch release. This is
 bumped for your everyday fixes.
