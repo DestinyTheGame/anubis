@@ -61,6 +61,11 @@ channel.
 If you have issues installing the application either create an issue in our
 issue tracker or [join us on discord][discord].
 
+### Documentation
+
+[See the docs folder](/docs) and if you need help setting up the application or
+have questions that are not answered by the docs please reacht out on [discord].
+
 # Developers
 
 This repository holds the code for the application it self. We did write some
@@ -73,44 +78,6 @@ Sourced under the `destinythegame` project:
 If you are interested in the development of the app, want to receive updates on
 the progress or just want to chat with the fine folks that make it app, [join our
 Discord server!][discord]
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Documentation](/docs)
-- [Development](#development)
-- [Releasing](#releasing)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Installation
-
-First of all, thanks for taking the effort to try the application. Any feedback
-good or bad is much appreciated. To install the application you need to download
-the correct build for Operating System. We currently support
-
-- Mac OS
-- Windows (32 and 64 bit)
-
-The applications are uploaded to our [releases] page at:
-
-https://github.com/DestinyTheGame/anubis/releases
-
-Each version has a *downloads* section where you can select and download the
-application that matches your system. If you want to run the application on a
-different Operating System/platform you might need to build the app your self or
-run it in development mode. See [development](#development) for more
-information.
-
-Please note that we do not have auto updating setup yet, so you need to
-*manually* check if new builds are available by looking at our
-[releases][releases] page. We also announce new builds in our discord release
-channel.
-
-If you have issues installing the application either create an issue in our
-issue tracker or [join us on discord][discord].
-
-## Development
 
 The application it self is build upon the [Electron][electron] which allows us
 to build cross platform applications using JavaScript, HTML and CSS. Electron
