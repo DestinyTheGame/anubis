@@ -150,35 +150,59 @@ export default class Countdown extends Component {
 
     return (
       <div className='countdown active'>
-        { (days > 0) &&
-          [
-            <div className='days' key='days'>
-              { days }
-              <span>{ days == 1 ? 'Day' : 'Days'}</span>
-            </div>,
-            <div className='sep' key='sep'>:</div>
-          ]
-        }
+        { this.props.prefix }
 
-        <div className='hours'>
-          { this.zero(hours) }
-          <span>Hours</span>
-        </div>
+        <NoneZero value={ days }>
+          <div className='days' key='days'>
+            { days }
+            <span>{ days == 1 ? 'Day' : 'Days'}</span>
+          </div>,
+          <div className='sep' key='sep'>:</div>
+        </NoneZero>
 
-        <div className='sep'>:</div>
+        <NoneZero value={ hours }>
+          <div className='hours'>
+            { this.zero(hours) }
+            <span>Hours</span>
+          </div>
 
-        <div className='mins'>
-          { this.zero(mins) }
-          <span>Minutes</span>
-        </div>
+          <div className='sep'>:</div>
+        </NoneZero>
 
-        <div className='sep'>:</div>
+        <NoneZero value={ mins }>
+          <div className='mins'>
+            { this.zero(mins) }
+            <span>Minutes</span>
+          </div>
 
-        <div className={ finalcountdown }>
-          { this.zero(secs) }
-          <span>Seconds</span>
-        </div>
+          <div className='sep'>:</div>
+        </NoneZero>
+
+        <NoneZero value={ secs }>
+          <div className={ finalcountdown }>
+            { this.zero(secs) }
+            <span>Seconds</span>
+          </div>
+        </NoneZero>
       </div>
     );
   }
+}
+
+/**
+ * Simple helper component which will make some conditional statements easier to
+ * read.
+ *
+ * @param {Object} props
+ * @returns {Component}
+ * @private
+ */
+function NoneZero(props) {
+  if (props.value > 0) return (
+    <div>
+      { props.children }
+    </div>
+  );
+
+  return null;
 }
