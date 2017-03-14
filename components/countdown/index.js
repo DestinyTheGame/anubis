@@ -156,7 +156,8 @@ export default class Countdown extends Component {
           <div className='days' key='days'>
             { days }
             <span>{ days == 1 ? 'Day' : 'Days'}</span>
-          </div>,
+          </div>
+
           <div className='sep' key='sep'>:</div>
         </NoneZero>
 
