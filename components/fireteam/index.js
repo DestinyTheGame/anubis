@@ -136,9 +136,9 @@ export default class Fireteam extends Component {
     const { character } = data;
     const { primary, special, heavy, artifact, armor } = character.loadout();
 
-    this.usage(data, primary);
-    this.usage(data, special);
-    this.usage(data, heavy);
+    if (primary) this.usage(data, primary);
+    if (special) this.usage(data, special);
+    if (heavy) this.usage(data, heavy);
 
     return (
       <div className='loadout'>
