@@ -1,3 +1,5 @@
+import { hide, danger } from './peskyperks';
+
 /**
  * Character model.
  *
@@ -106,16 +108,17 @@ export default class Character {
            !(node.isActivated === true && definition.column > -1)
         || !step
         || !step.nodeStepName
-        || ~hideNodes.indexOf(step.nodeStepHash)
+        || hide(step.nodeStepHash)
         || node.hidden
       ) return;
 
       nodes.push({
-        id: step.nodeStepHash,
-        name: step.nodeStepName,
+        danger: danger(item.itemTypeName, step.nodeStepHash),
         title: step.nodeStepDescription,
-        icon: step.icon
-      })
+        name: step.nodeStepName,
+        id: step.nodeStepHash,
+        icon: step.icon,
+      });
     });
 
     return nodes;
@@ -144,7 +147,6 @@ export default class Character {
     //
     if (!item) return;
 
-
     //
     // Merge definition data with the inventory based item data. First we need
     // to filter out the items that are in our inventory and only return the
@@ -152,7 +154,7 @@ export default class Character {
     // self because the API will return all weapons from our inventory instead
     // of just the one we have equipped.
     //
-    item = item.items.filter((item) => { return item.transferStatus === 1; })[0];
+    item = item.items.filter((item) => { return item.isEquipped; })[0];
     item = Object.assign(this.definitions.items[item.itemHash], item);
 
     const element = this.definitions.damageTypes[item.damageTypeHash];
@@ -472,86 +474,3 @@ export default class Character {
     return 'Unknown';
   }
 }
-
-/**
- * List of stepNodeHashes that we don't want to show up as weapon perks.
- *
- * @type {Array}
- * @private
- */
-const hideNodes = [
-  21956111,   // Orange Chroma
-  73039185,   // Blue Chroma
-  74523350,   // Cannibalism
-  193091484,  // Increase Strength
-  213547364,  // Will of Light
-  217480046,  // Twist Fate
-  300289986,  // Dreg Burn
-  431265444,  // Mutineer
-  472357138,  // Void Damage
-  519240296,  // White Chroma
-  617082448,  // Reforge Ready
-  643689081,  // Kinetic Damage
-  994456416,  // Burgeoning Hunger
-  1034209669, // Increase Intellect
-  1259277924, // Red Chroma
-  1263323987, // Increase Discipline
-  1270552711, // Infuse
-  1305317488, // Aspect Swap
-  1450441122, // Demotion
-  1516989546, // Magenta Chroma
-  1644354530, // Sword Strike
-  1782221257, // Shank Burn
-  1891493121, // Dark Breaker
-  1920788875, // Ascend
-  1975859941, // Solar Damage
-  2086308543, // Upgrade Defense
-  2133116599, // Deactivate Chroma
-  2470010183, // Hive Disruptor
-  2493487228, // Green Chroma
-  2688431654, // Arc Damage
-  2689436406, // Upgrade Damage
-  2845051978, // Ice Breaker
-  2978058659, // Oracle Disruptor
-  3200611139, // Scabbard
-  3575189929, // Hands-On
-  3707521590, // Vandal Burn
-  3742851299, // Lich Bane
-  3838454323, // Yellow Chroma
-  3985040583, // Disciplinarian
-  4197414939, // Inverse Shadow
-
-  //
-  // Ornaments
-  //
-  889765000,  // Spec ops.
-  3714326989, // Artic Survival.
-  4021291143, // Dunemaker.
-  2102232042, // Nanohance.
-  2490282438, // Fallen Ass.
-  888337503,  // Crucible ass.
-  3823075448, // Rose of Acid.
-  533595882,  // Rose of Corruption.
-  194511534,  // Sequel.
-  1463501299, // Addendum.
-  1361713467, // Not a toy.
-  1415759877, // Shock hazard.
-  3914911278, // Storms reproach.
-  2483806592, // Iconoclast.
-  1526284575, // Wolves Remember.
-  3537067099, // Born in Fire.
-  1061944774, // Heart of gold.
-  3764272115, // Prototype.
-  3638091012, // Queens Command.
-  3111908153, // Lingering Vestege.
-  1745108047, // Dragons Bane.
-  2456762628, // Hoodoom.
-  968615526,  // Bureau of Aeronautics.
-  239679421,  // Last Warmind.
-  1427027527, // Carrion.
-  961419189,  // Moon glow.
-  2435978606, // Superspy.
-  773941200,  // Royal Flush.
-  539788817,  // Meteorite.
-  1622904372, // Silver Bullet.
-];
