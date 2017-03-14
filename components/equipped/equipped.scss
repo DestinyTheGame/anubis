@@ -1,11 +1,13 @@
 @import '../../design/variables.scss';
 
 .equipped {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: $padding;
-  position: relative;
-  overflow: hidden;
+  .row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: $padding;
+    overflow: hidden;
+    position: relative;
+  }
 
   .perks {
     display: flex;
@@ -71,6 +73,41 @@
     }
   }
 
+  .usage {
+    padding: $padding;
+    background: rgba(palette(black), 0.8);
+    box-shadow: inset 0px 40px 80px 0px rgba(palette(black), 0.3);
+    margin-bottom: $padding;
+    margin-left: -$padding;
+    margin-right: -$padding;
+    color: #FFF;
+    display: flex;
+    flex-direction: row;
+
+    .stat {
+      margin-right: $padding;
+      width: 25%;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      dt {
+        text-align: center;
+        color: rgba(palette(white), .5);
+        margin-bottom: $padding/2;
+        text-transform: uppercase;
+        font-size: 12px
+      }
+
+      dd {
+        margin: 0;
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+  }
+
   .usage-bar {
     width: 100%;
     height: 100%;
@@ -85,29 +122,5 @@
       top: 0;
       z-index: 1;
     }
-
-    .details {
-      display: none;
-    }
-
-    .stat {
-      display: flex;
-      color: rgba(palette(black), .3);
-    }
-
-    p {
-      margin: 0;
-      width: 50px;
-      padding-right: 5px;
-      text-align: right;
-      display: inline-block;
-    }
-  }
-
-  &:hover .usage-bar .details {
-    display: block;
-    position: absolute;
-    right: 5px;
-    top: 5px;
   }
 }
