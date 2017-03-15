@@ -24,7 +24,7 @@ const defaults = {
   //
   // Platform we're playing on.
   //
-  'platform': 2
+  'playstation': true
 };
 
 //

@@ -23,6 +23,8 @@ export default class Config extends Component {
     return (
       <div className='main'>
         <div className='panel config'>
+          <h1>Overlay</h1>
+
           <Toggle label='Fake boons' name='boons' type='toggle' value={ boons } experimental>
             Fake the purchase of the mercy, favor and boldness boons.
           </Toggle>
@@ -49,6 +51,12 @@ export default class Config extends Component {
 
           <Toggle label='Show in-line' name='showInline' type='toggle' value={ true }>
             Show the wins, losses and boons on a single line.
+          </Toggle>
+
+          <h1>Stats</h1>
+
+          <Toggle label='Platform' name='playstation' type='toggle' value={ true }>
+            Is the default platform playstation?
           </Toggle>
         </div>
 

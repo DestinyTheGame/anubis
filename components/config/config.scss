@@ -3,6 +3,16 @@
 .config {
   flex-direction: column;
 
+  h1 {
+    margin: $padding 0;
+    font-weight: normal;
+    color: palette(primary, light);
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
   form {
     margin-bottom: 25px;
   }

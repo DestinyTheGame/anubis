@@ -1,6 +1,7 @@
 import EventEmitter from 'eventemitter3';
 import parallel from 'async/parallel';
 import reduce from 'async/reduce';
+import TickTock from 'tick-tock';
 import { get } from '../storage';
 import request from 'request';
 import map from 'async/map';
@@ -17,6 +18,7 @@ export default class TrialsReport extends EventEmitter {
 
     this.guardian = boot.get('guardian');
     this.destiny = boot.get('destiny');
+    this.timers = new TickTock();
 
     this.membership = null;
     this.username = null;
@@ -35,8 +37,10 @@ export default class TrialsReport extends EventEmitter {
   search(username, fn) {
     this.username = username;
 
-    get('platform', (err, platform) => {
+    get('playstation', (err, playstation) => {
       if (err) return this.emit('error', err);
+
+      const platform = playstation ? 2 : 1;
 
       this.destiny.user.search(platform, this.username, (err, matches) => {
         if (err) return this.emit('error', err);
