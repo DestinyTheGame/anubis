@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import Usage from '../usage';
 import './equipped.scss';
 
 /**
@@ -33,16 +34,20 @@ export default class Equipped extends Component {
   /**
    * Render a bar graph about the usage of a given weapon.
    *
+   * @param {String} Key Key of the data.
    * @returns {Null|Component}
    * @private
    */
-  bar() {
+  bar(key) {
+    const className = classnames('usage-bar', key);
     const props = this.props;
-    if (!props.usage) return null;
+    const usage = props.usage;
+
+    if (!usage || !usage[key]) return null;
 
     return (
-      <div className='usage-bar'>
-        <div className='fill' style={{ width: props.usage.percentage + '%' }}></div>
+      <div className={ className }>
+        <div className='fill' style={{ width: usage[key].percentage + '%' }}></div>
       </div>
     );
   }
@@ -55,29 +60,14 @@ export default class Equipped extends Component {
    */
   usage() {
     const props = this.props;
-    if (!props.usage || !this.state.open) return null;
+    const usage = props.usage;
+
+    if (!usage || !this.state.open) return null;
 
     return (
       <div className='usage'>
-        <dl className='stat'>
-          <dt>Headshots</dt>
-          <dd>{ props.usage.sum_headshots }</dd>
-        </dl>
-
-        <dl className='stat'>
-          <dt>Kills</dt>
-          <dd>{ props.usage.sum_kills }</dd>
-        </dl>
-
-        <dl className='stat'>
-          <dt>Accuracy</dt>
-          <dd>{ (100 / props.usage.sum_kills * props.usage.sum_headshots).toFixed(0) }%</dd>
-        </dl>
-
-        <dl className='stat'>
-          <dt>Usage</dt>
-          <dd>{ (props.usage.percentage).toFixed(0) }%</dd>
-        </dl>
+        <Usage { ...usage.week } name='week' />
+        <Usage { ...usage.map } name='map' />
       </div>
     );
   }
@@ -100,8 +90,12 @@ export default class Equipped extends Component {
       [props.element && props.element.name]: props.element
     });
 
+    const equipped = classnames('equipped', {
+      expand: props.usage
+    });
+
     return (
-      <div className='equipped' data-type={ props.type } onClick={ this.toggle }>
+      <div className={ equipped } data-type={ props.type } onClick={ this.toggle }>
         <div className='row'>
           <div className='icon'>
             <span className={ attack }>{ props.attack }</span>
@@ -137,7 +131,8 @@ export default class Equipped extends Component {
             </div>
           </div>
 
-          { this.bar() }
+          { this.bar('week') }
+          { this.bar('map') }
         </div>
 
         { this.usage() }

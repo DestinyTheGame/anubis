@@ -160,24 +160,47 @@ export default class Fireteam extends Component {
    * @private
    */
   usage(data, item) {
-    const weapons = data.report.thisWeekWeapons;
-    const week = data.report.currentWeek;
+    if (!data.report) return;
 
-    if (!Array.isArray(weapons) || !week) return;
+    const statistics = {};
 
-    let match;
-
-    if (!weapons.some((weapon) => {
-      if (weapon.itemTypeName === item.type) {
-        match = weapon;
+    [
+      {
+        weapons: data.report.thisWeekWeapons,
+        stats: data.report.currentWeek,
+        prop: 'week'
+      }, {
+        weapons: data.report.thisMapWeapons,
+        stats: data.report.currentMap,
+        prop: 'map'
       }
+    ].forEach((spec) => {
+      const { weapons, stats, prop } = spec;
+      let match;
 
-      return !!match;
-    })) return;
+      //
+      // No matching data to process so we want to back out before we assign
+      // incorrect data to our statistics report.
+      //
+      if (!Array.isArray(weapons) || !stats || !weapons.some((weapon) => {
+        if (weapon.itemTypeName === item.type) {
+          match = weapon;
+        }
 
-    item.usage = Object.assign({
-      percentage: (100 / week.kills) * match.sum_kills
-    }, match);
+        return !!match;
+      })) return;
+
+      statistics[prop] = Object.assign({
+        percentage: (100 / stats.kills) * match.sum_kills
+      }, match);
+    });
+
+    //
+    // Only assign the object if we actually have data to share.
+    //
+    if (Object.keys(statistics).length) {
+      item.usage = statistics;
+    }
   }
 
   /**
