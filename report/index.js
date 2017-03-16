@@ -220,7 +220,7 @@ export default class TrialsReport extends EventEmitter {
     this.timers.clear();
     this.timers.setTimeout('refresh', () => {
       this.user((err, data) => {
-        if (err) return;
+        if (err) return this.refresh();
 
         //
         // Simulate the same data structure as the lookup function so we can
