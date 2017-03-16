@@ -124,7 +124,14 @@ export default class TrialsReport extends EventEmitter {
         memo[id] = body[0];
         next(undefined, memo);
       });
-    }, fn);
+    }, (err, report) => {
+      if (err) return fn(err);
+
+      this.report = report;
+      this.emit('report', report);
+
+      fn(undefined, report);
+    });
   }
 
   /**
@@ -158,6 +165,7 @@ export default class TrialsReport extends EventEmitter {
       this.emit('loadout', this.loadout);
 
       fn(undefined, user);
+      this.refresh();
     };
   }
 
@@ -168,8 +176,6 @@ export default class TrialsReport extends EventEmitter {
    * @public
    */
   user(fn) {
-    const username = this.username;
-
     map(this.fireteam, (member, next) => {
       const platform = member.membershipType;
       const id = member.membershipId;
@@ -204,11 +210,37 @@ export default class TrialsReport extends EventEmitter {
   }
 
   /**
+   * Schedule a new refresh cycle.
+   *
+   * @private
+   */
+  refresh() {
+    const gather = this.gather(this.username, () => {});
+
+    this.timers.clear();
+    this.timers.setTimeout('refresh', () => {
+      this.user((err, data) => {
+        if (err) return;
+
+        //
+        // Simulate the same data structure as the lookup function so we can
+        // re-use our internally stored data to eliminate some of the HTTP
+        // requests we need to make.
+        //
+        gather(undefined, {
+          user: data,
+          trialsreport: this.report
+        });
+      });
+    }, 10000);
+  }
+
+  /**
    * Kill all the information as the connection has died.
    *
    * @private
    */
   destroy() {
-
+    this.timers.clear();
   }
 }
