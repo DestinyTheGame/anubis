@@ -179,7 +179,7 @@ export default class Countdown extends Component {
           <div className='sep'>:</div>
         </NoneZero>
 
-        <NoneZero value={ secs }>
+        <NoneZero value={ secs } negative>
           <div className={ finalcountdown }>
             { this.zero(secs) }
             <span>Seconds</span>
@@ -199,7 +199,9 @@ export default class Countdown extends Component {
  * @private
  */
 function NoneZero(props) {
-  if (props.value > 0) return (
+  const allowed = props.negative ? props.value >= 0  : props.value > 0;
+
+  if (allowed) return (
     <div>
       { props.children }
     </div>
