@@ -97,7 +97,7 @@ export default class Equipped extends Component {
 
     return (
       <div className={ equipped } data-type={ props.type } onClick={ this.toggle }>
-        <div className='row'>
+        <div className='row item'>
           <div className='icon'>
             <span className={ attack }>{ props.attack }</span>
             <img src={ 'https://bungie.net' + props.icon } />

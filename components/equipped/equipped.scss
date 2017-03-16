@@ -5,12 +5,19 @@
     cursor: pointer;
   }
 
-  &.changed .row {
-    background: palette(primary, light);
+  &.changed .item {
+    background: rgba(palette(primary), 0.8);
     color: palette(white);
+    margin-right: -($padding);
+    margin-left: -($padding);
+    padding-left: ($padding - 5px);
+    padding-right: ($padding - 5px);
+    border-right: 5px solid rgba(palette(primary, mid), .2);
+    border-left: 5px solid rgba(palette(primary, mid), .2);
   }
 
   .row {
+    transition: background-color 500ms linear, color 500ms linear;
     display: flex;
     flex-direction: row;
     margin-bottom: $padding;
