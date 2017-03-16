@@ -91,6 +91,7 @@ export default class Equipped extends Component {
     });
 
     const equipped = classnames('equipped', {
+      changed: props.changed,
       expand: props.usage
     });
 

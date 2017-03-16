@@ -5,6 +5,11 @@
     cursor: pointer;
   }
 
+  &.changed .row {
+    background: palette(primary, light);
+    color: palette(white);
+  }
+
   .row {
     display: flex;
     flex-direction: row;
