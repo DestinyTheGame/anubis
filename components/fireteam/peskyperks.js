@@ -52,6 +52,7 @@ danger.weapons = {
     186107093: 'Increased Damage',                                            // Aggballs
     3125734432: 'Decreases damage falloff, can compete from longer ranges',   // Rangefinder.
     3058480256: 'High Call Rounds, increases flinch',                         // HCR.
+    4081260527: 'Increased damage after reload',                              // Reactive reload.
   },
   'Shotgun': {
     186107093: 'Increased Damage',                                            // Aggballs
