@@ -11,6 +11,7 @@ import { hide, danger } from './peskyperks';
  */
 export default class Character {
   constructor(character, inventory, definitions, report) {
+    this.changes = Object.create(null);
     this.definitions = definitions;
     this.inventory = inventory;
 
@@ -18,6 +19,23 @@ export default class Character {
     this.stats = this.base.stats;
     this.character = character;
     this.report = report;
+  }
+
+  /**
+   * Either set that something has changed or get and delete a change so it can
+   * only be used as a change indicator once.
+   *
+   * @param {String} what Property that was changed.
+   * @returns {Boolean|Undefined}
+   * @public
+   */
+  changed(what, set) {
+    if (set) return this.changes[what] = set;
+
+    set = this.changes[what];
+    delete this.changes[what];
+
+    return set;
   }
 
   /**
@@ -170,6 +188,8 @@ export default class Character {
     });
 
     return {
+      id: item.itemHash,
+      changed: !!this.changed(slot),
       attack: item.primaryStat.value,
       title: item.itemDescription,
       type: item.itemTypeName,

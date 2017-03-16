@@ -33,7 +33,6 @@ export default class Fireteam extends Component {
   process(props) {
     this.members = props.members.map((data) => {
       const { character, inventory } = data;
-      console.log(data);
 
       return Object.assign(data, {
         character: new Character(character, inventory.data, inventory.definitions)
@@ -48,17 +47,51 @@ export default class Fireteam extends Component {
    * @private
    */
   componentWillReceiveProps(props) {
-    //
-    // TODO: We've received a new fire team, check if this is the same fire team
-    // as before and when this is the case we can start detecting possible
-    // changes in their load out and display that to the user. We probably want
-    // to look for changes in
-    //
-    // - Subclass, Primary, Special, Heavy, Armor, Artifact
-    //
-    const members = this.members;
-
+    const previous = this.members;
     this.process(props);
+    const current = this.members;
+
+    //
+    // There are no changes, or it's the first time we look someone up.
+    //
+    if (!previous || !current || this.id(previous) !== this.id(current)) return;
+
+    //
+    // Check the load out for changes and flag the slots as changed.
+    //
+    // @TODO Armor, Subclass
+    //
+    current.forEach((member, index) => {
+      const prev = previous[index].character;
+      const char = member.character;
+
+      [
+        'primary',
+        'special',
+        'heavy',
+        'artifact'
+      ].forEach((slot) => {
+        const prevId = (prev.equipped(slot) || {}).id;
+        const currId = (char.equipped(slot) || {}).id;
+
+        if (currId !== prevId) {
+          char.changed(slot, true);
+        }
+      });
+    });
+  }
+
+  /**
+   * Generate a unique id based on a given fireteam.
+   *
+   * @param {Array} members Array of fireteam members.
+   * @returns {String} Generated id
+   * @private
+   */
+  id(members) {
+    return members.map((member) => {
+      return member.guardian.membershipId;
+    }).join('|');
   }
 
   /**
