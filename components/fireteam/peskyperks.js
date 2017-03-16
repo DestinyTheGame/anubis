@@ -24,14 +24,28 @@ danger.weapons = {
     386636896: 'Increased damage by random bullets, can proc multiple times', // LitC.
     3125734432: 'Decreases damage falloff, can compete from longer ranges',   // Rangefinder.
     1085914778: 'Increased in air accuracy.',                                 // Icarus.
+    3359693707: 'Explosions have no damage falloff & flashes opponents',      // Explosive rounds.
+    342310710: 'Increased damage by random bullets, 2 more',                  // Holding Aces.
     2110331143: 'Increased range, slower reload',                             // Rifled Barrel.
     4081260527: 'Increased damage after reload',                              // Reactive reload.
-    3528431156: 'Increases Aim Assist by 25%',                                // Hidden Hand
+    3528431156: 'Increases Aim Assist by 25%',                                // Hidden Hand.
+    2346453920: 'Damage over time, green cum on your screen',                 // Mark of the Devourer.
   },
   'Pulse Rifle': {
     3058480256: 'High Call Rounds, increases flinch',                         // HCR.
     1923295819: 'Hand-laid stock, pulse rifle dmg falloff is minimal',        // Hand-Laid stock.
     265561391: 'Counterbalance, only upwards recoil',                         // Counter balance.
+  },
+  'Scout Rifle': {
+    868135889: 'Full auto, increased RoF',                                    // Full Auto.
+    4081260527: 'Increased damage after reload',                              // Reactive reload.
+    695712111: 'Increased damager after a kill',                              // Crowd Control.
+    3359693707: 'Explosions have no damage falloff & flashes opponents',      // Explosive rounds.
+    453334051: 'Increased stability without sacrificing range',               // Braced Frame.
+  },
+  'Auto Rifle': {
+    265561391: 'Counterbalance, only upwards recoil',                         // Counter balance.
+    453334051: 'Increased stability without sacrificing range',               // Braced Frame.
   },
   'Rocket Launcher': {
     1628173634: 'Grenades and horse shoes',                                   // G&H.
@@ -46,6 +60,7 @@ danger.weapons = {
     3845139909: 'Low zoom scope',                                             // Ambush.
     855592488: 'Less flinch',                                                 // Unflinching.
     423261833: 'Removes 1 frame of ADS',                                      // Linear compensator.
+    1288562798: 'Generates free ammo',                                        // Icebreaker no-backpack.
   },
   'Sidearm': {
     3528431156: 'Increases Aim Assist by 25%',                                // Hidden Hand
