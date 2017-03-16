@@ -64,6 +64,8 @@ export default class TrialsReport extends EventEmitter {
    * @private
    */
   lookup(username, fn) {
+    username = username.trim();
+
     this.search(username, (err) => {
       if (err) return fn(err);
 
