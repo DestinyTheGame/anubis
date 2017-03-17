@@ -262,17 +262,14 @@ export default class Fireteam extends Component {
    * @private
    */
   flawless(data) {
-    const report = data.report || {};;
-    let flawless = 0;
-
-    ['year1', 'year2', 'year3'].forEach((key) => {
-      if (key in report) {
-        flawless += report[key].flawless;
-      }
-    });
+    const report = data.report || {};
+    const year1 = (report.year1 || {}).flawless || 0;
+    const year2 = (report.year2 || {}).flawless || 0;
+    const year3 = (report.year3 || {}).flawless || 0;
+    const week = report.currentWeek.flawless || 0;
 
     return (
-      <Flawless times={ flawless } />
+      <Flawless y1={ year1 } y2={ year2 } y3={ year3 } week={ week } />
     );
   }
 

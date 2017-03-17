@@ -43,6 +43,10 @@ danger.weapons = {
     3359693707: 'Explosions have no damage falloff & flashes opponents',      // Explosive rounds.
     453334051: 'Increased stability without sacrificing range',               // Braced Frame.
   },
+  'Fusion Rifle': {
+    3125734432: 'Decreases damage falloff, can compete from longer ranges',   // Rangefinder.
+    3661313476: 'Improved charge time',                                       // Acc Coils.
+  },
   'Auto Rifle': {
     265561391: 'Counterbalance, only upwards recoil',                         // Counter balance.
     453334051: 'Increased stability without sacrificing range',               // Braced Frame.
@@ -61,6 +65,8 @@ danger.weapons = {
     855592488: 'Less flinch',                                                 // Unflinching.
     423261833: 'Removes 1 frame of ADS',                                      // Linear compensator.
     1288562798: 'Generates free ammo',                                        // Icebreaker no-backpack.
+    2479685401: 'Decreased ADS',                                              // Snapshot.
+    2837264531: 'Increased accuracy after weapons switching',                 // Hotswap.
   },
   'Sidearm': {
     3528431156: 'Increases Aim Assist by 25%',                                // Hidden Hand
@@ -68,6 +74,7 @@ danger.weapons = {
     3125734432: 'Decreases damage falloff, can compete from longer ranges',   // Rangefinder.
     3058480256: 'High Call Rounds, increases flinch',                         // HCR.
     4081260527: 'Increased damage after reload',                              // Reactive reload.
+    579007477: 'Super burst of bullets when reloading after a kill',          // Trespasser exotic perk
   },
   'Shotgun': {
     186107093: 'Increased Damage',                                            // Aggballs

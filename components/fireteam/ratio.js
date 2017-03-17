@@ -14,7 +14,7 @@ export default function Ratio(props) {
         { props.ratio }%
       </strong>
 
-      <span>Ratio</span>
+      <span>Win ratio</span>
     </div>
   );
 }
