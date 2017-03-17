@@ -88,7 +88,7 @@ export default class Guardian extends Component {
    * @private
    */
   loading() {
-    const color = this.props.small ? '#EAEDF3' : '#7E829B';
+    const color = this.props.small ? '#EAEDF3' : '#9CA0A9';
 
     return (
       <div className='loading center'>
