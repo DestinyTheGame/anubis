@@ -190,4 +190,5 @@ hide.nodes = [
   1622904372, // Silver Bullet.
   3435035717, // Spliced Cosmoclast Greaves
   1332177923, // Siva Re-Roll raid gear.
+  542134281,  // Hakke sidearm mozzle velocity.
 ];
