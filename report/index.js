@@ -1,10 +1,19 @@
 import EventEmitter from 'eventemitter3';
+import diagnostics from 'diagnostics';
 import parallel from 'async/parallel';
 import reduce from 'async/reduce';
 import TickTock from 'tick-tock';
 import { get } from '../storage';
 import request from 'request';
 import map from 'async/map';
+
+/**
+ * Output debug messages.
+ *
+ * @type {Function}
+ * @private
+ */
+const debug = diagnostics('anubis:trials-report');
 
 /**
  * Generate a Trials Report of the given users.
@@ -25,6 +34,8 @@ export default class TrialsReport extends EventEmitter {
 
     this.fireteam = [];             // Current fire team of the user.
     this.loadout = [];              // Load out of the fire team.
+
+    this.on('error', debug);
   }
 
   /**
@@ -38,13 +49,23 @@ export default class TrialsReport extends EventEmitter {
     this.username = username;
 
     get('playstation', (err, playstation) => {
-      if (err) return this.emit('error', err);
+      if (err) {
+        this.emit('error', err);
+        return fn(err);
+      }
 
       const platform = playstation ? 2 : 1;
 
       this.destiny.user.search(platform, this.username, (err, matches) => {
-        if (err) return this.emit('error', err);
-        if (!matches || !matches.length) return fn(new Error('Invalid username'));
+        if (err) {
+          this.emit('error', err);
+          return fn(err);
+        }
+
+        if (!matches || !matches.length) {
+          this.emit('error', new Error('Invalid username'));
+          return fn(new Error('Invalid username'));
+        }
 
         //
         // Call back early so can let the UI know that we've found a matching
@@ -244,5 +265,6 @@ export default class TrialsReport extends EventEmitter {
    */
   destroy() {
     this.timers.clear();
+    this.removeAllListeners();
   }
 }
