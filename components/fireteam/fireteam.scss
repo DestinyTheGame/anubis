@@ -1,5 +1,19 @@
 @import '../../design/variables.scss';
 
+@keyframes overlord {
+  0% {
+    color: palette(primary, light);
+  }
+
+  50% {
+    color: rgba(palette(primary, light), .5);
+  }
+
+  100% {
+    color: palette(primary, light);
+  }
+}
+
 .fireteam {
   display: flex;
 
@@ -52,6 +66,10 @@
 
       &.stacked strong {
         color: palette(primary, light);
+      }
+
+      &.stackedAF strong {
+        animation: overlord 5s infinite;
       }
 
       &.virgin {
