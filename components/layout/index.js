@@ -44,7 +44,7 @@ export default class Layout extends Component {
 
     return (
       <div className='wrap left'>
-        <Menu id='menu' pageWrapId='wrap' outerContainerId='container' left noOverlay ref={ r => this.ref = r}>
+        <Menu id='menu' pageWrapId='wrap' outerContainerId='container' left ref={ r => this.ref = r}>
           <div className='app-name'>
             <h5>Anubis</h5>
             <h6>Trials Companion App</h6>
