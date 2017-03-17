@@ -4,8 +4,11 @@ import Tooltip from 'react-tooltip';
 import classnames from 'classnames';
 import Ability from '../abilities';
 import Equipped from '../equipped';
+import Flawless from './flawless';
+import Matches from './matches';
 import Emblem from '../emblem';
 import Stats from '../stats';
+import Ratio from './ratio';
 import Elo from './elo';
 import './fireteam.scss';
 
@@ -239,6 +242,7 @@ export default class Fireteam extends Component {
   /**
    * Render a player's Elo.
    *
+   * @param {Object} data Gathered data.
    * @returns {Component} Elo component.
    * @private
    */
@@ -247,6 +251,64 @@ export default class Fireteam extends Component {
 
     return (
       <Elo rating={ guardian.elo } />
+    );
+  }
+
+  /**
+   * Amount of flawless's
+   *
+   * @param {Object} data Gathered data.
+   * @returns {Component} Flawless component.
+   * @private
+   */
+  flawless(data) {
+    const report = data.report || {};;
+    let flawless = 0;
+
+    ['year1', 'year2', 'year3'].forEach((key) => {
+      if (key in report) {
+        flawless += report[key].flawless;
+      }
+    });
+
+    return (
+      <Flawless times={ flawless } />
+    );
+  }
+
+  /**
+   * Amount of flawless's
+   *
+   * @param {Object} data Gathered data.
+   * @returns {Component} Flawless component.
+   * @private
+   */
+  matches(data) {
+    const report = data.report || {};
+    const week = report.currentWeek;
+
+    return (
+      <Matches played={ week.matches || 0 } />
+    );
+  }
+
+  /**
+   * Amount of flawless's
+   *
+   * @param {Object} data Gathered data.
+   * @returns {Component} Flawless component.
+   * @private
+   */
+  ratio(data) {
+    const report = data.report || {};
+    const week = report.currentWeek;
+    const matches = week.matches || 0;
+    const lost = week.losses || 0;
+    const won = matches - lost;
+    const ratio = (100 * (matches - lost) / matches).toFixed(0);
+
+    return (
+      <Ratio ratio={ matches && ratio } />
     );
   }
 
@@ -279,11 +341,14 @@ export default class Fireteam extends Component {
                   { this.abilities(data) }
                 </div>
 
+                { this.gear(data) }
+
                 <div className='weekly'>
                   { this.elo(data) }
+                  { this.flawless(data) }
+                  { this.matches(data) }
+                  { this.ratio(data) }
                 </div>
-
-                { this.gear(data) }
               </div>
             );
           })
