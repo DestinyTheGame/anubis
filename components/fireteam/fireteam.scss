@@ -27,15 +27,43 @@
   }
 
   .weekly {
-    margin-bottom: $padding;
+    flex-direction: row;
+    display: flex;
 
-    .elo {
-      color: palette(white);
-      text-align: center;
-      width: 25%;
-      height: $topbar;
+    .stat {
+      color: palette(gray);
       display: flex;
       flex-direction: column;
+      height: $topbar;
+      text-align: center;
+      width: 25%;
+
+      &.beginner strong {
+        color: rgba(palette(primary, light), .2);
+      }
+
+      &.intermediate strong {
+        color: rgba(palette(primary, light), .5);
+      }
+
+      &.advanced strong {
+        color: rgba(palette(primary, light), .7);
+      }
+
+      &.stacked strong {
+        color: palette(primary, light);
+      }
+
+      &.virgin {
+        strong {
+          color: hotpink;
+          text-transform: uppercase;
+        }
+
+        span {
+          text-decoration: line-through;
+        }
+      }
 
       strong {
         font-size: 23px;
@@ -43,7 +71,7 @@
       }
 
       span {
-        color: rgba(palette(white), .5);
+        text-transform: uppercase;
         margin-top: 3px;
         font-size: 12px;
         display: block;
