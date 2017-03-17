@@ -1,12 +1,19 @@
-.split {
-  flex-direction: column;
-  display: flex;
+@import '../../design/variables.scss';
 
-  .bottom {
-    display: flex;
+.split {
+  width: 33%;
+  color: palette(gray);
+  text-align: center;
+  height: 75px;
+
+  h4 {
+    margin: 16px 0 5px;
+    font-size: 23px;
   }
 
-  .top {
-    display: flex;
+  .bottom {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
   }
 }

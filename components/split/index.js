@@ -10,9 +10,9 @@ import './split.scss';
 export default function Split(props) {
   return (
     <div className='split'>
-      <div className='top'>
+      <h4>
         { props.top }
-      </div>
+      </h4>
       <div className='bottom'>
         { props.bottom }
       </div>
