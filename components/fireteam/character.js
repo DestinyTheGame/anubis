@@ -295,16 +295,18 @@ export default class Character {
   }
 
   /**
-   * Return the build of the account.
+   * Return the build of the account. Please note that it's possible that some
+   * of these stats just do not exist for example when you have no recovery on
+   * a blade dancer.
    *
    * @returns {Object} The build.
    * @public
    */
   build() {
     return {
-      armor: this.stats.STAT_ARMOR.value,
-      agility: this.stats.STAT_AGILITY.value,
-      recovery: this.stats.STAT_RECOVERY.value
+      armor: (this.stats.STAT_ARMOR || {}).value || 0,
+      agility: (this.stats.STAT_AGILITY || {}).value || 0,
+      recovery: (this.stats.STAT_RECOVERY || {}).value || 0
     };
   }
 
