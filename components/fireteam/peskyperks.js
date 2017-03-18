@@ -188,6 +188,7 @@ hide.nodes = [
   773941200,  // Royal Flush.
   539788817,  // Meteorite.
   1622904372, // Silver Bullet.
+  2085002907, // White Witch
   3435035717, // Spliced Cosmoclast Greaves
   1332177923, // Siva Re-Roll raid gear.
   542134281,  // Hakke sidearm mozzle velocity.
