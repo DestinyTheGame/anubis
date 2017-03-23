@@ -266,7 +266,7 @@ export default class Fireteam extends Component {
     const year1 = (report.year1 || {}).flawless || 0;
     const year2 = (report.year2 || {}).flawless || 0;
     const year3 = (report.year3 || {}).flawless || 0;
-    const week = report.currentWeek.flawless || 0;
+    const week = (report.currentWeek || {}).flawless || 0;
 
     return (
       <Flawless y1={ year1 } y2={ year2 } y3={ year3 } week={ week } />
