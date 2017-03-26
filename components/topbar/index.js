@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import Countdown from 'react-countdown-date';
 import Loading from 'halogen/PulseLoader';
 import WebSockets from '../websocket';
-import Countdown from '../countdown';
 import Card from '../card';
 import './topbar.scss';
 
@@ -62,7 +62,7 @@ export default class TopBar extends Component {
    */
   render() {
     const state = this.state;
-    const map = state.flavor ? (
+    const map = state.flavor && !~state.flavor.indexOf('LIMIT') ? (
       <div className='map'>
         Map of the week is <strong>{ state.flavor }</strong>
       </div>
